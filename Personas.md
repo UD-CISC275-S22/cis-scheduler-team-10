@@ -1,0 +1,4 @@
+Person 1: A freshman CIS major looking to construct their 4 year plan. Their main barrier is not knowing enough about courses and not having easy advisor access.
+Person 2: A sophomore CIS major looking to figure out their next few schedules based on courses they have already taken. Their main barriers are uncertainty in some electives and understanding prerequisites.
+Person 3: A transfer into the CIS major looking to construct new schedules. Their main barrier is knowing what classes will count for certain requirements and what they will need to take to meet prerequisites.
+Person 4: An advisor trying to help a student construct a 4 year plan. Their main barrier is not knowing every course off the top of their head and that the student constructed a temporary spreadsheet they want to base the plan off of.
