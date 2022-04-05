@@ -3,6 +3,7 @@ Degree Plan
 - Name (string)
 - Option to Add/Edit/Remove (bool)
 - Requirements (University, College, Major)
+
 Semester
 - Name (string)
 - Active (not skipped) (bool)
@@ -10,6 +11,7 @@ Semester
 - Season (fall, winter, spring, summer) (custom type/strings)
 - Array of courses (course[])
 - Option to Add/Edit/Remove (bool)
+
 Course
 - Code (string)
 - Title (string)
