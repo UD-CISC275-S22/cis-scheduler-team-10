@@ -11,6 +11,7 @@
                 "numCredits": 2,
                 "preReqs": [],
                 "courseDescription": "Introduction to profession, including disciplines of chemical, civil, computer, electrical, environmental, and mechanical engineering. Prepares students for success through integration of: technical problem solving and engineering design, ethical decision-making, teamwork, and communicating to diverse audiences.",
+                "complete": false,
                 "required": true,
                 "requirementType": "college"
             },
@@ -20,6 +21,7 @@
                 "numCredits": 3,
                 "preReqs": [],
                 "courseDescription": "Computing and principles of programming with an emphasis on systematic program design. Topics include functional programming, data abstraction, procedural abstraction, use of control and state, recursion, testing, and object-oriented programming concepts. Requires no prior programming experience, open to any major, but intended primarily for majors and minors in computer science or mathematics.",
+                "complete": false,
                 "required": true,
                 "requirementType": "major"
             },
@@ -29,6 +31,7 @@
                 "numCredits": 4,
                 "preReqs": [],
                 "courseDescription": "Functions, limits, continuity, derivatives. Polynomial, rational, exponential, hyperbolic, logarithmic, trigonometric and inverse trigonometric functions. Definite and indefinite integrals and the Fundamental Theorem of Calculus. Simple differential equations (separable ODE, linear ODE). ODE models leading to exponential growth and decay.",
+                "complete": false,
                 "required": true,
                 "requirementType": "college"
             },
@@ -38,6 +41,7 @@
                 "numCredits": 3,
                 "preReqs": [],
                 "courseDescription": "Introduction to the process of academic writing that centers on the composition of analytical, research-based essays.",
+                "complete": false,
                 "required": true,
                 "requirementType": "university"
             },
@@ -46,7 +50,8 @@
                 "courseTitle": "U.S. History Since 1865",
                 "numCredits": 3,
                 "preReqs": [],
-                "courseDescription": "IAn introductory survey of American history since 1865. Themes and approach vary with the instructor.",
+                "courseDescription": "An introductory survey of American history since 1865. Themes and approach vary with the instructor.",
+                "complete": false,
                 "required": false,
                 "requirementType": "university"
             }
@@ -59,38 +64,12 @@
         "season": "spring",
         "coursesTaken": [
             {
-                "courseCode": "MATH241",
-                "courseTitle": "Analytic Geometry & Calculus A",
-                "numCredits": 4,
-                "preReqs": [],
-                "courseDescription": "Functions, limits, continuity, derivatives. Polynomial, rational, exponential, hyperbolic, logarithmic, trigonometric and inverse trigonometric functions. Definite and indefinite integrals and the Fundamental Theorem of Calculus. Simple differential equations (separable ODE, linear ODE). ODE models leading to exponential growth and decay.",
-                "required": true,
-                "requirementType": "college"
-            },
-            {
-                "courseCode": "ENGL110",
-                "courseTitle": "Seminar in Composition",
-                "numCredits": 3,
-                "preReqs": [],
-                "courseDescription": "Introduction to the process of academic writing that centers on the composition of analytical, research-based essays.",
-                "required": true,
-                "requirementType": "university"
-            },
-            {
-                "courseCode": "HIST106",
-                "courseTitle": "U.S. History Since 1865",
-                "numCredits": 3,
-                "preReqs": [],
-                "courseDescription": "An introductory survey of American history since 1865. Themes and approach vary with the instructor.",
-                "required": false,
-                "requirementType": "university"
-            },
-            {
                 "courseCode": "CISC181",
                 "courseTitle": "Introduction to Computer Science II",
                 "numCredits": 3,
                 "preReqs": ["CISC108"],
                 "courseDescription": "Principles of computer science illustrated and applied through programming in an object oriented language. Programming projects illustrate computational problems, styles and issues that arise in computer systems development and in all application areas of computation.",
+                "complete": false,
                 "required": true,
                 "requirementType": "major"
             },
@@ -100,6 +79,7 @@
                 "numCredits": 3,
                 "preReqs": ["CISC108"],
                 "courseDescription": "Principles of computer systems programming for software and hardware platforms to achieve efficient resource usage. Topics include the C programming language, memory management, and awareness of system constraints and interfacing. Projects include programming embedded systems and interactive objects.",
+                "complete": false,
                 "required": true,
                 "requirementType": "major"
             },
@@ -109,6 +89,7 @@
                 "numCredits": 3,
                 "preReqs": [],
                 "courseDescription": "Major ideas and areas of study in social and cultural anthropology. Use of ethnographic data and film to illustrate the anthropologist’s view of societies in their sociocultural and ecological dimensions.",
+                "complete": false,
                 "required": false,
                 "requirementType": "university"
             }

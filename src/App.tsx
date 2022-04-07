@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-
+import { Course } from "./interfaces/course";
+import { Semester } from "./interfaces/semester";
+import { Plan } from "./interfaces/plan";
+import courses from "./data/courses.json";
+import semesters from "./data/semesters.json";
+import plans from "./data/degreePlans.json";
+const COURSES = courses as Course[];
+const SEMESTERS = semesters as Semester[];
+const PLANS = plans as Plan[];
 function App(): JSX.Element {
     return (
         <div className="App">

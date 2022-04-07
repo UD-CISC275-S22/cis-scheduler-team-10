@@ -2,7 +2,7 @@
 
 import { Course } from "./course";
 
-export type Season = "Fall" | "Winter" | "Spring" | "Summer I" | "Summer II";
+export type Season = "fall" | "winter" | "spring" | "summer I" | "summer II";
 
 export interface Semester {
     // Name (string)
