@@ -1,37 +1,38 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
+import { Course } from "./interfaces/course";
+import { Semester } from "./interfaces/semester";
 
-export function SemesterComponent(): JSX.Element {
-    // {
-    // semester
-    // }: {
-    // semester: Semester;
-    // }
+export function SemesterComponent({
+    semester
+}: {
+    semester: Semester;
+}): JSX.Element {
     return (
         <div
             className="semester"
             style={{ border: "1px solid black", padding: "20px" }}
         >
-            This is a semester.
-            {/* <Row
-                style={{
-                    border: "1px solid black",
-                    padding: "20px"
-                }}
-            > */}
+            {semester.semesterName.toUpperCase()}
             <Col
                 style={{
-                    border: "1px solid red",
-                    padding: "20px"
+                    border: "1px solid black"
                 }}
             >
-                <CourseComponent></CourseComponent>
-                {/* </Col>
-                <Col> */}
-                <CourseComponent></CourseComponent>
+                {semester.coursesTaken.map((course: Course) => {
+                    return (
+                        <div
+                            key={course.courseCode}
+                            style={{
+                                padding: "5px"
+                            }}
+                        >
+                            <CourseComponent course={course}></CourseComponent>
+                        </div>
+                    );
+                })}
             </Col>
-            {/* </Row> */}
         </div>
     );
 }

@@ -19,9 +19,7 @@ function App(): JSX.Element {
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
-            <DegreePlanComponent
-            //degreePlan={degreePlan}}
-            ></DegreePlanComponent>
+            <DegreePlanComponent degreePlan={PLANS[0]}></DegreePlanComponent>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
         </div>
     );
