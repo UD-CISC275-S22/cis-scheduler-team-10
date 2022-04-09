@@ -95,6 +95,26 @@
                         "complete": false,
                         "required": false,
                         "requirementType": "university"
+                    },
+                    {
+                        "courseCode": "MATH242",
+                        "courseTitle": "Analytic Geometry & Calculus B",
+                        "numCredits": 4,
+                        "preReqs": [],
+                        "courseDescription": "Brief review of MATH 241; evaluation of limits by L’Hospital’s rule; applications of integration; integration techniques; parametric curves; polar coordinates; infinite sequences and series. Includes use of computers to perform symbolic, numerical and graphical analysis.",
+                        "complete": false,
+                        "required": false,
+                        "requirementType": "college"
+                    },
+                    {
+                        "courseCode": "ENGL207",
+                        "courseTitle": "Introduction to Poetry",
+                        "numCredits": 3,
+                        "preReqs": [],
+                        "courseDescription": "Representative masterworks of English, American and world verse.",
+                        "complete": false,
+                        "required": false,
+                        "requirementType": "university"
                     }
                 ]
             }

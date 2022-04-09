@@ -7,8 +7,13 @@ export function CourseComponent({ course }: { course: Course }): JSX.Element {
             // className="course"
             style={{ border: "1px solid black", padding: "10px" }}
         >
-            {course.courseCode}
-            <div> {course.courseDescription}</div>
+            <div>
+                <b>{course.courseCode}</b>
+            </div>
+            <div>
+                <i>{course.courseTitle}</i>
+            </div>
+            <p> {course.courseDescription}</p>
         </div>
     );
 }
