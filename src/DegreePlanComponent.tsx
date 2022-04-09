@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
+import { Semester } from "./interfaces/semester";
 
 export function DegreePlanComponent({
     degreePlan
@@ -20,9 +21,14 @@ export function DegreePlanComponent({
             <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
-                        <SemesterComponent
-                            semester={degreePlan.semesters[0]}
-                        ></SemesterComponent>
+                        {degreePlan.semesters.map((sem: Semester) => (
+                            <div key={sem.semesterName}>
+                                {" "}
+                                <SemesterComponent
+                                    semester={sem}
+                                ></SemesterComponent>
+                            </div>
+                        ))}
                     </Col>
                 </Row>
             </div>
