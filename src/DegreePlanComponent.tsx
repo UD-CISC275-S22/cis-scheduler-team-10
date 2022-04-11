@@ -14,22 +14,19 @@ export function DegreePlanComponent({
             // className="degreePlan"
             style={{ border: "1px solid black", padding: "20px" }}
         >
-            <Container style={{ border: "1px solid black" }}>
-                {degreePlan.name.toUpperCase()} DEGREE PLAN
+            <Container style={{ textDecorationThickness: "3px" }}>
+                <b>{degreePlan.name.toUpperCase()} DEGREE PLAN</b>
             </Container>
 
             <div style={{ padding: "5px" }}>
                 <Row>
-                    <Col>
-                        {degreePlan.semesters.map((sem: Semester) => (
-                            <div key={sem.semesterName}>
-                                {" "}
-                                <SemesterComponent
-                                    semester={sem}
-                                ></SemesterComponent>
-                            </div>
-                        ))}
-                    </Col>
+                    {degreePlan.semesters.map((sem: Semester) => (
+                        <Col key={sem.semesterName}>
+                            <SemesterComponent
+                                semester={sem}
+                            ></SemesterComponent>
+                        </Col>
+                    ))}
                 </Row>
             </div>
         </div>

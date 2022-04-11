@@ -41,10 +41,12 @@ function App(): JSX.Element {
                 </Col>
                 <Col className="degreePlan">
                     {planView !== null ? (
+                        // <Row>
                         <DegreePlanComponent
                             degreePlan={planView}
                         ></DegreePlanComponent>
                     ) : (
+                        // </Row>
                         <Container
                             style={{
                                 border: "1px solid black",

@@ -15,24 +15,18 @@ export function SemesterComponent({
             style={{ border: "1px solid black", padding: "20px" }}
         >
             {semester.semesterName.toUpperCase()}
-            <Col
-                style={{
-                    border: "1px solid black"
-                }}
-            >
-                {semester.coursesTaken.map((course: Course) => {
-                    return (
-                        <div
-                            key={course.courseCode}
-                            style={{
-                                padding: "5px"
-                            }}
-                        >
-                            <CourseComponent course={course}></CourseComponent>
-                        </div>
-                    );
-                })}
-            </Col>
+            {semester.coursesTaken.map((course: Course) => {
+                return (
+                    <div
+                        key={course.courseCode}
+                        style={{
+                            padding: "5px"
+                        }}
+                    >
+                        <CourseComponent course={course}></CourseComponent>
+                    </div>
+                );
+            })}
         </div>
     );
 }
