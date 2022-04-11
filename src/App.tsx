@@ -16,6 +16,7 @@ const PLANS = plans as Plan[];
 
 function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(PLANS[0]);
+    const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
 
     function updatePlanView(newPlan: Plan): void {
         if (newPlan === planView) {
@@ -23,6 +24,11 @@ function App(): JSX.Element {
         } else {
             changePlanView(newPlan);
         }
+    }
+
+    function addPlan(newPlanName: string): void {
+        const newPlan: Plan = { name: newPlanName, semesters: [] };
+        changeAllPlans([...allPlans, newPlan]);
     }
 
     return (
@@ -35,8 +41,9 @@ function App(): JSX.Element {
             >
                 <Col>
                     <DegreePlansListComponent
-                        degreePlans={PLANS}
+                        degreePlans={allPlans}
                         updatePlanView={updatePlanView}
+                        addPlan={addPlan}
                     ></DegreePlansListComponent>
                 </Col>
                 <Col className="degreePlan">
