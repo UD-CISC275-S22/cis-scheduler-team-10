@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { SemesterComponent } from "./SemesterComponent";
+import { Button, Col, Form, Row } from "react-bootstrap";
+//import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 
 function InsertPlan({
