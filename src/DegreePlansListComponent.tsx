@@ -21,6 +21,10 @@ function InsertPlan({
         changeEditing(!editing);
         setPlanName("Insert Name Here");
     }
+    function cancel() {
+        changeEditing(!editing);
+        setPlanName("Insert Name Here");
+    }
     return (
         <Form.Group controlId="formPlanName" as={Row}>
             <Col>
@@ -34,6 +38,9 @@ function InsertPlan({
             </Col>
             <Button onClick={save} variant="success" className="me-4">
                 Save
+            </Button>
+            <Button onClick={cancel} variant="warning" className="me-4">
+                Cancel
             </Button>
         </Form.Group>
     );
@@ -61,7 +68,7 @@ export function DegreePlansListComponent({
                 variant="success"
                 className="me-4"
             >
-                +
+                Change
             </Button>
             {degreePlans.map((plan: Plan) => {
                 return (

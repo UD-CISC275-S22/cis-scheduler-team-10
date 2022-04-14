@@ -31,6 +31,12 @@ function App(): JSX.Element {
         changeAllPlans([...allPlans, newPlan]);
     }
 
+    function removePlan(planName: string): void {
+        changeAllPlans(
+            allPlans.filter((p: Plan): boolean => p.name === planName)
+        );
+    }
+
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
