@@ -14,7 +14,7 @@ import { DegreePlansListComponent } from "./DegreePlansListComponent";
 const PLANS = plans as Plan[];
 
 function App(): JSX.Element {
-    const [planView, changePlanView] = useState<Plan | null>(PLANS[0]);
+    const [planView, changePlanView] = useState<Plan | null>(null);
     const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
 
     function updatePlanView(newPlan: Plan): void {
@@ -57,7 +57,26 @@ function App(): JSX.Element {
                                 padding: "20px"
                             }}
                         >
-                            No Degree Plan Selected
+                            <div className="intro-header">
+                                Welcome to Scheduler!
+                            </div>
+                            <Container
+                                className="intro"
+                                style={{
+                                    padding: "20px"
+                                }}
+                            >
+                                This program is intended to help you visualize a
+                                path to graduation. To begin, select a
+                                previously-made degree plan, or create a new
+                                plan. Add your desired courses into the
+                                semesters you plan to take them, keeping your
+                                degree requirements in mind. You can edit each
+                                semester until you are satisfied with its
+                                contents. You can also make multiple degree
+                                plans to explore other combinations of classes
+                                to fulfill all of your requirements.
+                            </Container>
                         </Container>
                     )}
                 </Col>

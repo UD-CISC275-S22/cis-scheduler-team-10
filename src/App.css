@@ -35,6 +35,15 @@
     flex-direction: column;
 }
 
+.intro {
+    min-height: 50vh;
+    font-size: calc(7px + 2vmin);
+}
+
+.intro-header {
+    font-size: calc(10px + 2vmin);
+}
+
 .App-header {
     width: 100%;
     background-color: #282c34;
