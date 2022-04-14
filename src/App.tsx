@@ -33,8 +33,9 @@ function App(): JSX.Element {
 
     function removePlan(planName: string): void {
         changeAllPlans(
-            allPlans.filter((p: Plan): boolean => p.name === planName)
+            allPlans.filter((p: Plan): boolean => p.name !== planName)
         );
+        changePlanView(null);
     }
 
     return (
@@ -50,6 +51,7 @@ function App(): JSX.Element {
                         degreePlans={allPlans}
                         updatePlanView={updatePlanView}
                         addPlan={addPlan}
+                        removePlan={removePlan}
                     ></DegreePlansListComponent>
                 </Col>
                 <Col className="degreePlan">
