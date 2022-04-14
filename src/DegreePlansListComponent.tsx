@@ -36,12 +36,14 @@ function InsertPlan({
                     }
                 />
             </Col>
-            <Button onClick={save} variant="success" className="me-4">
-                Save
-            </Button>
-            <Button onClick={cancel} variant="warning" className="me-4">
-                Cancel
-            </Button>
+            <Col>
+                <Button onClick={save} variant="success" className="me-4">
+                    Save
+                </Button>
+                <Button onClick={cancel} variant="warning" className="me-4">
+                    Cancel
+                </Button>
+            </Col>
         </Form.Group>
     );
 }
