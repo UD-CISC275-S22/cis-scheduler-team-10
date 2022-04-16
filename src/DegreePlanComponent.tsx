@@ -1,5 +1,5 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
@@ -9,6 +9,45 @@ export function DegreePlanComponent({
 }: {
     degreePlan: Plan;
 }): JSX.Element {
+    const [semSeason, changeSemSeason] = useState<string>("Fall");
+    const [semName, changeSemName] = useState<string>("");
+    const [addSem, changeAddSem] = useState<boolean>(false);
+    const [semList, changeSemList] = useState<Semester[]>(degreePlan.semesters);
+    const [semView, changeSemView] = useState<Semester | null>(
+        degreePlan.semesters[0]
+    );
+    function save() {
+        updateSemList();
+        changeAddSem(!addSem);
+        //setSemName("Insert Name Here");
+    }
+    function updateSemView(newSem: Semester): void {
+        if (newSem === semView) {
+            changeSemView(null);
+        } else {
+            changeSemView(newSem);
+        }
+    }
+    function updateSemList() {
+        let numCredits = 0;
+        semSeason === "fall" || semSeason === "winter"
+            ? (numCredits = 18)
+            : (numCredits = 7);
+        const newSem: Semester = {
+            semesterName: semName,
+            active: true,
+            creditLimit: numCredits,
+            season: semSeason,
+            coursesTaken: []
+        };
+        changeSemList([...semList, newSem]);
+    }
+    function updateSemSeason(event: React.ChangeEvent<HTMLSelectElement>) {
+        changeSemSeason(event.target.value);
+    }
+    function updateSemName(event: React.ChangeEvent<HTMLInputElement>) {
+        changeSemName(event.target.value);
+    }
     return (
         <div
             // className="degreePlan"
@@ -19,9 +58,43 @@ export function DegreePlanComponent({
             </Container>
 
             <div style={{ padding: "5px" }}>
+                <Button onClick={() => changeAddSem(!addSem)}>
+                    Create New Semester
+                </Button>
+                {!addSem ? (
+                    <div>
+                        <Form.Group controlId="semSeasonsInsert">
+                            <Form.Label>Add Semester by Season</Form.Label>
+                            <Form.Select
+                                value={semSeason}
+                                onChange={updateSemSeason}
+                            >
+                                <option value="fall">Fall</option>
+                                <option value="spring">Spring</option>
+                                <option value="winter">Winter</option>
+                                <option value="summer1">Summer I</option>
+                                <option value="summer2">Summer II</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group controlId="formSemesterName">
+                            <Form.Label>New Semester Name:</Form.Label>
+                            <Form.Control
+                                value={semName}
+                                onChange={updateSemName}
+                            />
+                        </Form.Group>
+                        <div style={{ padding: "2px" }}>
+                            <Button onClick={() => save}>Add Semester</Button>
+                        </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+            </div>
+            <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
-                        {degreePlan.semesters.map((sem: Semester) => (
+                        {semList.map((sem: Semester) => (
                             <div key={sem.semesterName}>
                                 {" "}
                                 <SemesterComponent
