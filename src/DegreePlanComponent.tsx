@@ -5,32 +5,36 @@ import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 
 export function DegreePlanComponent({
-    degreePlan
+    degreePlan,
+    degPlanSems,
+    changeDegPlanSems
 }: {
     degreePlan: Plan;
+    degPlanSems: Semester[];
+    changeDegPlanSems: (sems: Semester[]) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
-    const [semName, changeSemName] = useState<string>("");
+    const [semName, changeSemName] = useState<string>("Insert Name Here");
     const [addSem, changeAddSem] = useState<boolean>(false);
-    const [semList, changeSemList] = useState<Semester[]>(degreePlan.semesters);
-    const [semView, changeSemView] = useState<Semester | null>(
-        degreePlan.semesters[0]
-    );
+    const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
+    // const [semView, changeSemView] = useState<Semester | null>(
+    //     degreePlan.semesters[0]
+    // );
     function save() {
         updateSemList();
         changeAddSem(!addSem);
-        //setSemName("Insert Name Here");
+        changeSemName("Insert Name Here");
     }
-    function updateSemView(newSem: Semester): void {
-        if (newSem === semView) {
-            changeSemView(null);
-        } else {
-            changeSemView(newSem);
-        }
-    }
+    // function updateSemView(newSem: Semester): void {
+    //     if (newSem === semView) {
+    //         changeSemView(null);
+    //     } else {
+    //         changeSemView(newSem);
+    //     }
+    // }
     function updateSemList() {
         let numCredits = 0;
-        semSeason === "fall" || semSeason === "winter"
+        semSeason === "fall" || semSeason === "spring"
             ? (numCredits = 18)
             : (numCredits = 7);
         const newSem: Semester = {
@@ -41,6 +45,7 @@ export function DegreePlanComponent({
             coursesTaken: []
         };
         changeSemList([...semList, newSem]);
+        changeDegPlanSems([...semList, newSem]);
     }
     function updateSemSeason(event: React.ChangeEvent<HTMLSelectElement>) {
         changeSemSeason(event.target.value);
@@ -61,7 +66,7 @@ export function DegreePlanComponent({
                 <Button onClick={() => changeAddSem(!addSem)}>
                     Create New Semester
                 </Button>
-                {!addSem ? (
+                {addSem ? (
                     <div>
                         <Form.Group controlId="semSeasonsInsert">
                             <Form.Label>Add Semester by Season</Form.Label>
@@ -84,7 +89,7 @@ export function DegreePlanComponent({
                             />
                         </Form.Group>
                         <div style={{ padding: "2px" }}>
-                            <Button onClick={() => save}>Add Semester</Button>
+                            <Button onClick={save}>Add Semester</Button>
                         </div>
                     </div>
                 ) : (
