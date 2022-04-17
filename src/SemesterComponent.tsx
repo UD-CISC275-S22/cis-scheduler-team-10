@@ -46,6 +46,7 @@ export function SemesterComponent({
                             }}
                         >
                             <CourseComponent
+                                data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
                             ></CourseComponent>

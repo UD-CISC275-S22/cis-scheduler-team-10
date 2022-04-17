@@ -45,7 +45,7 @@ export function DegreePlanComponent({
                 <Row>
                     <Col>
                         {degreePlan.semesters.map((sem: Semester) => (
-                            <div key={sem.semesterName}>
+                            <div key={sem.semesterName} data-testid="semester">
                                 <SemesterComponent
                                     semester={sem}
                                     updateSemesters={updateSemesters}

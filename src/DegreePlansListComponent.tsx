@@ -65,7 +65,11 @@ export function DegreePlansListComponent({
             </Button>
             {degreePlans.map((plan: Plan) => {
                 return (
-                    <div key={plan.name} onClick={() => updatePlanView(plan)}>
+                    <div
+                        key={plan.name}
+                        data-testid="planName"
+                        onClick={() => updatePlanView(plan)}
+                    >
                         {plan.name}
                     </div>
                 );

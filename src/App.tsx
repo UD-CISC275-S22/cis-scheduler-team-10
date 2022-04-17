@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import { DegreePlanComponent } from "./DegreePlanComponent";
-//import { Course } from "./interfaces/course";
-//import { Semester } from "./interfaces/semester";
 import { Plan } from "./interfaces/plan";
-//import courses from "./data/courses.json";
-//import semesters from "./data/semesters.json";
 import plans from "./data/degreePlans.json";
 import { Row, Col, Container } from "react-bootstrap";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
-//const COURSES = courses as Course[];
-//const SEMESTERS = semesters as Semester[];
 const PLANS = plans as Plan[];
 
-function App(): JSX.Element {
+export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
     const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
 
@@ -49,16 +43,17 @@ function App(): JSX.Element {
                     padding: "10px"
                 }}
             >
-                <Col>
+                <Col data-testid="degreePlansList">
                     <DegreePlansListComponent
                         degreePlans={allPlans}
                         updatePlanView={updatePlanView}
                         addPlan={addPlan}
                     ></DegreePlansListComponent>
                 </Col>
-                <Col className="degreePlan">
+                <Col className="degreePlan" data-testid="degreePlan">
                     {planView !== null ? (
                         <DegreePlanComponent
+                            data-testid="degreePlan"
                             degreePlan={planView}
                             updatePlans={updatePlans}
                         ></DegreePlanComponent>
@@ -73,7 +68,7 @@ function App(): JSX.Element {
                                 Welcome to Scheduler!
                             </div>
                             <Container
-                                className="intro"
+                                data-testid="welcome"
                                 style={{
                                     padding: "20px"
                                 }}

@@ -24,7 +24,7 @@ export function CourseComponent({
         >
             <FormGroup>
                 {!editMode && (
-                    <div>
+                    <div data-testid="course-code">
                         <b>{courseCode}</b>
                     </div>
                 )}
@@ -38,7 +38,7 @@ export function CourseComponent({
                     ></Form.Control>
                 )}
                 {!editMode && (
-                    <div>
+                    <div data-testid="course-title">
                         <i>{courseTitle}</i>
                     </div>
                 )}
@@ -55,7 +55,7 @@ export function CourseComponent({
                 {editMode && (
                     <Form.Control
                         type="textbox"
-                        value={credits}
+                        value={!isNaN(credits) ? credits.toString() : ""}
                         onChange={(event: ChangeEvent) =>
                             changeCredits(parseInt(event.target.value))
                         }
@@ -63,6 +63,7 @@ export function CourseComponent({
                 )}
                 {!editMode && (
                     <Button
+                        data-testid="edit-course"
                         onClick={() => {
                             changeEditMode(!editMode);
                         }}
@@ -72,6 +73,7 @@ export function CourseComponent({
                 )}
                 {editMode && (
                     <Button
+                        data-testid="save-course"
                         onClick={() => {
                             const newCourse = {
                                 ...currentCourse,
