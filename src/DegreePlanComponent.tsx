@@ -27,7 +27,7 @@ export function DegreePlanComponent({
         updateSemList();
         changeAddSem(!addSem);
         changeSemName("Insert Name Here");
-
+        //updatePlan(plan);
         //updatePlanView(degreePlan);
     }
     // function updateSemView(newSem: Semester): void {
@@ -70,7 +70,7 @@ export function DegreePlanComponent({
         const newSemList = [...semList, newSem];
         changeSemList(newSemList);
         changeDegPlanSems(newSemList);
-        const newPlan = { ...plan, semesters: semList };
+        const newPlan = { ...plan, semesters: newSemList };
         newPlan.semesters = newSemList;
         updatePlans(newPlan, plan);
         updatePlan(newPlan);

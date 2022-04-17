@@ -17,11 +17,13 @@ const PLANS = plans as Plan[];
 function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(PLANS[0]);
     const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
+    const [plan, changePlan] = useState<Plan>(PLANS[0]);
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
-        PLANS[0].semesters
+        plan.semesters
     );
     const [sems, changeSems] = useState<Semester[]>(PLANS[0].semesters);
     function updatePlans(newPlan: Plan, oldPlan: Plan): void {
+        changeDegPlanSems(newPlan.semesters);
         const newPlans = allPlans.map((plan: Plan) => {
             if (plan === oldPlan) {
                 return { ...newPlan };
@@ -32,10 +34,11 @@ function App(): JSX.Element {
         changeAllPlans(newPlans);
     }
     function updatePlanView(newPlan: Plan): void {
-        changeDegPlanSems(newPlan.semesters);
+        changePlan(newPlan);
         if (newPlan === planView) {
             changePlanView(null);
         } else {
+            changeDegPlanSems(newPlan.semesters);
             changePlanView(newPlan);
         }
     }
