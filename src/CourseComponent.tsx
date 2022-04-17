@@ -4,7 +4,13 @@ import { Course } from "./interfaces/course";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
-export function CourseComponent({ course }: { course: Course }): JSX.Element {
+export function CourseComponent({
+    course,
+    updateCourses
+}: {
+    course: Course;
+    updateCourses: (newCourse: Course, oldCourse: Course) => void;
+}): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
@@ -67,12 +73,14 @@ export function CourseComponent({ course }: { course: Course }): JSX.Element {
                 {editMode && (
                     <Button
                         onClick={() => {
-                            updateCourse({
+                            const newCourse = {
                                 ...currentCourse,
                                 courseCode: courseCode,
                                 courseTitle: courseTitle,
                                 numCredits: credits
-                            });
+                            };
+                            updateCourse(newCourse);
+                            updateCourses(newCourse, currentCourse);
                             changeEditMode(!editMode);
                         }}
                     >
@@ -82,9 +90,9 @@ export function CourseComponent({ course }: { course: Course }): JSX.Element {
                 {editMode && (
                     <Button
                         onClick={() => {
-                            changeCode(course.courseCode);
-                            changeTitle(course.courseTitle);
-                            changeCredits(course.numCredits);
+                            changeCode(currentCourse.courseCode);
+                            changeTitle(currentCourse.courseTitle);
+                            changeCredits(currentCourse.numCredits);
                             changeEditMode(!editMode);
                         }}
                     >

@@ -25,6 +25,17 @@ function App(): JSX.Element {
         }
     }
 
+    function updatePlans(newPlan: Plan, oldPlan: Plan): void {
+        const newPlans = allPlans.map((plan: Plan) => {
+            if (plan === oldPlan) {
+                return { ...newPlan };
+            } else {
+                return { ...plan };
+            }
+        });
+        changeAllPlans(newPlans);
+    }
+
     function addPlan(newPlanName: string): void {
         const newPlan: Plan = { name: newPlanName, semesters: [] };
         changeAllPlans([...allPlans, newPlan]);
@@ -49,6 +60,7 @@ function App(): JSX.Element {
                     {planView !== null ? (
                         <DegreePlanComponent
                             degreePlan={planView}
+                            updatePlans={updatePlans}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
