@@ -11,7 +11,6 @@ describe("Scheduler Tests", () => {
         //app renders
     });
     test("List of plans and welcome message visible", () => {
-        //app renders
         const degreesList = screen.getByTestId("degreePlansList");
         expect(degreesList).toBeInTheDocument();
         const degreePlans = screen.getAllByTestId("planName");

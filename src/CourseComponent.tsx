@@ -67,6 +67,8 @@ export function CourseComponent({
                         onClick={() => {
                             changeEditMode(!editMode);
                         }}
+                        variant="success"
+                        className="me-4"
                     >
                         Edit
                     </Button>
@@ -85,6 +87,8 @@ export function CourseComponent({
                             updateCourses(newCourse, currentCourse);
                             changeEditMode(!editMode);
                         }}
+                        variant="success"
+                        className="me-4"
                     >
                         Save
                     </Button>
@@ -97,6 +101,8 @@ export function CourseComponent({
                             changeCredits(currentCourse.numCredits);
                             changeEditMode(!editMode);
                         }}
+                        variant="warning"
+                        className="me-4"
                     >
                         Cancel
                     </Button>
