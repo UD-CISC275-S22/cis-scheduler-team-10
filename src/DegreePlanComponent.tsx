@@ -8,27 +8,37 @@ export function DegreePlanComponent({
     degreePlan,
     degPlanSems,
     updatePlans,
-    changeDegPlanSems
+    changeDegPlanSems,
+    changePlan
 }: {
     degreePlan: Plan;
     degPlanSems: Semester[];
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     changeDegPlanSems: (sems: Semester[]) => void;
+    changePlan: (plan: Plan) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semName, changeSemName] = useState<string>("Insert Name Here");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
-    const [plan, updatePlan] = useState<Plan>(degreePlan);
+    //const [plan, updatePlan] = useState<Plan>(degreePlan);
 
     function save() {
         updateSemList();
         changeAddSem(!addSem);
         changeSemName("Insert Name Here");
-        //updatePlan(plan);
-        //updatePlanView(degreePlan);
     }
-
+    function updateSems(newSem: Semester, oldSem: Semester): void {
+        //changeDegPlanSems(newPlan.semesters);
+        const newSems = degPlanSems.map((sem: Semester) => {
+            if (sem === oldSem) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changeDegPlanSems(newSems);
+    }
     function updateSemList() {
         let numCredits = 0;
         semSeason === "fall" || semSeason === "spring"
@@ -41,13 +51,14 @@ export function DegreePlanComponent({
             season: semSeason,
             coursesTaken: []
         };
-        const newSemList = [...semList, newSem];
+        const newSemList = [...degPlanSems, newSem];
+        //updateSems(newSem, degPlanSems);
         changeSemList(newSemList);
         changeDegPlanSems(newSemList);
-        const newPlan = { ...plan, semesters: newSemList };
-        newPlan.semesters = newSemList;
-        updatePlans(newPlan, plan);
-        updatePlan(newPlan);
+        const newPlan = { ...degreePlan, semesters: newSemList };
+        //newPlan.semesters = newSemList;
+        updatePlans(newPlan, degreePlan);
+        changePlan(newPlan);
     }
     function updateSemSeason(event: React.ChangeEvent<HTMLSelectElement>) {
         changeSemSeason(event.target.value);
