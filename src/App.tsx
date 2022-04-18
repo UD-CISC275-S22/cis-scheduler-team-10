@@ -7,7 +7,7 @@ import { Plan } from "./interfaces/plan";
 //import courses from "./data/courses.json";
 //import semesters from "./data/semesters.json";
 import plans from "./data/degreePlans.json";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
 //const COURSES = courses as Course[];
@@ -21,7 +21,17 @@ function App(): JSX.Element {
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
     );
-    const [sems, changeSems] = useState<Semester[]>(PLANS[0].semesters);
+    function reset(p: Plan): void {
+        const newPlans = allPlans.map((plan: Plan) => {
+            if (plan === p) {
+                return { name: p.name, semesters: [] };
+            } else {
+                return { ...plan };
+            }
+        });
+        changeAllPlans(newPlans);
+        updatePlanView({ name: p.name, semesters: [] });
+    }
     function updatePlans(newPlan: Plan, oldPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
         const newPlans = allPlans.map((plan: Plan) => {
@@ -36,7 +46,7 @@ function App(): JSX.Element {
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
         changePlan(newPlan);
-        newPlan.semesters = degPlanSems;
+        changeDegPlanSems(degPlanSems);
         if (newPlan === planView) {
             changePlanView(null);
         } else {
@@ -85,7 +95,19 @@ function App(): JSX.Element {
                         </Container>
                     )}
                 </Col>
-                <Col></Col>
+                <Col>
+                    {planView === null ? (
+                        <span></span>
+                    ) : (
+                        <Button
+                            onClick={() => reset(plan)}
+                            variant="danger"
+                            className="me-4"
+                        >
+                            Reset
+                        </Button>
+                    )}
+                </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
         </div>
