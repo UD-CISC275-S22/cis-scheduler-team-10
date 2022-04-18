@@ -55,6 +55,7 @@ export function DegreePlansListComponent({
 }): JSX.Element {
     const [planName, setPlanName] = useState<string>("Insert Name Here");
     const [editing, changeEditing] = useState<boolean>(false);
+    const [plan, changePLan] = useState<Plan>(degreePlans[0]);
     return (
         <div
             className="degreePlansList"

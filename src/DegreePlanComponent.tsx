@@ -20,9 +20,7 @@ export function DegreePlanComponent({
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
-    // const [semView, changeSemView] = useState<Semester | null>(
-    //     degreePlan.semesters[0]
-    // );
+
     function save() {
         updateSemList();
         changeAddSem(!addSem);
@@ -30,31 +28,7 @@ export function DegreePlanComponent({
         //updatePlan(plan);
         //updatePlanView(degreePlan);
     }
-    // function updateSemView(newSem: Semester): void {
-    //     if (newSem === semView) {
-    //         changeSemView(null);
-    //     } else {
-    //         changeSemView(newSem);
-    //     }
-    // }
-    function updateSemesters(
-        newSemester: Semester,
-        oldSemester: Semester
-    ): void {
-        const newSemesters = plan.semesters.map((semester: Semester) => {
-            if (semester === oldSemester) {
-                return newSemester;
-            } else {
-                return {
-                    ...semester,
-                    coursesTaken: [...semester.coursesTaken]
-                };
-            }
-        });
-        const newPlan = { ...plan, semesters: newSemesters };
-        updatePlans(newPlan, plan);
-        updatePlan(newPlan);
-    }
+
     function updateSemList() {
         let numCredits = 0;
         semSeason === "fall" || semSeason === "spring"

@@ -34,11 +34,12 @@ function App(): JSX.Element {
         changeAllPlans(newPlans);
     }
     function updatePlanView(newPlan: Plan): void {
+        changeDegPlanSems(newPlan.semesters);
         changePlan(newPlan);
+        newPlan.semesters = degPlanSems;
         if (newPlan === planView) {
             changePlanView(null);
         } else {
-            changeDegPlanSems(newPlan.semesters);
             changePlanView(newPlan);
         }
     }
