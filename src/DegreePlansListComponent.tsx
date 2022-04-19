@@ -53,8 +53,8 @@ export function DegreePlansListComponent({
     degreePlans,
     updatePlanView,
     addPlan,
-    degPlanSems,
-    changeDegPlanSems,
+    // degPlanSems,
+    // changeDegPlanSems,
     removePlan
 }: {
     degreePlans: Plan[];
@@ -67,7 +67,7 @@ export function DegreePlansListComponent({
     const [planName, setPlanName] = useState<string>("Insert Name Here");
     const [adding, changeAdding] = useState<boolean>(false);
     const [editing, changeEditing] = useState<boolean>(false);
-    const [plan, changePLan] = useState<Plan>(degreePlans[0]);
+    // const [plan, changePLan] = useState<Plan>(degreePlans[0]);
     return (
         <div
             className="degreePlansList"

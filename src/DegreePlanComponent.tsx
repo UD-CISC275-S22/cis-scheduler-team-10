@@ -47,22 +47,24 @@ export function DegreePlanComponent({
         changeAddSem(!addSem);
         changeSemName("Insert Name Here");
     }
-    function updateSems(newSem: Semester, oldSem: Semester): void {
-        //changeDegPlanSems(newPlan.semesters);
-        const newSems = degPlanSems.map((sem: Semester) => {
-            if (sem === oldSem) {
-                return { ...newSem };
-            } else {
-                return { ...sem };
-            }
-        });
-        changeDegPlanSems(newSems);
-    }
+    // function updateSems(newSem: Semester, oldSem: Semester): void {
+    //     //changeDegPlanSems(newPlan.semesters);
+    //     const newSems = degPlanSems.map((sem: Semester) => {
+    //         if (sem === oldSem) {
+    //             return { ...newSem };
+    //         } else {
+    //             return { ...sem };
+    //         }
+    //     });
+    //     changeDegPlanSems(newSems);
+    // }
     function updateSemList() {
         let numCredits = 0;
-        semSeason === "fall" || semSeason === "spring"
-            ? (numCredits = 18)
-            : (numCredits = 7);
+        if (semSeason === "fall" || semSeason === "spring") {
+            numCredits = 18;
+        } else {
+            numCredits = 7;
+        }
         const newSem: Semester = {
             semesterName: semName,
             active: true,
@@ -70,7 +72,7 @@ export function DegreePlanComponent({
             season: semSeason,
             coursesTaken: []
         };
-        const newSemList = [...degPlanSems, newSem];
+        const newSemList = [...semList, newSem];
         //updateSems(newSem, degPlanSems);
         changeSemList(newSemList);
         changeDegPlanSems(newSemList);
