@@ -8,18 +8,22 @@ function InsertPlan({
     planName,
     setPlanName,
     addPlan,
-    editing,
-    changeEditing
+    adding,
+    changeAdding
 }: {
     planName: string;
     setPlanName: (name: string) => void;
     addPlan: (newPlanName: string) => void;
-    editing: boolean;
-    changeEditing: (editing: boolean) => void;
+    adding: boolean;
+    changeAdding: (adding: boolean) => void;
 }): JSX.Element {
     function save() {
         addPlan(planName);
-        changeEditing(!editing);
+        changeAdding(!adding);
+        setPlanName("Insert Name Here");
+    }
+    function cancel() {
+        changeAdding(!adding);
         setPlanName("Insert Name Here");
     }
     return (
@@ -33,9 +37,14 @@ function InsertPlan({
                     }
                 />
             </Col>
-            <Button onClick={save} variant="success" className="me-4">
-                Save
-            </Button>
+            <Col>
+                <Button onClick={save} variant="success" className="me-4">
+                    Save
+                </Button>
+                <Button onClick={cancel} variant="warning" className="me-4">
+                    Cancel
+                </Button>
+            </Col>
         </Form.Group>
     );
 }
@@ -45,15 +54,18 @@ export function DegreePlansListComponent({
     updatePlanView,
     addPlan,
     degPlanSems,
-    changeDegPlanSems
+    changeDegPlanSems,
+    removePlan
 }: {
     degreePlans: Plan[];
     updatePlanView: (plan: Plan) => void;
     addPlan: (newPlanName: string) => void;
     degPlanSems: Semester[];
     changeDegPlanSems: (sems: Semester[]) => void;
+    removePlan: (planName: string) => void;
 }): JSX.Element {
     const [planName, setPlanName] = useState<string>("Insert Name Here");
+    const [adding, changeAdding] = useState<boolean>(false);
     const [editing, changeEditing] = useState<boolean>(false);
     const [plan, changePLan] = useState<Plan>(degreePlans[0]);
     return (
@@ -62,13 +74,17 @@ export function DegreePlansListComponent({
             style={{ border: "1px solid black", padding: "20px" }}
         >
             Select a Degree Plan:
-            <Button
-                onClick={() => changeEditing(!editing)}
-                variant="success"
-                className="me-4"
-            >
-                +
-            </Button>
+            {editing ? (
+                <span></span>
+            ) : (
+                <Button
+                    onClick={() => changeAdding(!adding)}
+                    variant="success"
+                    className="me-4"
+                >
+                    +
+                </Button>
+            )}
             {degreePlans.map((plan: Plan) => {
                 return (
                     <div
@@ -77,19 +93,36 @@ export function DegreePlansListComponent({
                         onClick={() => updatePlanView(plan)}
                     >
                         {plan.name}
+                        {editing ? (
+                            <Button
+                                onClick={() => removePlan(plan.name)}
+                                variant="danger"
+                                className="me-4"
+                            >
+                                -
+                            </Button>
+                        ) : (
+                            <span></span>
+                        )}
                     </div>
                 );
             })}
-            {editing ? (
+            {adding ? (
                 <InsertPlan
                     planName={planName}
                     setPlanName={setPlanName}
                     addPlan={addPlan}
-                    editing={editing}
-                    changeEditing={changeEditing}
+                    adding={adding}
+                    changeAdding={changeAdding}
                 ></InsertPlan>
             ) : (
-                <span></span>
+                <Button
+                    onClick={() => changeEditing(!editing)}
+                    variant="danger"
+                    className="me-4"
+                >
+                    Remove
+                </Button>
             )}
         </div>
     );

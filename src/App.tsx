@@ -63,6 +63,13 @@ export function App(): JSX.Element {
         changeAllPlans([...allPlans, newPlan]);
     }
 
+    function removePlan(planName: string): void {
+        changeAllPlans(
+            allPlans.filter((p: Plan): boolean => p.name !== planName)
+        );
+        changePlanView(null);
+    }
+
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
@@ -78,6 +85,7 @@ export function App(): JSX.Element {
                         addPlan={addPlan}
                         degPlanSems={degPlanSems}
                         changeDegPlanSems={changeDegPlanSems}
+                        removePlan={removePlan}
                     ></DegreePlansListComponent>
                 </Col>
                 <Col className="degreePlan" data-testid="degreePlan">
