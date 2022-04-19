@@ -5,19 +5,16 @@ import { Plan } from "./interfaces/plan";
 import plans from "./data/degreePlans.json";
 import { Row, Col, Container } from "react-bootstrap";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
+import { Semester } from "./interfaces/semester";
 const PLANS = plans as Plan[];
 
 export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
     const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
-
-    function updatePlanView(newPlan: Plan): void {
-        if (newPlan === planView) {
-            changePlanView(null);
-        } else {
-            changePlanView(newPlan);
-        }
-    }
+    const [plan, changePlan] = useState<Plan>(PLANS[0]);
+    const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
+        plan.semesters
+    );
 
     function updatePlans(newPlan: Plan, oldPlan: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
@@ -29,6 +26,28 @@ export function App(): JSX.Element {
         });
         changeAllPlans(newPlans);
     }
+    function updatePlanView(newPlan: Plan): void {
+        changeDegPlanSems(newPlan.semesters);
+        changePlan(newPlan);
+        //newPlan.semesters = degPlanSems;
+
+        if (newPlan === planView) {
+            changePlanView(null);
+        } else {
+            changePlanView(newPlan);
+        }
+    }
+
+    // function updatePlans(newPlan: Plan, oldPlan: Plan): void {
+    //     const newPlans = allPlans.map((plan: Plan) => {
+    //         if (plan === oldPlan) {
+    //             return { ...newPlan };
+    //         } else {
+    //             return { ...plan };
+    //         }
+    //     });
+    //     changeAllPlans(newPlans);
+    // }
 
     function addPlan(newPlanName: string): void {
         const newPlan: Plan = { name: newPlanName, semesters: [] };
@@ -48,6 +67,8 @@ export function App(): JSX.Element {
                         degreePlans={allPlans}
                         updatePlanView={updatePlanView}
                         addPlan={addPlan}
+                        degPlanSems={degPlanSems}
+                        changeDegPlanSems={changeDegPlanSems}
                     ></DegreePlansListComponent>
                 </Col>
                 <Col className="degreePlan" data-testid="degreePlan">
@@ -55,7 +76,10 @@ export function App(): JSX.Element {
                         <DegreePlanComponent
                             data-testid="degreePlan"
                             degreePlan={planView}
+                            degPlanSems={degPlanSems}
                             updatePlans={updatePlans}
+                            changeDegPlanSems={changeDegPlanSems}
+                            changePlan={changePlan}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
