@@ -87,24 +87,27 @@ export function DegreePlansListComponent({
             )}
             {degreePlans.map((plan: Plan) => {
                 return (
-                    <div
-                        key={plan.name}
-                        data-testid="planName"
-                        onClick={() => updatePlanView(plan)}
-                    >
-                        {plan.name}
-                        {editing ? (
-                            <Button
-                                onClick={() => removePlan(plan.name)}
-                                variant="danger"
-                                className="me-4"
-                            >
-                                -
-                            </Button>
-                        ) : (
-                            <span></span>
-                        )}
-                    </div>
+                    <Row key={plan.name}>
+                        <Col
+                            key={plan.name}
+                            onClick={() => updatePlanView(plan)}
+                        >
+                            {plan.name}
+                        </Col>
+                        <Col key={plan.name}>
+                            {editing ? (
+                                <Button
+                                    onClick={() => removePlan(plan.name)}
+                                    variant="danger"
+                                    className="me-4"
+                                >
+                                    -
+                                </Button>
+                            ) : (
+                                <span></span>
+                            )}
+                        </Col>
+                    </Row>
                 );
             })}
             {adding ? (

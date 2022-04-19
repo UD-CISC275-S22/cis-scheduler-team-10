@@ -67,7 +67,9 @@ export function App(): JSX.Element {
         changeAllPlans(
             allPlans.filter((p: Plan): boolean => p.name !== planName)
         );
-        changePlanView(null);
+        if (planView !== null && planName === planView.name) {
+            changePlanView(null);
+        }
     }
 
     return (
