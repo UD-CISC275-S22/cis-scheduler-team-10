@@ -3,24 +3,28 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 
 export function DegreePlanComponent({
     degreePlan,
     degPlanSems,
     updatePlans,
     changeDegPlanSems,
-    changePlan
+    changePlan,
+    changeSemCourses
 }: {
     degreePlan: Plan;
     degPlanSems: Semester[];
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     changeDegPlanSems: (sems: Semester[]) => void;
     changePlan: (plan: Plan) => void;
+    changeSemCourses: (courses: Course[]) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semName, changeSemName] = useState<string>("Insert Name Here");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
+    const [sem, changeSem] = useState<Semester>(degreePlan.semesters[0]);
     //const [plan, updatePlan] = useState<Plan>(degreePlan);
 
     function save() {
@@ -117,6 +121,9 @@ export function DegreePlanComponent({
                                 {" "}
                                 <SemesterComponent
                                     semester={sem}
+                                    changeSemCourses={changeSemCourses}
+                                    updateSems={updateSems}
+                                    changeSem={changeSem}
                                 ></SemesterComponent>
                             </div>
                         ))}

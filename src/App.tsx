@@ -10,6 +10,7 @@ import plans from "./data/degreePlans.json";
 import { Row, Col, Container } from "react-bootstrap";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 //const COURSES = courses as Course[];
 //const SEMESTERS = semesters as Semester[];
 const PLANS = plans as Plan[];
@@ -20,6 +21,9 @@ function App(): JSX.Element {
     const [plan, changePlan] = useState<Plan>(PLANS[0]);
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
+    );
+    const [semCourses, changeSemCourses] = useState<Course[]>(
+        degPlanSems[0].coursesTaken
     );
     //const [sems, changeSems] = useState<Semester[]>(PLANS[0].semesters);
     function updatePlans(newPlan: Plan, oldPlan: Plan): void {
@@ -35,6 +39,7 @@ function App(): JSX.Element {
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
+        //changeSemCourses(degPlanSems.coursesTaken);
         changePlan(newPlan);
         //newPlan.semesters = degPlanSems;
 
@@ -74,6 +79,7 @@ function App(): JSX.Element {
                             degPlanSems={degPlanSems}
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
+                            changeSemCourses={changeSemCourses}
                             changePlan={changePlan}
                         ></DegreePlanComponent>
                     ) : (
