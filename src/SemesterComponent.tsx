@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
 import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
-    semester
+    semester,
+    updateSemesters
 }: {
     semester: Semester;
+    updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
 }): JSX.Element {
+    const [currentSem, updateSem] = useState<Semester>(semester);
+
+    function updateCourses(newCourse: Course, oldCourse: Course): void {
+        const newCourses = currentSem.coursesTaken.map((course: Course) => {
+            if (course === oldCourse) {
+                return newCourse;
+            } else {
+                return course;
+            }
+        });
+        const newSem = { ...currentSem, coursesTaken: newCourses };
+        updateSemesters(newSem, currentSem);
+        updateSem(newSem);
+    }
+
     return (
         <div
             className="semester"
@@ -28,7 +45,11 @@ export function SemesterComponent({
                                 padding: "5px"
                             }}
                         >
-                            <CourseComponent course={course}></CourseComponent>
+                            <CourseComponent
+                                data-testid="course"
+                                course={course}
+                                updateCourses={updateCourses}
+                            ></CourseComponent>
                         </div>
                     );
                 })}
