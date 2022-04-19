@@ -2,12 +2,100 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
+  console.error
+    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
+
+  console.error
+    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
+
+  console.error
+    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
+
+  console.error
+    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
+        at div
+        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
+        at div
+        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
+
 FAIL src/App.test.tsx
-  ✕ renders the course name somewhere (91 ms)
+  Scheduler Tests
+    ✓ The App renders (96 ms)
+    ✕ List of plans and welcome message visible (29 ms)
+    ✕ Can view semester (13 ms)
+    ✕ Can edit courses (10 ms)
 
-  ● renders the course name somewhere
+  ● Scheduler Tests › List of plans and welcome message visible
 
-    TestingLibraryElementError: Unable to find an element with the text: /CISC275/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+    TestingLibraryElementError: Unable to find an element by: [data-testid="planName"]
 
     Ignored nodes: comments, <script />, <style />
     [36m<body>[39m
@@ -26,6 +114,7 @@ FAIL src/App.test.tsx
           [36m>[39m
             [36m<div[39m
               [33mclass[39m=[32m"col"[39m
+              [33mdata-testid[39m=[32m"degreePlansList"[39m
             [36m>[39m
               [36m<div[39m
                 [33mclass[39m=[32m"degreePlansList"[39m
@@ -38,290 +127,55 @@ FAIL src/App.test.tsx
                 [36m>[39m
                   [0m+[0m
                 [36m</button>[39m
-                [36m<div>[39m
-                  [0mFreshman Year[0m
+                [36m<div[39m
+                  [33mclass[39m=[32m"row"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mFreshman Year[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [36m<span />[39m
+                  [36m</div>[39m
                 [36m</div>[39m
-                [36m<span />[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mRemove[0m
+                [36m</button>[39m
               [36m</div>[39m
             [36m</div>[39m
             [36m<div[39m
               [33mclass[39m=[32m"degreePlan col"[39m
+              [33mdata-testid[39m=[32m"degreePlan"[39m
             [36m>[39m
               [36m<div[39m
+                [33mclass[39m=[32m"container"[39m
                 [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
               [36m>[39m
                 [36m<div[39m
-                  [33mclass[39m=[32m"container"[39m
-                  [33mstyle[39m=[32m"border: 1px solid black;"[39m
+                  [33mclass[39m=[32m"intro-header"[39m
                 [36m>[39m
-                  [0mFRESHMAN YEAR[0m
-                  [0m DEGREE PLAN[0m
+                  [0mWelcome to Scheduler![0m
                 [36m</div>[39m
                 [36m<div[39m
-                  [33mstyle[39m=[32m"padding: 5px;"[39m
+                  [33mclass[39m=[32m"container"[39m
+                  [33mdata-testid[39m=[32m"welcome"[39m
+                  [33mstyle[39m=[32m"padding: 20px;"[39m
                 [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"row"[39m
-                  [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"col"[39m
-                    [36m>[39m
-                      [36m<div>[39m
-                        [0m [0m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"semester"[39m
-                          [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
-                        [36m>[39m
-                          [0mFALL 2021[0m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"col"[39m
-                            [33mstyle[39m=[32m"border: 1px solid black;"[39m
-                          [36m>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mEGG101[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mIntroduction to Engineering (FYE)[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mIntroduction to profession, including disciplines of chemical, civil, computer, electrical, environmental, and mechanical engineering. Prepares students for success through integration of: technical problem solving and engineering design, ethical decision-making, teamwork, and communicating to diverse audiences.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mCISC108[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mIntroduction to Computer Science I[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mComputing and principles of programming with an emphasis on systematic program design. Topics include functional programming, data abstraction, procedural abstraction, use of control and state, recursion, testing, and object-oriented programming concepts. Requires no prior programming experience, open to any major, but intended primarily for majors and minors in computer science or mathematics.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mMATH241[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mAnalytic Geometry & Calculus A[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mFunctions, limits, continuity, derivatives. Polynomial, rational, exponential, hyperbolic, logarithmic, trigonometric and inverse trigonometric functions. Definite and indefinite integrals and the Fundamental Theorem of Calculus. Simple differential equations (separable ODE, linear ODE). ODE models leading to exponential growth and decay.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mENGL110[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mSeminar in Composition[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mIntroduction to the process of academic writing that centers on the composition of analytical, research-based essays.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mHIST106[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mU.S. History Since 1865[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mAn introductory survey of American history since 1865. Themes and approach vary with the instructor.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                      [36m<div>[39m
-                        [0m [0m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"semester"[39m
-                          [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
-                        [36m>[39m
-                          [0mSPRING 2022[0m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"col"[39m
-                            [33mstyle[39m=[32m"border: 1px solid black;"[39m
-                          [36m>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mCISC181[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mIntroduction to Computer Science II[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mPrinciples of computer science illustrated and applied through programming in an object oriented language. Programming projects illustrate computational problems, styles and issues that arise in computer systems development and in all application areas of computation.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mCISC210[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mIntroduction to Systems Programming[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mPrinciples of computer systems programming for software and hardware platforms to achieve efficient resource usage. Topics include the C programming language, memory management, and awareness of system constraints and interfacing. Projects include programming embedded systems and interactive objects.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mANTH101[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mIntroduction to Social and Cultural Anthropology[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mMajor ideas and areas of study in social and cultural anthropology. Use of ethnographic data and film to illustrate the anthropologist’s view of societies in their sociocultural and ecological dimensions.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mMATH242[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mAnalytic Geometry & Calculus B[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mBrief review of MATH 241; evaluation of limits by L’Hospital’s rule; applications of integration; integration techniques; parametric curves; polar coordinates; infinite sequences and series. Includes use of computers to perform symbolic, numerical and graphical analysis.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                            [36m<div[39m
-                              [33mstyle[39m=[32m"padding: 5px;"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mstyle[39m=[32m"border: 1px solid black; padding: 10px;"[39m
-                              [36m>[39m
-                                [36m<div>[39m
-                                  [36m<b>[39m
-                                    [0mENGL207[0m
-                                  [36m</b>[39m
-                                [36m</div>[39m
-                                [36m<div>[39m
-                                  [36m<i>[39m
-                                    [0mIntroduction to Poetry[0m
-                                  [36m</i>[39m
-                                [36m</div>[39m
-                                [36m<p>[39m
-                                  [0m [0m
-                                  [0mRepresentative masterworks of English, American and world verse.[0m
-                                [36m</p>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</div>[39m
+                  [0mThis program is intended to help you visualize a path to graduation. To begin, select a previously-made degree plan, or create a new plan. Add your desired courses into the semesters you plan to take them, keeping your degree requirements in mind. You can edit each semester until you are satisfied with its contents. You can also make multiple degree plans to explore other combinations of classes to fulfill all of your requirements.[0m
                 [36m</div>[39m
               [36m</div>[39m
             [36m</div>[39m
             [36m<div[39m
               [33mclass[39m=[32m"col"[39m
-            [36m/>[39m
+            [36m>[39m
+              [36m<span />[39m
+            [36m</div>[39m
           [36m</div>[39m
           [36m<p>[39m
             [0mKatie Hoyt, Vedant Subramanian, Evelyn Welsh[0m
@@ -330,19 +184,234 @@ FAIL src/App.test.tsx
       [36m</div>[39m
     [36m</body>[39m
 
-       5 | test("renders the course name somewhere", () => {
-       6 |     render(<App />);
-    >  7 |     const linkElement = screen.getByText(/CISC275/i);
-         |                                ^
-       8 |     expect(linkElement).toBeInTheDocument();
-       9 | });
-      10 |
+      14 |         const degreesList = screen.getByTestId("degreePlansList");
+      15 |         expect(degreesList).toBeInTheDocument();
+    > 16 |         const degreePlans = screen.getAllByTestId("planName");
+         |                                    ^
+      17 |         expect(degreePlans.length).toEqual(1);
+      18 |         const welcome = screen.getByTestId("welcome");
+      19 |         expect(welcome).toBeInTheDocument();
 
       at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
       at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
-      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
-      at getByText (node_modules/@testing-library/dom/dist/query-helpers.js:111:19)
-      at Object.<anonymous> (src/App.test.tsx:7:32)
+      at getAllByTestId (node_modules/@testing-library/dom/dist/query-helpers.js:130:15)
+      at Object.<anonymous> (src/App.test.tsx:16:36)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● Scheduler Tests › Can view semester
+
+    TestingLibraryElementError: Unable to find an element by: [data-testid="planName"]
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"App"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"App-header"[39m
+          [36m>[39m
+            [0mScheduler (Team 10)[0m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"row"[39m
+            [33mstyle[39m=[32m"padding: 10px;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+              [33mdata-testid[39m=[32m"degreePlansList"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"degreePlansList"[39m
+                [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+              [36m>[39m
+                [0mSelect a Degree Plan:[0m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-success"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0m+[0m
+                [36m</button>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"row"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mFreshman Year[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [36m<span />[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mRemove[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"degreePlan col"[39m
+              [33mdata-testid[39m=[32m"degreePlan"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"container"[39m
+                [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"intro-header"[39m
+                [36m>[39m
+                  [0mWelcome to Scheduler![0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container"[39m
+                  [33mdata-testid[39m=[32m"welcome"[39m
+                  [33mstyle[39m=[32m"padding: 20px;"[39m
+                [36m>[39m
+                  [0mThis program is intended to help you visualize a path to graduation. To begin, select a previously-made degree plan, or create a new plan. Add your desired courses into the semesters you plan to take them, keeping your degree requirements in mind. You can edit each semester until you are satisfied with its contents. You can also make multiple degree plans to explore other combinations of classes to fulfill all of your requirements.[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<span />[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<p>[39m
+            [0mKatie Hoyt, Vedant Subramanian, Evelyn Welsh[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      20 |     });
+      21 |     test("Can view semester", () => {
+    > 22 |         const degreePlans = screen.getAllByTestId("planName");
+         |                                    ^
+      23 |         expect(degreePlans.length).toEqual(1);
+      24 |         degreePlans[0].click();
+      25 |         const planView = screen.getByTestId("degreePlan");
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at getAllByTestId (node_modules/@testing-library/dom/dist/query-helpers.js:130:15)
+      at Object.<anonymous> (src/App.test.tsx:22:36)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● Scheduler Tests › Can edit courses
+
+    TestingLibraryElementError: Unable to find an element by: [data-testid="planName"]
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"App"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"App-header"[39m
+          [36m>[39m
+            [0mScheduler (Team 10)[0m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"row"[39m
+            [33mstyle[39m=[32m"padding: 10px;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+              [33mdata-testid[39m=[32m"degreePlansList"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"degreePlansList"[39m
+                [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+              [36m>[39m
+                [0mSelect a Degree Plan:[0m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-success"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0m+[0m
+                [36m</button>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"row"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mFreshman Year[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [36m<span />[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mRemove[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"degreePlan col"[39m
+              [33mdata-testid[39m=[32m"degreePlan"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"container"[39m
+                [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"intro-header"[39m
+                [36m>[39m
+                  [0mWelcome to Scheduler![0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container"[39m
+                  [33mdata-testid[39m=[32m"welcome"[39m
+                  [33mstyle[39m=[32m"padding: 20px;"[39m
+                [36m>[39m
+                  [0mThis program is intended to help you visualize a path to graduation. To begin, select a previously-made degree plan, or create a new plan. Add your desired courses into the semesters you plan to take them, keeping your degree requirements in mind. You can edit each semester until you are satisfied with its contents. You can also make multiple degree plans to explore other combinations of classes to fulfill all of your requirements.[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<span />[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<p>[39m
+            [0mKatie Hoyt, Vedant Subramanian, Evelyn Welsh[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      29 |     });
+      30 |     test("Can edit courses", () => {
+    > 31 |         const degreePlans = screen.getAllByTestId("planName");
+         |                                    ^
+      32 |         expect(degreePlans.length).toEqual(1);
+      33 |         degreePlans[0].click();
+      34 |         const code1 = screen.getByText("EGG101");
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at getAllByTestId (node_modules/@testing-library/dom/dist/query-helpers.js:130:15)
+      at Object.<anonymous> (src/App.test.tsx:31:36)
       at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
       at runJest (node_modules/@jest/core/build/runJest.js:404:19)
       at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
@@ -351,20 +420,20 @@ FAIL src/App.test.tsx
 -------------------------------|---------|----------|---------|---------|-------------------
 File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------------------|---------|----------|---------|---------|-------------------
-All files                      |      52 |    33.33 |   53.33 |      52 |                   
- src                           |      52 |    33.33 |   53.33 |      52 |                   
-  App.tsx                      |   44.44 |       25 |   33.33 |   44.44 | 21-30             
-  CourseComponent.tsx          |     100 |      100 |     100 |     100 |                   
-  DegreePlanComponent.tsx      |     100 |      100 |     100 |     100 |                   
-  DegreePlansListComponent.tsx |   36.36 |       50 |   28.57 |   36.36 | 20-31,60,68       
-  SemesterComponent.tsx        |     100 |      100 |     100 |     100 |                   
+All files                      |   10.47 |       10 |     7.5 |   10.47 |                   
+ src                           |   10.47 |       10 |     7.5 |   10.47 |                   
+  App.tsx                      |      20 |    14.28 |      10 |      20 | 19-71,138         
+  CourseComponent.tsx          |       0 |        0 |       0 |       0 | 14-102            
+  DegreePlanComponent.tsx      |       0 |        0 |       0 |       0 | 20-138            
+  DegreePlansListComponent.tsx |   31.25 |       50 |      20 |   31.25 | 21-36,81,93-123   
+  SemesterComponent.tsx        |       0 |        0 |       0 |       0 | 14-41             
  src/interfaces                |       0 |        0 |       0 |       0 |                   
   course.ts                    |       0 |        0 |       0 |       0 |                   
   plan.ts                      |       0 |        0 |       0 |       0 |                   
   semester.ts                  |       0 |        0 |       0 |       0 |                   
 -------------------------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 failed, 1 total
-Tests:       1 failed, 1 total
+Tests:       3 failed, 1 passed, 4 total
 Snapshots:   0 total
-Time:        1.984 s
+Time:        2.519 s
 Ran all test suites.
