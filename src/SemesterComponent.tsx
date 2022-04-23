@@ -31,7 +31,9 @@ export function SemesterComponent({
             className="semester"
             style={{ border: "1px solid black", padding: "20px" }}
         >
-            {semester.semesterName.toUpperCase()}
+            {semester.season.toUpperCase() +
+                " " +
+                semester.semesterName.toUpperCase()}
             <Col
                 style={{
                     border: "1px solid black"

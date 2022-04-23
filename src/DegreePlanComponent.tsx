@@ -18,10 +18,11 @@ export function DegreePlanComponent({
     changePlan: (plan: Plan) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
-    const [semName, changeSemName] = useState<string>("Insert Name Here");
+    const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
+    const [invalid, updateInvalid] = useState<boolean>(false);
 
     function updateSemesters(
         newSemester: Semester,
@@ -43,9 +44,14 @@ export function DegreePlanComponent({
     }
 
     function save() {
-        updateSemList();
-        changeAddSem(!addSem);
-        changeSemName("Insert Name Here");
+        if (semYear.length === 4 && parseInt(semYear) >= 2000) {
+            updateInvalid(false);
+            updateSemList();
+            changeAddSem(!addSem);
+            changeSemYear("");
+        } else {
+            updateInvalid(true);
+        }
     }
     // function updateSems(newSem: Semester, oldSem: Semester): void {
     //     //changeDegPlanSems(newPlan.semesters);
@@ -66,7 +72,7 @@ export function DegreePlanComponent({
             numCredits = 7;
         }
         const newSem: Semester = {
-            semesterName: semName,
+            semesterName: semYear,
             active: true,
             creditLimit: numCredits,
             season: semSeason,
@@ -84,8 +90,16 @@ export function DegreePlanComponent({
     function updateSemSeason(event: React.ChangeEvent<HTMLSelectElement>) {
         changeSemSeason(event.target.value);
     }
+
+    //^(19|20)\d{2}$
+    // /^[0-9\b]+$/
     function updateSemName(event: React.ChangeEvent<HTMLInputElement>) {
-        changeSemName(event.target.value);
+        if (
+            /^[0-9\b]+$/.test(event.target.value) ||
+            event.target.value === ""
+        ) {
+            changeSemYear(event.target.value);
+        }
     }
 
     return (
@@ -104,7 +118,7 @@ export function DegreePlanComponent({
                 {addSem ? (
                     <div>
                         <Form.Group controlId="semSeasonsInsert">
-                            <Form.Label>Add Semester by Season</Form.Label>
+                            <Form.Label>Add Semester by Season:</Form.Label>
                             <Form.Select
                                 value={semSeason}
                                 onChange={updateSemSeason}
@@ -117,12 +131,18 @@ export function DegreePlanComponent({
                             </Form.Select>
                         </Form.Group>
                         <Form.Group controlId="formSemesterName">
-                            <Form.Label>New Semester Name:</Form.Label>
+                            <Form.Label>Semester Year:</Form.Label>
                             <Form.Control
-                                value={semName}
+                                value={semYear}
                                 onChange={updateSemName}
+                                // type={"number"}
                             />
                         </Form.Group>
+                        {invalid && (
+                            <span style={{ color: "red" }}>
+                                Please enter a valid year after 2000.
+                            </span>
+                        )}
                         <div style={{ padding: "2px" }}>
                             <Button onClick={save}>Save Semester</Button>
                         </div>
