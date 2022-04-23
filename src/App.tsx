@@ -38,7 +38,9 @@ export function App(): JSX.Element {
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
+
         changePlan(newPlan);
+        //updatePlans(newPlan, plan);
         //
 
         if (newPlan === planView) {
