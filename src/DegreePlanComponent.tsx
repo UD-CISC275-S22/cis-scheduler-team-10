@@ -9,25 +9,32 @@ export function DegreePlanComponent({
     updatePlans,
     degPlanSems,
     changeDegPlanSems,
-    changePlan
+    changePlan,
+    addSemester
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     degPlanSems: Semester[];
     changeDegPlanSems: (sems: Semester[]) => void;
     changePlan: (plan: Plan) => void;
+    addSemester: (
+        sems: Semester[],
+        plan: Plan,
+        semName: string,
+        semSeason: string
+    ) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semName, changeSemName] = useState<string>("Insert Name Here");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
-    const [plan, updatePlan] = useState<Plan>(degreePlan);
+    //const [plan, updatePlan] = useState<Plan>(degreePlan);
 
     function updateSemesters(
         newSemester: Semester,
         oldSemester: Semester
     ): void {
-        const newSemesters = plan.semesters.map((semester: Semester) => {
+        const newSemesters = degreePlan.semesters.map((semester: Semester) => {
             if (semester === oldSemester) {
                 return newSemester;
             } else {
@@ -37,13 +44,15 @@ export function DegreePlanComponent({
                 };
             }
         });
-        const newPlan = { ...plan, semesters: newSemesters };
-        updatePlans(newPlan, plan);
-        updatePlan(newPlan);
+        const newPlan = { ...degreePlan, semesters: newSemesters };
+        updatePlans(newPlan, degreePlan);
+        changePlan(newPlan);
     }
 
     function save() {
-        updateSemList();
+        changeSemList(degreePlan.semesters);
+        changeDegPlanSems(semList);
+        addSemester(semList, degreePlan, semName, semSeason);
         changeAddSem(!addSem);
         changeSemName("Insert Name Here");
     }
@@ -58,29 +67,19 @@ export function DegreePlanComponent({
     //     });
     //     changeDegPlanSems(newSems);
     // }
-    function updateSemList() {
-        let numCredits = 0;
-        if (semSeason === "fall" || semSeason === "spring") {
-            numCredits = 18;
-        } else {
-            numCredits = 7;
-        }
-        const newSem: Semester = {
-            semesterName: semName,
-            active: true,
-            creditLimit: numCredits,
-            season: semSeason,
-            coursesTaken: []
-        };
-        const newSemList = [...semList, newSem];
-        //updateSems(newSem, degPlanSems);
-        changeSemList(newSemList);
-        changeDegPlanSems(newSemList);
-        const newPlan = { ...degreePlan, semesters: newSemList };
-        //newPlan.semesters = newSemList;
-        updatePlans(newPlan, degreePlan);
-        changePlan(newPlan);
-    }
+    // function updateSemList() {
+    //     //addSemester(semName, semSeason);
+    //     //changeDegPlanSems([...degPlanSems, newSem]);
+    //     // const newSemList = [...semList, newSem];
+    //     // //updateSems(newSem, degPlanSems);
+    //     // changeSemList(newSemList);
+    //     // changeDegPlanSems(newSemList);
+    //     const newPlan = { ...degreePlan, semesters: degPlanSems };
+    //     // //newPlan.semesters = newSemList;
+    //     updatePlans(degreePlan, newPlan);
+    //     changePlan(plan);
+    //     //updatePlanView(plan);
+    // }
     function updateSemSeason(event: React.ChangeEvent<HTMLSelectElement>) {
         changeSemSeason(event.target.value);
     }

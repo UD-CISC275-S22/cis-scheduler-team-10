@@ -39,7 +39,8 @@ export function App(): JSX.Element {
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
         changePlan(newPlan);
-        changeDegPlanSems(degPlanSems);
+        //
+
         if (newPlan === planView) {
             changePlanView(null);
         } else {
@@ -60,6 +61,7 @@ export function App(): JSX.Element {
 
     function addPlan(newPlanName: string): void {
         const newPlan: Plan = { name: newPlanName, semesters: [] };
+
         changeAllPlans([...allPlans, newPlan]);
     }
 
@@ -71,7 +73,35 @@ export function App(): JSX.Element {
             changePlanView(null);
         }
     }
+    function addSemester(
+        sems: Semester[],
+        plan: Plan,
+        semName: string,
+        semSeason: string
+    ): void {
+        changePlan(plan);
+        //changeDegPlanSems(sems);
+        let numCredits = 0;
+        if (semSeason === "fall" || semSeason === "spring") {
+            numCredits = 18;
+        } else {
+            numCredits = 7;
+        }
+        const newSem: Semester = {
+            semesterName: semName,
+            active: true,
+            creditLimit: numCredits,
+            season: semSeason,
+            coursesTaken: []
+        };
+        const newSems = [...degPlanSems, newSem];
+        const newPlan = { ...plan, semesters: newSems };
+        updatePlans(newPlan, plan);
+        // changeDegPlanSems(newSems);
 
+        //
+        updatePlanView(newPlan);
+    }
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
@@ -99,6 +129,8 @@ export function App(): JSX.Element {
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
                             changePlan={changePlan}
+                            //updatePlanView={updatePlanView}
+                            addSemester={addSemester}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
