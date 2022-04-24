@@ -3,6 +3,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 
 export function DegreePlanComponent({
     degreePlan,
@@ -10,7 +11,10 @@ export function DegreePlanComponent({
     degPlanSems,
     changeDegPlanSems,
     changePlan,
-    addSemester
+    addSemester,
+    courses,
+    changeCourses,
+    addCourse
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
@@ -23,6 +27,9 @@ export function DegreePlanComponent({
         semName: string,
         semSeason: string
     ) => void;
+    courses: Course[];
+    changeCourses: (crses: Course[]) => void;
+    addCourse: (crsID: string, semester: Semester) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semName, changeSemName] = useState<string>("Insert Name Here");
@@ -123,7 +130,9 @@ export function DegreePlanComponent({
                             />
                         </Form.Group>
                         <div style={{ padding: "2px" }}>
-                            <Button onClick={save}>Save Semester</Button>
+                            <Button variant="success" onClick={save}>
+                                Save Semester
+                            </Button>
                         </div>
                     </div>
                 ) : (
@@ -138,6 +147,9 @@ export function DegreePlanComponent({
                                 <SemesterComponent
                                     semester={sem}
                                     updateSemesters={updateSemesters}
+                                    courses={courses}
+                                    changeCourses={changeCourses}
+                                    addCourse={addCourse}
                                 ></SemesterComponent>
                             </div>
                         ))}

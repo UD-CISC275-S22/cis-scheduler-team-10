@@ -6,6 +6,8 @@ import plans from "./data/degreePlans.json";
 import { Row, Col, Container, Button } from "react-bootstrap";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
+import { SemesterComponent } from "./SemesterComponent";
 const PLANS = plans as Plan[];
 
 export function App(): JSX.Element {
@@ -14,6 +16,9 @@ export function App(): JSX.Element {
     const [plan, changePlan] = useState<Plan>(PLANS[0]);
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
+    );
+    const [courses, changeCourses] = useState<Course[]>(
+        degPlanSems[0].coursesTaken
     );
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
@@ -49,17 +54,6 @@ export function App(): JSX.Element {
             changePlanView(newPlan);
         }
     }
-
-    // function updatePlans(newPlan: Plan, oldPlan: Plan): void {
-    //     const newPlans = allPlans.map((plan: Plan) => {
-    //         if (plan === oldPlan) {
-    //             return { ...newPlan };
-    //         } else {
-    //             return { ...plan };
-    //         }
-    //     });
-    //     changeAllPlans(newPlans);
-    // }
 
     function addPlan(newPlanName: string): void {
         const newPlan: Plan = { name: newPlanName, semesters: [] };
@@ -104,6 +98,27 @@ export function App(): JSX.Element {
         //
         updatePlanView(newPlan);
     }
+    function addCourse(crsID: string, semester: Semester) {
+        const newCourse: Course = {
+            courseCode: crsID,
+            courseTitle: "",
+            numCredits: 0,
+            preReqs: [],
+            courseDescription: "",
+            complete: true,
+            required: true,
+            requirementType: "university"
+        };
+        const newCourses = [...courses, newCourse];
+        changeCourses(newCourses);
+        const newSem = { ...semester, coursesTaken: courses };
+        const newSems = [...degPlanSems, newSem];
+        const newPlan = { ...plan, semesters: newSems };
+
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, plan);
+        updatePlanView(newPlan);
+    }
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
@@ -133,6 +148,9 @@ export function App(): JSX.Element {
                             changePlan={changePlan}
                             //updatePlanView={updatePlanView}
                             addSemester={addSemester}
+                            courses={courses}
+                            changeCourses={changeCourses}
+                            addCourse={addCourse}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
