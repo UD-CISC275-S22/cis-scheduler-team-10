@@ -6,10 +6,14 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export function CourseComponent({
     course,
-    updateCourses
+    updateCourses,
+    coursePool,
+    updatecoursePool
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
+    coursePool: Course[];
+    updatecoursePool: (updated: Course[]) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
@@ -73,6 +77,7 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
+                {/* {!editMode && <Button onClick={() => {}}>Move</Button>} */}
                 {editMode && (
                     <Button
                         data-testid="save-course"

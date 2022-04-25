@@ -6,10 +6,14 @@ import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
     semester,
-    updateSemesters
+    updateSemesters,
+    coursePool,
+    updatecoursePool
 }: {
     semester: Semester;
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    coursePool: Course[];
+    updatecoursePool: (updated: Course[]) => void;
 }): JSX.Element {
     const [currentSem, updateSem] = useState<Semester>(semester);
 
@@ -49,6 +53,8 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
+                                coursePool={coursePool}
+                                updatecoursePool={updatecoursePool}
                             ></CourseComponent>
                         </div>
                     );

@@ -3,6 +3,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 
 export function DegreePlanComponent({
     degreePlan,
@@ -22,6 +23,7 @@ export function DegreePlanComponent({
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
+    const [coursePool, updatecoursePool] = useState<Course[]>([]);
 
     function updateSemesters(
         newSemester: Semester,
@@ -139,6 +141,8 @@ export function DegreePlanComponent({
                                 <SemesterComponent
                                     semester={sem}
                                     updateSemesters={updateSemesters}
+                                    coursePool={coursePool}
+                                    updatecoursePool={updatecoursePool}
                                 ></SemesterComponent>
                             </div>
                         ))}
