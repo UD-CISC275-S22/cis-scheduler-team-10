@@ -50,17 +50,6 @@ export function App(): JSX.Element {
         }
     }
 
-    // function updatePlans(newPlan: Plan, oldPlan: Plan): void {
-    //     const newPlans = allPlans.map((plan: Plan) => {
-    //         if (plan === oldPlan) {
-    //             return { ...newPlan };
-    //         } else {
-    //             return { ...plan };
-    //         }
-    //     });
-    //     changeAllPlans(newPlans);
-    // }
-
     function addPlan(newPlanName: string): void {
         const newPlan: Plan = { name: newPlanName, semesters: [] };
 
@@ -74,6 +63,15 @@ export function App(): JSX.Element {
         if (planView !== null && planName === planView.name) {
             changePlanView(null);
         }
+    }
+    function removeSemester(semName: string): void {
+        changeDegPlanSems(
+            degPlanSems.filter(
+                (s: Semester): boolean => s.semesterName !== semName
+            )
+        );
+        changePlan({ ...plan, semesters: degPlanSems });
+        updatePlanView(plan);
     }
     function addSemester(
         sems: Semester[],
@@ -131,8 +129,8 @@ export function App(): JSX.Element {
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
                             changePlan={changePlan}
-                            //updatePlanView={updatePlanView}
                             addSemester={addSemester}
+                            removeSemester={removeSemester}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
