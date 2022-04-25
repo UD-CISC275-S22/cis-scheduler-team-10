@@ -10,20 +10,23 @@ export function DegreePlanComponent({
     updatePlans,
     degPlanSems,
     changeDegPlanSems,
-    changePlan
+    changePlan,
+    coursePool,
+    updateCoursePool
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     degPlanSems: Semester[];
     changeDegPlanSems: (sems: Semester[]) => void;
     changePlan: (plan: Plan) => void;
+    coursePool: Course[];
+    updateCoursePool: (updated: Course) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semName, changeSemName] = useState<string>("Insert Name Here");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
-    const [coursePool, updatecoursePool] = useState<Course[]>([]);
 
     function updateSemesters(
         newSemester: Semester,
@@ -142,7 +145,7 @@ export function DegreePlanComponent({
                                     semester={sem}
                                     updateSemesters={updateSemesters}
                                     coursePool={coursePool}
-                                    updatecoursePool={updatecoursePool}
+                                    updateCoursePool={updateCoursePool}
                                 ></SemesterComponent>
                             </div>
                         ))}

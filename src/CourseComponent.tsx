@@ -8,12 +8,12 @@ export function CourseComponent({
     course,
     updateCourses,
     coursePool,
-    updatecoursePool
+    updateCoursePool
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
     coursePool: Course[];
-    updatecoursePool: (updated: Course[]) => void;
+    updateCoursePool: (updated: Course) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
@@ -77,7 +77,15 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
-                {/* {!editMode && <Button onClick={() => {}}>Move</Button>} */}
+                {!editMode && !coursePool.includes(currentCourse) && (
+                    <Button
+                        onClick={() => {
+                            updateCoursePool(currentCourse);
+                        }}
+                    >
+                        {"→"}
+                    </Button>
+                )}
                 {editMode && (
                     <Button
                         data-testid="save-course"

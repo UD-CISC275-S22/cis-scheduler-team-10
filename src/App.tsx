@@ -10,6 +10,7 @@ import catalog from "./data/catalog.json";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { CoursePoolComponent } from "./CoursePoolComponent";
 const PLANS = plans as Plan[];
 const filler = Object.values(catalog);
 let courses: string[] = [];
@@ -44,6 +45,19 @@ export function App(): JSX.Element {
         plan.semesters
     );
     const [courseSearch, setCourseSearch] = useState<string[]>();
+    const [coursePool, changeCoursePool] = useState<Course[]>([]);
+
+    function updateCoursePool(newCourse: Course): void {
+        let newPool = [...coursePool];
+        if (coursePool.includes(newCourse)) {
+            newPool = newPool.filter(
+                (course: Course): boolean => course !== newCourse
+            );
+        } else {
+            newPool = [...newPool, newCourse];
+        }
+        changeCoursePool(newPool);
+    }
 
     function chooseCourse(): void {
         setCourseSearch(courseSearch);
@@ -134,6 +148,8 @@ export function App(): JSX.Element {
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
                             changePlan={changePlan}
+                            coursePool={coursePool}
+                            updateCoursePool={updateCoursePool}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
@@ -188,6 +204,10 @@ export function App(): JSX.Element {
                             selected={courseSearch}
                         ></Typeahead>
                     </Form.Group>
+                    <CoursePoolComponent
+                        coursePool={coursePool}
+                        updateCoursePool={updateCoursePool}
+                    ></CoursePoolComponent>
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
