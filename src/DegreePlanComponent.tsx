@@ -69,8 +69,6 @@ export function DegreePlanComponent({
             }
         });
         changeDegPlanSems(newSems);
-        console.log(newSems);
-        console.log(degPlanSems);
     }
 
     function save() {
