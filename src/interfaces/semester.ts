@@ -2,7 +2,7 @@
 
 import { Course } from "./course";
 
-export type Season = "fall" | "winter" | "spring" | "summer I" | "summer II";
+//export type Season = "fall" | "winter" | "spring" | "summer I" | "summer II";
 
 export interface Semester {
     // Name (string)
@@ -12,7 +12,7 @@ export interface Semester {
     // Credit Limit (number)
     creditLimit: number;
     // Which Semester (Season)
-    season: Season;
+    season: string;
     // Array of Courses [Taking Courses] (Course[])
     coursesTaken: Course[];
 }
