@@ -2,96 +2,12 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
-  console.error
-    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
-      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
-      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
-      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
-      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
-
-  console.error
-    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
-      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
-      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
-      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
-      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
-
-  console.error
-    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
-      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
-      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
-      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
-      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
-
-  console.error
-    Warning: Encountered two children with the same key, `Freshman Year`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at DegreePlansListComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlansListComponent.tsx:53:5)
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:12:40)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
-      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
-      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
-      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16990:28)
-      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
-
 FAIL src/App.test.tsx
   Scheduler Tests
-    ✓ The App renders (96 ms)
-    ✕ List of plans and welcome message visible (29 ms)
-    ✕ Can view semester (13 ms)
-    ✕ Can edit courses (10 ms)
+    ✓ The App renders (81 ms)
+    ✕ List of plans and welcome message visible (62 ms)
+    ✕ Can view semester (35 ms)
+    ✕ Can edit courses (38 ms)
 
   ● Scheduler Tests › List of plans and welcome message visible
 
@@ -175,6 +91,42 @@ FAIL src/App.test.tsx
               [33mclass[39m=[32m"col"[39m
             [36m>[39m
               [36m<span />[39m
+              [36m<div>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"form-label"[39m
+                [36m>[39m
+                  [0mSelect Course[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"rbt"[39m
+                  [33mstyle[39m=[32m"outline: none; position: relative;"[39m
+                  [33mtabindex[39m=[32m"-1"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"display: flex; flex: 1; height: 100%; position: relative;"[39m
+                  [36m>[39m
+                    [36m<input[39m
+                      [33maria-autocomplete[39m=[32m"both"[39m
+                      [33maria-expanded[39m=[32m"false"[39m
+                      [33maria-haspopup[39m=[32m"listbox"[39m
+                      [33mautocomplete[39m=[32m"off"[39m
+                      [33mclass[39m=[32m"rbt-input-main form-control rbt-input"[39m
+                      [33mplaceholder[39m=[32m"Course Search..."[39m
+                      [33mrole[39m=[32m"combobox"[39m
+                      [33mtype[39m=[32m"text"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                    [36m<input[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"rbt-input-hint"[39m
+                      [33mreadonly[39m=[32m""[39m
+                      [33mstyle[39m=[32m"background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"[39m
+                      [33mtabindex[39m=[32m"-1"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
             [36m</div>[39m
           [36m</div>[39m
           [36m<p>[39m
@@ -283,6 +235,42 @@ FAIL src/App.test.tsx
               [33mclass[39m=[32m"col"[39m
             [36m>[39m
               [36m<span />[39m
+              [36m<div>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"form-label"[39m
+                [36m>[39m
+                  [0mSelect Course[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"rbt"[39m
+                  [33mstyle[39m=[32m"outline: none; position: relative;"[39m
+                  [33mtabindex[39m=[32m"-1"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"display: flex; flex: 1; height: 100%; position: relative;"[39m
+                  [36m>[39m
+                    [36m<input[39m
+                      [33maria-autocomplete[39m=[32m"both"[39m
+                      [33maria-expanded[39m=[32m"false"[39m
+                      [33maria-haspopup[39m=[32m"listbox"[39m
+                      [33mautocomplete[39m=[32m"off"[39m
+                      [33mclass[39m=[32m"rbt-input-main form-control rbt-input"[39m
+                      [33mplaceholder[39m=[32m"Course Search..."[39m
+                      [33mrole[39m=[32m"combobox"[39m
+                      [33mtype[39m=[32m"text"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                    [36m<input[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"rbt-input-hint"[39m
+                      [33mreadonly[39m=[32m""[39m
+                      [33mstyle[39m=[32m"background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"[39m
+                      [33mtabindex[39m=[32m"-1"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
             [36m</div>[39m
           [36m</div>[39m
           [36m<p>[39m
@@ -391,6 +379,42 @@ FAIL src/App.test.tsx
               [33mclass[39m=[32m"col"[39m
             [36m>[39m
               [36m<span />[39m
+              [36m<div>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"form-label"[39m
+                [36m>[39m
+                  [0mSelect Course[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"rbt"[39m
+                  [33mstyle[39m=[32m"outline: none; position: relative;"[39m
+                  [33mtabindex[39m=[32m"-1"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mstyle[39m=[32m"display: flex; flex: 1; height: 100%; position: relative;"[39m
+                  [36m>[39m
+                    [36m<input[39m
+                      [33maria-autocomplete[39m=[32m"both"[39m
+                      [33maria-expanded[39m=[32m"false"[39m
+                      [33maria-haspopup[39m=[32m"listbox"[39m
+                      [33mautocomplete[39m=[32m"off"[39m
+                      [33mclass[39m=[32m"rbt-input-main form-control rbt-input"[39m
+                      [33mplaceholder[39m=[32m"Course Search..."[39m
+                      [33mrole[39m=[32m"combobox"[39m
+                      [33mtype[39m=[32m"text"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                    [36m<input[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"rbt-input-hint"[39m
+                      [33mreadonly[39m=[32m""[39m
+                      [33mstyle[39m=[32m"background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"[39m
+                      [33mtabindex[39m=[32m"-1"[39m
+                      [33mvalue[39m=[32m""[39m
+                    [36m/>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
             [36m</div>[39m
           [36m</div>[39m
           [36m<p>[39m
@@ -420,14 +444,15 @@ FAIL src/App.test.tsx
 -------------------------------|---------|----------|---------|---------|-------------------
 File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------------------|---------|----------|---------|---------|-------------------
-All files                      |   10.47 |       10 |     7.5 |   10.47 |                   
- src                           |   10.47 |       10 |     7.5 |   10.47 |                   
-  App.tsx                      |      20 |    14.28 |      10 |      20 | 19-71,138         
+All files                      |   13.81 |     7.14 |    5.76 |   12.66 |                   
+ src                           |   13.81 |     7.14 |    5.76 |   12.66 |                   
+  App.tsx                      |   27.58 |    11.11 |    6.66 |      25 | 48-142,241        
   CourseComponent.tsx          |       0 |        0 |       0 |       0 | 14-102            
-  DegreePlanComponent.tsx      |       0 |        0 |       0 |       0 | 20-138            
-  DegreePlansListComponent.tsx |   31.25 |       50 |      20 |   31.25 | 21-36,81,93-123   
-  SemesterComponent.tsx        |       0 |        0 |       0 |       0 | 14-41             
+  DegreePlanComponent.tsx      |       0 |        0 |       0 |       0 | 37-189            
+  DegreePlansListComponent.tsx |   31.25 |       50 |      20 |   31.25 | 21-36,81,93-124   
+  SemesterComponent.tsx        |       0 |        0 |       0 |       0 | 26-104            
  src/interfaces                |       0 |        0 |       0 |       0 |                   
+  catalog.ts                   |       0 |        0 |       0 |       0 |                   
   course.ts                    |       0 |        0 |       0 |       0 |                   
   plan.ts                      |       0 |        0 |       0 |       0 |                   
   semester.ts                  |       0 |        0 |       0 |       0 |                   
@@ -435,5 +460,5 @@ All files                      |   10.47 |       10 |     7.5 |   10.47 |
 Test Suites: 1 failed, 1 total
 Tests:       3 failed, 1 passed, 4 total
 Snapshots:   0 total
-Time:        2.519 s
+Time:        3.193 s
 Ran all test suites.
