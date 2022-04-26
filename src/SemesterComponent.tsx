@@ -37,6 +37,9 @@ export function SemesterComponent({
         updateSemesters(newSem, currentSem);
         updateSem(newSem);
     }
+    function reset(s: Semester): void {
+        updateSem({ ...s, coursesTaken: [] });
+    }
     // function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
     //     changeCrsID(event.target.value);
     // }
@@ -53,6 +56,13 @@ export function SemesterComponent({
             style={{ border: "1px solid black", padding: "20px" }}
         >
             {semester.semesterName.toUpperCase()}
+            <Button
+                onClick={() => reset(currentSem)}
+                variant="danger"
+                className="me-4"
+            >
+                Reset
+            </Button>
             <Col
                 style={{
                     border: "1px solid black"
