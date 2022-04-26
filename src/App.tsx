@@ -28,7 +28,7 @@ export function App(): JSX.Element {
     }
     function updatePlans(newPlan: Plan, oldPlan: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
-            if (plan === oldPlan) {
+            if (plan.name === oldPlan.name) {
                 return { ...newPlan };
             } else {
                 return { ...plan };
