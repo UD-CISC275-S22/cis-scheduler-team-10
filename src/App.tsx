@@ -17,9 +17,8 @@ export function App(): JSX.Element {
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
     );
-    const [courses, changeCourses] = useState<Course[]>(
-        degPlanSems[0].coursesTaken
-    );
+    const [sem, changeSem] = useState<Semester>(degPlanSems[0]);
+    const [courses, changeCourses] = useState<Course[]>(sem.coursesTaken);
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
             if (plan === p) {
@@ -98,7 +97,10 @@ export function App(): JSX.Element {
         //
         updatePlanView(newPlan);
     }
-    function addCourse(crsID: string, semester: Semester) {
+    function addCourse(crsID: string, semester: Semester, plan: Plan) {
+        //changeSem(semester);
+
+        changePlan(plan);
         const newCourse: Course = {
             courseCode: crsID,
             courseTitle: "",
@@ -111,8 +113,16 @@ export function App(): JSX.Element {
         };
         const newCourses = [...courses, newCourse];
         changeCourses(newCourses);
-        const newSem = { ...semester, coursesTaken: courses };
-        const newSems = [...degPlanSems, newSem];
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = degPlanSems.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changeDegPlanSems(newSems);
         const newPlan = { ...plan, semesters: newSems };
 
         //changeDegPlanSems(newSems);

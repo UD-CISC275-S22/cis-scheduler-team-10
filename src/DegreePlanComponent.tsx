@@ -29,7 +29,7 @@ export function DegreePlanComponent({
     ) => void;
     courses: Course[];
     changeCourses: (crses: Course[]) => void;
-    addCourse: (crsID: string, semester: Semester) => void;
+    addCourse: (crsID: string, semester: Semester, plan: Plan) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semName, changeSemName] = useState<string>("Insert Name Here");
@@ -150,6 +150,7 @@ export function DegreePlanComponent({
                                     courses={courses}
                                     changeCourses={changeCourses}
                                     addCourse={addCourse}
+                                    plan={degreePlan}
                                 ></SemesterComponent>
                             </div>
                         ))}

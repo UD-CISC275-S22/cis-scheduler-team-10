@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
+import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
@@ -9,13 +10,15 @@ export function SemesterComponent({
     updateSemesters,
     courses,
     changeCourses,
-    addCourse
+    addCourse,
+    plan
 }: {
     semester: Semester;
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     courses: Course[];
     changeCourses: (crses: Course[]) => void;
-    addCourse: (crsID: string, semester: Semester) => void;
+    addCourse: (crsID: string, semester: Semester, plan: Plan) => void;
+    plan: Plan;
 }): JSX.Element {
     const [currentSem, updateSem] = useState<Semester>(semester);
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
@@ -37,9 +40,9 @@ export function SemesterComponent({
         changeCrsID(event.target.value);
     }
     function save() {
-        changeCrsList(semester.coursesTaken);
-        changeCourses(crsList);
-        addCourse(crsID, semester);
+        // changeCrsList(semester.coursesTaken);
+        // changeCourses(crsList);
+        addCourse(crsID, semester, plan);
         changeAddingCourse(!addingCourse);
         changeCrsID("Insert Course ID");
     }
