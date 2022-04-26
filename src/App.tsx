@@ -6,6 +6,8 @@ import plans from "./data/degreePlans.json";
 import { Row, Col, Container, Button } from "react-bootstrap";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+// import { Course } from "./interfaces/course";
+// import { SemesterComponent } from "./SemesterComponent";
 const PLANS = plans as Plan[];
 
 export function App(): JSX.Element {
@@ -109,6 +111,38 @@ export function App(): JSX.Element {
         //
         updatePlanView(newPlan);
     }
+    // function addCourse(crsID: string, semester: Semester, plan: Plan) {
+    //     //changeSem(semester);
+
+    //     changePlan(plan);
+    //     const newCourse: Course = {
+    //         courseCode: crsID,
+    //         courseTitle: "",
+    //         numCredits: 0,
+    //         preReqs: [],
+    //         courseDescription: "",
+    //         complete: true,
+    //         required: true,
+    //         requirementType: "university"
+    //     };
+    //     const newCourses = [...courses, newCourse];
+    //     changeCourses(newCourses);
+    //     const newSem = { ...semester, coursesTaken: newCourses };
+    //     //const newSems = [...degPlanSems, newSem];
+    //     const newSems = degPlanSems.map((sem: Semester) => {
+    //         if (sem === semester) {
+    //             return { ...newSem };
+    //         } else {
+    //             return { ...sem };
+    //         }
+    //     });
+    //     changeDegPlanSems(newSems);
+    //     const newPlan = { ...plan, semesters: newSems };
+
+    //     //changeDegPlanSems(newSems);
+    //     updatePlans(newPlan, plan);
+    //     updatePlanView(newPlan);
+    // }
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>

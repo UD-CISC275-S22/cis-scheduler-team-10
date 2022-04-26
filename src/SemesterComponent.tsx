@@ -38,15 +38,16 @@ export function SemesterComponent({
         updateSem(newSem);
     }
     // function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
-    //     changeCrsID(event.target.value);
+    // changeCrsID(event.target.value);
     // }
-    // function save() {
-    //     changeCrsList(semester.coursesTaken);
-    //     changeCourses(crsList);
-    //     addCourse(crsID, semester);
-    //     changeAddingCourse(!addingCourse);
-    //     changeCrsID("Insert Course ID");
-    // }
+    function save() {
+        // changeCrsList(semester.coursesTaken);
+        // changeCourses(crsList);
+        // addCourse(crsID, semester, plan);
+        // changeAddingCourse(!addingCourse);
+        // changeCrsID("Insert Course ID");
+    }
+
     return (
         <div
             className="semester"
@@ -89,28 +90,24 @@ export function SemesterComponent({
                     );
                 })}
                 <div style={{ padding: "2px" }}>
-                    {" "}
                     <Button onClick={() => changeAddingCourse(!addingCourse)}>
                         Add Course
                     </Button>
                 </div>
                 <div>
-                    {/* {addingCourse ? (
+                    {addingCourse ? (
                         <div>
                             <Form.Group controlId="formCourseID">
                                 <Form.Label>Course ID:</Form.Label>
-                                <Form.Control
-                                    value={crsID}
-                                    onChange={updateCrsID}
-                                />
+                                <Form.Control value={""} />
                             </Form.Group>
                             <Button variant="success" onClick={save}>
                                 Save Course
                             </Button>
                         </div>
                     ) : (
-                        ""
-                    )} */}
+                        <div></div>
+                    )}
                 </div>
             </Col>
         </div>

@@ -10,6 +10,7 @@ import {
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
+// import { Course } from "./interfaces/course";
 
 export function DegreePlanComponent({
     degreePlan,
