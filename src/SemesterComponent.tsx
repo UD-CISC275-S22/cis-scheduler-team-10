@@ -8,7 +8,8 @@ export function SemesterComponent({
     semester,
     updateSemesters,
     removing,
-    removeSemester
+    removeSemester,
+    reset
 }: // courses,
 // changeCourses,
 // addCourse
@@ -17,6 +18,7 @@ export function SemesterComponent({
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
+    reset: (s: Semester) => void;
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -53,9 +55,18 @@ export function SemesterComponent({
             className="semester"
             style={{ border: "1px solid black", padding: "20px" }}
         >
-            {semester.season.toUpperCase() +
-                " " +
-                semester.semesterName.toUpperCase()}
+            <Col>
+                {semester.season.toUpperCase() +
+                    " " +
+                    semester.semesterName.toUpperCase()}
+                <Button
+                    onClick={() => reset(currentSem)}
+                    variant="danger"
+                    className="me-4"
+                >
+                    Reset
+                </Button>
+            </Col>
             <Col
                 style={{
                     border: "1px solid black"
