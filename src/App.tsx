@@ -15,6 +15,11 @@ export function App(): JSX.Element {
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
     );
+
+    function updatePlan(plan: Plan) {
+        changePlan(plan);
+        changePlanView(plan);
+    }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
             if (plan === p) {
@@ -35,6 +40,7 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
+        // updatePlanView()
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
@@ -98,7 +104,7 @@ export function App(): JSX.Element {
                             degPlanSems={degPlanSems}
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
-                            changePlan={changePlan}
+                            changePlan={updatePlan}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
