@@ -65,13 +65,14 @@ export function App(): JSX.Element {
         }
     }
     function removeSemester(semName: string): void {
-        changeDegPlanSems(
-            degPlanSems.filter(
-                (s: Semester): boolean => s.semesterName !== semName
-            )
+        const newSems = degPlanSems.filter(
+            (s: Semester): boolean => s.semesterName !== semName
         );
-        changePlan({ ...plan, semesters: degPlanSems });
-        updatePlanView(plan);
+        //changeDegPlanSems(newSems);
+        const newPlan = { ...plan, semesters: newSems };
+        changePlan(newPlan);
+        updatePlans(newPlan, plan);
+        updatePlanView(newPlan);
     }
     function addSemester(
         sems: Semester[],
