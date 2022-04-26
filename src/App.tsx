@@ -44,8 +44,11 @@ export function App(): JSX.Element {
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
+
         changePlan(newPlan);
-        changeDegPlanSems(degPlanSems);
+        //updatePlans(newPlan, plan);
+        //
+
         if (newPlan === planView) {
             changePlanView(null);
         } else {
@@ -53,19 +56,9 @@ export function App(): JSX.Element {
         }
     }
 
-    // function updatePlans(newPlan: Plan, oldPlan: Plan): void {
-    //     const newPlans = allPlans.map((plan: Plan) => {
-    //         if (plan === oldPlan) {
-    //             return { ...newPlan };
-    //         } else {
-    //             return { ...plan };
-    //         }
-    //     });
-    //     changeAllPlans(newPlans);
-    // }
-
     function addPlan(newPlanName: string): void {
         const newPlan: Plan = { name: newPlanName, semesters: [] };
+
         changeAllPlans([...allPlans, newPlan]);
     }
 
@@ -77,7 +70,45 @@ export function App(): JSX.Element {
             changePlanView(null);
         }
     }
+    function removeSemester(semName: string): void {
+        const newSems = degPlanSems.filter(
+            (s: Semester): boolean => s.semesterName !== semName
+        );
+        //changeDegPlanSems(newSems);
+        const newPlan = { ...plan, semesters: newSems };
+        changePlan(newPlan);
+        updatePlans(newPlan, plan);
+        updatePlanView(newPlan);
+    }
+    function addSemester(
+        sems: Semester[],
+        plan: Plan,
+        semName: string,
+        semSeason: string
+    ): void {
+        changePlan(plan);
+        //changeDegPlanSems(sems);
+        let numCredits = 0;
+        if (semSeason === "fall" || semSeason === "spring") {
+            numCredits = 18;
+        } else {
+            numCredits = 7;
+        }
+        const newSem: Semester = {
+            semesterName: semName,
+            active: true,
+            creditLimit: numCredits,
+            season: semSeason,
+            coursesTaken: []
+        };
+        const newSems = [...degPlanSems, newSem];
+        const newPlan = { ...plan, semesters: newSems };
+        updatePlans(newPlan, plan);
+        // changeDegPlanSems(newSems);
 
+        //
+        updatePlanView(newPlan);
+    }
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
@@ -105,6 +136,8 @@ export function App(): JSX.Element {
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
                             changePlan={updatePlan}
+                            addSemester={addSemester}
+                            removeSemester={removeSemester}
                         ></DegreePlanComponent>
                     ) : (
                         <Container

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import {
+    Button,
+    ButtonGroup,
+    Col,
+    Container,
+    Form,
+    Row
+} from "react-bootstrap";
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
@@ -9,13 +16,22 @@ export function DegreePlanComponent({
     updatePlans,
     degPlanSems,
     changeDegPlanSems,
-    changePlan
+    changePlan,
+    addSemester,
+    removeSemester
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     degPlanSems: Semester[];
     changeDegPlanSems: (sems: Semester[]) => void;
     changePlan: (plan: Plan) => void;
+    addSemester: (
+        sems: Semester[],
+        plan: Plan,
+        semName: string,
+        semSeason: string
+    ) => void;
+    removeSemester: (semName: string) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
@@ -23,12 +39,13 @@ export function DegreePlanComponent({
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
     const [invalid, updateInvalid] = useState<boolean>(false);
+    const [removing, changeRemoving] = useState<boolean>(false);
 
     function updateSemesters(
         newSemester: Semester,
         oldSemester: Semester
     ): void {
-        const newSemesters = plan.semesters.map((semester: Semester) => {
+        const newSemesters = degreePlan.semesters.map((semester: Semester) => {
             if (semester === oldSemester) {
                 return newSemester;
             } else {
@@ -43,27 +60,6 @@ export function DegreePlanComponent({
         updatePlan(newPlan);
     }
 
-    function save() {
-        if (semYear.length === 4 && parseInt(semYear) >= 2000) {
-            updateInvalid(false);
-            updateSemList();
-            changeAddSem(!addSem);
-            changeSemYear("");
-        } else {
-            updateInvalid(true);
-        }
-    }
-    // function updateSems(newSem: Semester, oldSem: Semester): void {
-    //     //changeDegPlanSems(newPlan.semesters);
-    //     const newSems = degPlanSems.map((sem: Semester) => {
-    //         if (sem === oldSem) {
-    //             return { ...newSem };
-    //         } else {
-    //             return { ...sem };
-    //         }
-    //     });
-    //     changeDegPlanSems(newSems);
-    // }
     function updateSemList() {
         let numCredits = 0;
         if (semSeason === "fall" || semSeason === "spring") {
@@ -83,10 +79,24 @@ export function DegreePlanComponent({
         changeSemList(newSemList);
         changeDegPlanSems(newSemList);
         const newPlan = { ...degreePlan, semesters: [...newSemList] };
-        //newPlan.semesters = newSemList;
         updatePlans(newPlan, degreePlan);
         changePlan(newPlan);
     }
+
+    function save() {
+        if (semYear.length === 4 && parseInt(semYear) >= 2000) {
+            updateInvalid(false);
+            updateSemList();
+            changeSemList(degreePlan.semesters);
+            changeDegPlanSems(semList);
+            addSemester(semList, degreePlan, semYear, semSeason);
+            changeAddSem(!addSem);
+            changeSemYear("");
+        } else {
+            updateInvalid(true);
+        }
+    }
+
     function updateSemSeason(event: React.ChangeEvent<HTMLSelectElement>) {
         changeSemSeason(event.target.value);
     }
@@ -103,18 +113,23 @@ export function DegreePlanComponent({
     }
 
     return (
-        <div
-            // className="degreePlan"
-            style={{ border: "1px solid black", padding: "20px" }}
-        >
+        <div style={{ border: "1px solid black", padding: "20px" }}>
             <Container style={{ border: "1px solid black" }}>
                 {degreePlan.name.toUpperCase()} DEGREE PLAN
             </Container>
 
             <div style={{ padding: "5px" }}>
-                <Button onClick={() => changeAddSem(!addSem)}>
-                    Create New Semester
-                </Button>
+                <ButtonGroup>
+                    <Button onClick={() => changeAddSem(!addSem)}>
+                        Create New Semester
+                    </Button>
+                    <Button
+                        variant="danger"
+                        onClick={() => changeRemoving(!removing)}
+                    >
+                        Remove Semester
+                    </Button>
+                </ButtonGroup>
                 {addSem ? (
                     <div>
                         <Form.Group controlId="semSeasonsInsert">
@@ -144,13 +159,16 @@ export function DegreePlanComponent({
                             </span>
                         )}
                         <div style={{ padding: "2px" }}>
-                            <Button onClick={save}>Save Semester</Button>
+                            <Button variant="success" onClick={save}>
+                                Save Semester
+                            </Button>
                         </div>
                     </div>
                 ) : (
                     <span></span>
                 )}
             </div>
+
             <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
@@ -162,7 +180,24 @@ export function DegreePlanComponent({
                                 <SemesterComponent
                                     semester={sem}
                                     updateSemesters={updateSemesters}
+                                    removing={removing}
+                                    removeSemester={removeSemester}
                                 ></SemesterComponent>
+                                {/* <Col key={sem.semesterName}>
+                                    {removing ? (
+                                        <Button
+                                            onClick={() =>
+                                                removeSemester(sem.semesterName)
+                                            }
+                                            variant="danger"
+                                            className="me-4"
+                                        >
+                                            Remove Semester
+                                        </Button>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                </Col> */}
                             </div>
                         ))}
                     </Col>
