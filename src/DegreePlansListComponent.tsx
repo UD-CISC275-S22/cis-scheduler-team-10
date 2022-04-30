@@ -89,12 +89,13 @@ export function DegreePlansListComponent({
                 return (
                     <Row key={plan.name}>
                         <Col
-                            key={plan.name}
+                            // key={plan.name}
                             onClick={() => updatePlanView(plan)}
                         >
                             {plan.name}
                         </Col>
-                        <Col key={plan.name}>
+                        <Col>
+                            {/* // key={plan.name} */}
                             {editing ? (
                                 <Button
                                     onClick={() => removePlan(plan.name)}

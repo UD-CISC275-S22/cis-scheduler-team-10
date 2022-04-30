@@ -1,6 +1,6 @@
 [
     {
-        "semesterName": "Fall 2021",
+        "semesterName": "2021",
         "active": true,
         "creditLimit": 18,
         "season": "fall",
@@ -58,7 +58,7 @@
         ]
     },
     {
-        "semesterName": "Spring 2022",
+        "semesterName": "2022",
         "active": true,
         "creditLimit": 18,
         "season": "spring",
