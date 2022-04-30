@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup } from "react-bootstrap";
 import { Course } from "./interfaces/course";
+import { Plan } from "./interfaces/plan";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -8,12 +9,20 @@ export function CourseComponent({
     course,
     updateCourses,
     coursePool,
-    updateCoursePool
+    updateCoursePool,
+    updatePlans,
+    removingCourse,
+    removeCourse
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
     coursePool: Course[];
     updateCoursePool: (updated: Course) => void;
+    changePlan: (plan: Plan) => void;
+    updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
+    plan: Plan;
+    removingCourse: boolean;
+    removeCourse: (crsID: string) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
@@ -31,6 +40,17 @@ export function CourseComponent({
                     <div data-testid="course-code">
                         <b>{courseCode}</b>
                     </div>
+                )}
+                {removingCourse ? (
+                    <Button
+                        variant="danger"
+                        className="me-4"
+                        onClick={() => removeCourse(courseCode)}
+                    >
+                        Remove Course
+                    </Button>
+                ) : (
+                    <span></span>
                 )}
                 {editMode && (
                     <Form.Control

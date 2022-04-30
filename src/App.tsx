@@ -85,7 +85,7 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
-        // updatePlanView()
+        updatePlanView(newPlan);
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);

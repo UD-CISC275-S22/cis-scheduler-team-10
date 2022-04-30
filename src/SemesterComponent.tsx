@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Col, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Col, Form } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
+import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
@@ -11,8 +12,14 @@ export function SemesterComponent({
     updateCoursePool,
     removing,
     removeSemester,
-    reset
-}: {
+    reset,
+    plan,
+    changePlan,
+    updatePlans
+}: // courses,
+// changeCourses,
+// addCourse
+{
     semester: Semester;
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     coursePool: Course[];
@@ -20,11 +27,22 @@ export function SemesterComponent({
     removing: boolean;
     removeSemester: (semName: string) => void;
     reset: (s: Semester) => void;
+    plan: Plan;
+    changePlan: (plan: Plan) => void;
+    updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
+    // courses: Course[];
+    // changeCourses: (crses: Course[]) => void;
+    // addCourse: (crsID: string, semester: Semester) => void;
 }): JSX.Element {
     const [currentSem, updateSem] = useState<Semester>(semester);
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
-    //const [crsID, changeCrsID] = useState<string>("Insert Course ID");
-    // const [crsList, changeCrsList] = useState<Course[]>(courses);
+    const [crsID, changeCrsID] = useState<string>("Insert Course ID");
+    const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
+    const [courseSearch, setCourseSearch] = useState<string[]>();
+    const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
+    function chooseCourse(): void {
+        setCourseSearch(courseSearch);
+    }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -37,15 +55,65 @@ export function SemesterComponent({
         updateSemesters(newSem, currentSem);
         updateSem(newSem);
     }
-    // function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
-    // changeCrsID(event.target.value);
-    // }
+    function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
+        changeCrsID(event.target.value);
+    }
+    function removeCourse(crsID: string): void {
+        const newCourses = crsList.filter(
+            (c: Course): boolean => c.courseCode !== crsID
+        );
+        changeCrsList(newCourses);
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, plan);
+        //updatePlanView(newPlan);
+    }
+    function addCourse(crsID: string, semester: Semester, plan: Plan) {
+        const newCourse: Course = {
+            courseCode: crsID,
+            courseTitle: "",
+            numCredits: 0,
+            preReqs: [],
+            courseDescription: "",
+            complete: true,
+            required: true,
+            requirementType: "university"
+        };
+        const newCourses = [...crsList, newCourse];
+        changeCrsList(newCourses);
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, plan);
+        //updatePlanView(newPlan);
+    }
     function save() {
-        // changeCrsList(semester.coursesTaken);
+        //changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
-        // addCourse(crsID, semester, plan);
-        // changeAddingCourse(!addingCourse);
-        // changeCrsID("Insert Course ID");
+        addCourse(crsID, semester, plan);
+        changeAddingCourse(!addingCourse);
+        changeCrsID("Insert Course ID");
     }
 
     return (
@@ -96,21 +164,42 @@ export function SemesterComponent({
                                 updateCourses={updateCourses}
                                 coursePool={coursePool}
                                 updateCoursePool={updateCoursePool}
+                                plan={plan}
+                                changePlan={changePlan}
+                                updatePlans={updatePlans}
+                                removingCourse={removingCourse}
+                                removeCourse={removeCourse}
                             ></CourseComponent>
                         </div>
                     );
                 })}
                 <div style={{ padding: "2px" }}>
-                    <Button onClick={() => changeAddingCourse(!addingCourse)}>
-                        Add Course
-                    </Button>
+                    <ButtonGroup>
+                        <Button
+                            onClick={() => changeAddingCourse(!addingCourse)}
+                        >
+                            Add Course
+                        </Button>
+                        <Button
+                            variant="danger"
+                            onClick={() =>
+                                changeRemovingCourse(!removingCourse)
+                            }
+                        >
+                            Remove Course
+                        </Button>
+                    </ButtonGroup>
                 </div>
+                {/* <div>{removingCourse ? <div>hi</div> : <span></span>}</div> */}
                 <div>
                     {addingCourse ? (
                         <div>
                             <Form.Group controlId="formCourseID">
                                 <Form.Label>Course ID:</Form.Label>
-                                <Form.Control value={""} />
+                                <Form.Control
+                                    value={crsID}
+                                    onChange={updateCrsID}
+                                />
                             </Form.Group>
                             <Button variant="success" onClick={save}>
                                 Save Course
