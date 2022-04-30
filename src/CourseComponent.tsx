@@ -101,6 +101,7 @@ export function CourseComponent({
                     <Button
                         onClick={() => {
                             updateCoursePool(currentCourse);
+                            removeCourse(courseCode);
                         }}
                     >
                         {"→"}
