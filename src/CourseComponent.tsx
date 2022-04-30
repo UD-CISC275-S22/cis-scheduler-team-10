@@ -12,6 +12,7 @@ export function CourseComponent({
     plan,
     changePlan,
     updatePlans,
+    removingCourse,
     removeCourse
 }: {
     course: Course;
@@ -19,23 +20,15 @@ export function CourseComponent({
     changePlan: (plan: Plan) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     plan: Plan;
-    removeCourse: boolean;
+    removingCourse: boolean;
+    removeCourse: (crsID: string) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
     const [credits, changeCredits] = useState<number>(course.numCredits);
     const [currentCourse, updateCourse] = useState<Course>(course);
-    // function removeCourse(crsID: string): void {
-    //     const newSems = degPlanSems.filter(
-    //         (s: Semester): boolean => s.semesterName !== semName
-    //     );
-    //     //changeDegPlanSems(newSems);
-    //     const newPlan = { ...plan, semesters: newSems };
-    //     changePlan(newPlan);
-    //     updatePlans(newPlan, plan);
-    //     updatePlanView(newPlan);
-    // }
+
     return (
         <div
             // className="course"
@@ -47,9 +40,13 @@ export function CourseComponent({
                         <b>{courseCode}</b>
                     </div>
                 )}
-                {removeCourse ? (
-                    <Button variant="danger" className="me-4">
-                        Remove Semester
+                {removingCourse ? (
+                    <Button
+                        variant="danger"
+                        className="me-4"
+                        onClick={() => removeCourse(courseCode)}
+                    >
+                        Remove Course
                     </Button>
                 ) : (
                     <span></span>

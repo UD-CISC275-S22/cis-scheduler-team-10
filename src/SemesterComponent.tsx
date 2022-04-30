@@ -54,6 +54,27 @@ export function SemesterComponent({
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
         changeCrsID(event.target.value);
     }
+    function removeCourse(crsID: string): void {
+        const newCourses = crsList.filter(
+            (c: Course): boolean => c.courseCode !== crsID
+        );
+        changeCrsList(newCourses);
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, plan);
+        //updatePlanView(newPlan);
+    }
     function addCourse(crsID: string, semester: Semester, plan: Plan) {
         const newCourse: Course = {
             courseCode: crsID,
@@ -140,7 +161,8 @@ export function SemesterComponent({
                                 plan={plan}
                                 changePlan={changePlan}
                                 updatePlans={updatePlans}
-                                removeCourse={removingCourse}
+                                removingCourse={removingCourse}
+                                removeCourse={removeCourse}
                             ></CourseComponent>
                         </div>
                     );
