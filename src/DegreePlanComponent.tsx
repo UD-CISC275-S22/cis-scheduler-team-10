@@ -196,6 +196,9 @@ export function DegreePlanComponent({
                                     removing={removing}
                                     removeSemester={removeSemester}
                                     reset={reset}
+                                    plan={degreePlan}
+                                    changePlan={changePlan}
+                                    updatePlans={updatePlans}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (
