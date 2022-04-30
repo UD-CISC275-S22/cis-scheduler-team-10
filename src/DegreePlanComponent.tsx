@@ -56,9 +56,10 @@ export function DegreePlanComponent({
                 };
             }
         });
-        const newPlan = { ...plan, semesters: newSemesters };
-        updatePlans(newPlan, plan);
+        const newPlan = { ...degreePlan, semesters: newSemesters };
+        changeDegPlanSems(newSemesters);
         updatePlan(newPlan);
+        updatePlans(newPlan, degreePlan);
     }
 
     function updateSemList() {
@@ -85,15 +86,21 @@ export function DegreePlanComponent({
     }
 
     function reset(s: Semester): void {
+        const newSem = { ...s, coursesTaken: [] };
         const newSems = degPlanSems.map((sem: Semester) => {
             if (sem.semesterName === s.semesterName) {
-                return { ...sem, coursesTaken: [] };
+                return newSem;
             } else {
                 return { ...sem };
             }
         });
-        changeDegPlanSems(newSems);
+        changePlan({ ...degreePlan, semesters: newSems });
+        const newPlan = { ...degreePlan, semesters: newSems };
+        changeSemList(newSems);
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, degreePlan);
     }
+    //updatePlanView(newPlan);
 
     function save() {
         if (semYear.length === 4 && parseInt(semYear) >= 2000) {
