@@ -3,6 +3,7 @@ import "./App.css";
 import { DegreePlanComponent } from "./DegreePlanComponent";
 import { Plan } from "./interfaces/plan";
 import plans from "./data/degreePlans.json";
+// import degrees from "./data/degrees.json";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
 // import { Course } from "./interfaces/course";
 import { Catalog } from "./interfaces/catalog";
@@ -10,7 +11,9 @@ import catalog from "./data/catalog.json";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+// import { Degree } from "./interfaces/degree";
 const PLANS = plans as Plan[];
+// const DEGREES = degrees as Degree[];
 
 const filler = Object.values(catalog);
 let courses: string[] = [];
@@ -31,7 +34,7 @@ for (let i = 0; i < filler.length; i++) {
 //         courseDescription: c.descr,
 //         complete: false,
 //         required: false,
-//         requirementType: /*c.breadth*/ "university"
+//         requirementType: c.breadth.split(";")
 //     })
 // );
 
@@ -43,6 +46,7 @@ export function App(): JSX.Element {
         plan.semesters
     );
     const [courseSearch, setCourseSearch] = useState<string[]>();
+    // const [currentDegree, setDegree] = useState<Degree>(DEGREES[0]);
 
     function chooseCourse(): void {
         setCourseSearch(courseSearch);

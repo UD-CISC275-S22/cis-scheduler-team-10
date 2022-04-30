@@ -1,6 +1,6 @@
 // Provides a Framework for a Single Course
 
-export type RequirementType =
+export type RequirementTypes =
     | "University: "
     | "A&S: "
     | "University: Social and Behavioral Sciences"
@@ -33,5 +33,5 @@ export interface Course {
     // Required (bool)
     required: boolean;
     // RequirementType (string)
-    requirementType: RequirementType;
+    requirementType: string[];
 }

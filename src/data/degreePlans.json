@@ -16,7 +16,7 @@
                         "courseDescription": "Introduction to profession, including disciplines of chemical, civil, computer, electrical, environmental, and mechanical engineering. Prepares students for success through integration of: technical problem solving and engineering design, ethical decision-making, teamwork, and communicating to diverse audiences.",
                         "complete": false,
                         "required": true,
-                        "requirementType": "college"
+                        "requirementType": ["University: ", "A&S: "]
                     },
                     {
                         "courseCode": "CISC108",
@@ -26,7 +26,10 @@
                         "courseDescription": "Computing and principles of programming with an emphasis on systematic program design. Topics include functional programming, data abstraction, procedural abstraction, use of control and state, recursion, testing, and object-oriented programming concepts. Requires no prior programming experience, open to any major, but intended primarily for majors and minors in computer science or mathematics.",
                         "complete": false,
                         "required": true,
-                        "requirementType": "major"
+                        "requirementType": [
+                            "University: Mathematics, Natural Sciences and Technology",
+                            "A&S: GROUP D: A&S Math, Nat Sci & Technology"
+                        ]
                     },
                     {
                         "courseCode": "MATH241",
@@ -36,7 +39,7 @@
                         "courseDescription": "Functions, limits, continuity, derivatives. Polynomial, rational, exponential, hyperbolic, logarithmic, trigonometric and inverse trigonometric functions. Definite and indefinite integrals and the Fundamental Theorem of Calculus. Simple differential equations (separable ODE, linear ODE). ODE models leading to exponential growth and decay.",
                         "complete": false,
                         "required": true,
-                        "requirementType": "college"
+                        "requirementType": []
                     },
                     {
                         "courseCode": "ENGL110",
@@ -46,7 +49,7 @@
                         "courseDescription": "Introduction to the process of academic writing that centers on the composition of analytical, research-based essays.",
                         "complete": false,
                         "required": true,
-                        "requirementType": "university"
+                        "requirementType": []
                     },
                     {
                         "courseCode": "HIST106",
@@ -56,7 +59,7 @@
                         "courseDescription": "An introductory survey of American history since 1865. Themes and approach vary with the instructor.",
                         "complete": false,
                         "required": false,
-                        "requirementType": "university"
+                        "requirementType": []
                     }
                 ]
             },
@@ -74,7 +77,7 @@
                         "courseDescription": "Principles of computer science illustrated and applied through programming in an object oriented language. Programming projects illustrate computational problems, styles and issues that arise in computer systems development and in all application areas of computation.",
                         "complete": false,
                         "required": true,
-                        "requirementType": "major"
+                        "requirementType": []
                     },
                     {
                         "courseCode": "CISC210",
@@ -84,7 +87,7 @@
                         "courseDescription": "Principles of computer systems programming for software and hardware platforms to achieve efficient resource usage. Topics include the C programming language, memory management, and awareness of system constraints and interfacing. Projects include programming embedded systems and interactive objects.",
                         "complete": false,
                         "required": true,
-                        "requirementType": "major"
+                        "requirementType": []
                     },
                     {
                         "courseCode": "ANTH101",
@@ -94,7 +97,7 @@
                         "courseDescription": "Major ideas and areas of study in social and cultural anthropology. Use of ethnographic data and film to illustrate the anthropologist’s view of societies in their sociocultural and ecological dimensions.",
                         "complete": false,
                         "required": false,
-                        "requirementType": "university"
+                        "requirementType": []
                     },
                     {
                         "courseCode": "MATH242",
@@ -104,7 +107,7 @@
                         "courseDescription": "Brief review of MATH 241; evaluation of limits by L’Hospital’s rule; applications of integration; integration techniques; parametric curves; polar coordinates; infinite sequences and series. Includes use of computers to perform symbolic, numerical and graphical analysis.",
                         "complete": false,
                         "required": false,
-                        "requirementType": "college"
+                        "requirementType": []
                     },
                     {
                         "courseCode": "ENGL207",
@@ -114,7 +117,7 @@
                         "courseDescription": "Representative masterworks of English, American and world verse.",
                         "complete": false,
                         "required": false,
-                        "requirementType": "university"
+                        "requirementType": []
                     }
                 ]
             }

@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Computer Science BS",
+        "minCredits": 124,
+        "requiredCourses": [
+            "ENGL 110",
+            "CISC 108",
+            "LLCU 110",
+            "CISC 181",
+            "CISC 210",
+            "CISC 220"
+        ]
+    }
+]
