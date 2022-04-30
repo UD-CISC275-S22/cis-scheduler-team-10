@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Col, Form } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
@@ -35,7 +35,7 @@ export function SemesterComponent({
     const [crsID, changeCrsID] = useState<string>("Insert Course ID");
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
     const [courseSearch, setCourseSearch] = useState<string[]>();
-
+    const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     function chooseCourse(): void {
         setCourseSearch(courseSearch);
     }
@@ -137,15 +137,32 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
+                                plan={plan}
+                                changePlan={changePlan}
+                                updatePlans={updatePlans}
+                                removeCourse={removingCourse}
                             ></CourseComponent>
                         </div>
                     );
                 })}
                 <div style={{ padding: "2px" }}>
-                    <Button onClick={() => changeAddingCourse(!addingCourse)}>
-                        Add Course
-                    </Button>
+                    <ButtonGroup>
+                        <Button
+                            onClick={() => changeAddingCourse(!addingCourse)}
+                        >
+                            Add Course
+                        </Button>
+                        <Button
+                            variant="danger"
+                            onClick={() =>
+                                changeRemovingCourse(!removingCourse)
+                            }
+                        >
+                            Remove Course
+                        </Button>
+                    </ButtonGroup>
                 </div>
+                {/* <div>{removingCourse ? <div>hi</div> : <span></span>}</div> */}
                 <div>
                     {addingCourse ? (
                         <div>
