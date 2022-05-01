@@ -21,7 +21,11 @@ export function SemesterComponent({
 // addCourse
 {
     semester: Semester;
-    updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    updateSemesters: (
+        newSemester: Semester,
+        oldSemester: Semester,
+        plan: Plan
+    ) => void;
     coursePool: Course[];
     updateCoursePool: (updated: Course) => void;
     removing: boolean;
@@ -52,7 +56,7 @@ export function SemesterComponent({
             }
         });
         const newSem = { ...currentSem, coursesTaken: newCourses };
-        updateSemesters(newSem, currentSem);
+        updateSemesters(newSem, currentSem, plan);
         updateSem(newSem);
     }
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
@@ -64,20 +68,19 @@ export function SemesterComponent({
         );
         changeCrsList(newCourses);
         const newSem = { ...semester, coursesTaken: newCourses };
-        //const newSems = [...degPlanSems, newSem];
-        const newSems = plan.semesters.map((sem: Semester) => {
-            if (sem === semester) {
-                return { ...newSem };
-            } else {
-                return { ...sem };
-            }
-        });
-        changePlan({ ...plan, semesters: newSems });
-        const newPlan = { ...plan, semesters: newSems };
+        updateSemesters(newSem, semester, plan);
+        console.log(newCourses);
+        // const newSems = plan.semesters.map((sem: Semester) => {
+        //     if (sem === semester) {
+        //         return { ...newSem };
+        //     } else {
+        //         return { ...sem };
+        //     }
+        // });
 
-        //changeDegPlanSems(newSems);
-        updatePlans(newPlan, plan);
-        //updatePlanView(newPlan);
+        // changePlan({ ...plan, semesters: newSems });
+        // const newPlan = { ...plan, semesters: newSems };
+        // updatePlans(newPlan, plan);
     }
     function addCourse(crsID: string, semester: Semester, plan: Plan) {
         const newCourse: Course = {

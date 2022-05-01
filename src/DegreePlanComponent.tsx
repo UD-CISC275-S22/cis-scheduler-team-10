@@ -21,7 +21,8 @@ export function DegreePlanComponent({
     coursePool,
     updateCoursePool,
     addSemester,
-    removeSemester
+    removeSemester,
+    updateSemesters
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
@@ -37,6 +38,11 @@ export function DegreePlanComponent({
         semSeason: string
     ) => void;
     removeSemester: (semName: string) => void;
+    updateSemesters: (
+        newSemester: Semester,
+        oldSemester: Semester,
+        plan: Plan
+    ) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
@@ -46,25 +52,25 @@ export function DegreePlanComponent({
     const [invalid, updateInvalid] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
 
-    function updateSemesters(
-        newSemester: Semester,
-        oldSemester: Semester
-    ): void {
-        const newSemesters = degreePlan.semesters.map((semester: Semester) => {
-            if (semester === oldSemester) {
-                return newSemester;
-            } else {
-                return {
-                    ...semester,
-                    coursesTaken: [...semester.coursesTaken]
-                };
-            }
-        });
-        const newPlan = { ...degreePlan, semesters: newSemesters };
-        changeDegPlanSems(newSemesters);
-        updatePlan(newPlan);
-        updatePlans(newPlan, degreePlan);
-    }
+    // function updateSemesters(
+    //     newSemester: Semester,
+    //     oldSemester: Semester
+    // ): void {
+    //     const newSemesters = degreePlan.semesters.map((semester: Semester) => {
+    //         if (semester === oldSemester) {
+    //             return newSemester;
+    //         } else {
+    //             return {
+    //                 ...semester,
+    //                 coursesTaken: [...semester.coursesTaken]
+    //             };
+    //         }
+    //     });
+    //     const newPlan = { ...degreePlan, semesters: newSemesters };
+    //     changeDegPlanSems(newSemesters);
+    //     updatePlan(newPlan);
+    //     updatePlans(newPlan, degreePlan);
+    // }
 
     function updateSemList() {
         let numCredits = 0;
