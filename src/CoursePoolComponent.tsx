@@ -34,18 +34,11 @@ export function CoursePoolComponent({
         if (newSemester !== undefined) {
             changeTempSemester(newSemester);
         } else {
-            console.log("THERE IS A PROBLEM DID NOT FIND SEMESTER TO ADD BACK");
+            console.log("ERROR: DID NOT FIND SEMESTER TO ADD BACK");
         }
     }
 
     function moveCourseToSem(course: Course) {
-        // const updatedTempSem = {
-        //     ...currentPlan.semesters[0],
-        //     coursesTaken: [...currentPlan.semesters[0].coursesTaken]
-        // };
-        // console.log(updatedTempSem);
-        // changeTempSemester(updatedTempSem);
-        // console.log(tempSemester);
         if (tempSemester === currentPlan.semesters[0]) {
             console.log("temp = 0 despite courses");
         } else {

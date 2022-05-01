@@ -74,15 +74,17 @@ export function App(): JSX.Element {
                 };
             }
         });
-        console.log("NEW SEMESTERS AFTER REMOVAL");
+        console.log("NEW SEMESTERS AFTER ADDING");
         console.log(newSemesters);
         const newPlan = { ...currentPlan, semesters: newSemesters };
-        console.log(newPlan);
+        // console.log(newPlan);
         // changePlan(newPlan);
         updatePlan(newPlan);
         changeDegPlanSems(newSemesters);
         updatePlans(newPlan, currentPlan);
-        console.log(allPlans);
+        updatePlanView(newPlan);
+
+        // console.log(allPlans);
     }
 
     function chooseCourse(): void {
@@ -94,8 +96,8 @@ export function App(): JSX.Element {
             return { ...sem, coursesTaken: [...sem.coursesTaken] };
         });
         changePlan({ ...newPlan, semesters: planSems });
-        console.log(plan);
-        console.log(newPlan);
+        // console.log(plan);
+        // console.log(newPlan);
         changePlanView(newPlan);
 
         // console.log(plan);
