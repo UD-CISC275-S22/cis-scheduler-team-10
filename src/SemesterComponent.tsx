@@ -48,14 +48,19 @@ export function SemesterComponent({
         setCourseSearch(courseSearch);
     }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
+        console.log("plan in sem component");
+        console.log(plan);
+        console.log(currentSem);
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
-            if (course === oldCourse) {
+            if (course.courseCode === oldCourse.courseCode) {
                 return newCourse;
             } else {
                 return course;
             }
         });
         const newSem = { ...currentSem, coursesTaken: newCourses };
+        console.log("THESE NEXT 2 SHOULD BE THE SAME");
+        console.log(newSem);
         updateSemesters(newSem, currentSem, plan);
         updateSem(newSem);
     }
@@ -69,7 +74,7 @@ export function SemesterComponent({
         changeCrsList(newCourses);
         const newSem = { ...semester, coursesTaken: newCourses };
         updateSemesters(newSem, semester, plan);
-        console.log(newCourses);
+        // console.log(newCourses);
         // const newSems = plan.semesters.map((sem: Semester) => {
         //     if (sem === semester) {
         //         return { ...newSem };
@@ -104,6 +109,7 @@ export function SemesterComponent({
                 return { ...sem };
             }
         });
+        updateSem(newSem);
         changePlan({ ...plan, semesters: newSems });
         const newPlan = { ...plan, semesters: newSems };
 

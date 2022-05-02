@@ -42,18 +42,17 @@ export function CoursePoolComponent({
         // } else {
         //     console.log("what we want! temp does not equal sem 0");
         // }
-        const newCourses = tempSemester.coursesTaken.map(
+        const oldCourses = tempSemester.coursesTaken.map(
             (course: Course): Course => {
                 return course;
             }
         );
-        newCourses.push(course);
-        console.log("Courses after adding");
-        console.log(newCourses);
+        const newCourses = [...oldCourses, course];
         const newSem: Semester = {
             ...tempSemester,
             coursesTaken: [...newCourses]
         };
+        changeTempSemester(newSem);
         updateSemesters(newSem, tempSemester, currentPlan);
     }
 

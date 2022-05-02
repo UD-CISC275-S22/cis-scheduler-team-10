@@ -63,8 +63,8 @@ export function App(): JSX.Element {
         currentPlan: Plan
     ): void {
         console.log("in update semesters");
-        console.log(newSemester);
-        console.log(oldSemester);
+        // console.log(newSemester);
+        // console.log(oldSemester);
         const newSemesters = currentPlan.semesters.map((semester: Semester) => {
             if (
                 semester.season + semester.semesterName ===
@@ -79,18 +79,28 @@ export function App(): JSX.Element {
                 };
             }
         });
-        console.log("NEW SEMESTERS AFTER ADDING");
         console.log(newSemesters);
-        const newPlan = { ...currentPlan, semesters: newSemesters };
-        console.log("now new plan should include course");
-        console.log(newPlan);
-        updatePlan(newPlan);
-        changeDegPlanSems(newSemesters);
-        updatePlans(newPlan, currentPlan);
-        updatePlanView(newPlan);
+
+        //from addcourse
+        // updateSem(newSemester);
+        changePlan({ ...plan, semesters: newSemesters });
+        const newPlan = { ...plan, semesters: newSemesters };
+        updatePlans(newPlan, plan);
+
+        // not from addcourse
+        // console.log("NEW SEMESTERS AFTER ADDING");
+        // console.log(newSemesters);
+        // const newPlan = { ...currentPlan, semesters: newSemesters };
+        // console.log("now new plan should include course");
+        // console.log(newPlan);
+        // updatePlan(newPlan);
+        // changeDegPlanSems(newSemesters);
+        // updatePlans(newPlan, plan); //currentPlan
+        // updatePlanView(newPlan);
 
         console.log("back in updateSems");
         console.log(plan);
+        console.log(allPlans);
 
         // console.log(allPlans);
     }
@@ -105,12 +115,17 @@ export function App(): JSX.Element {
         });
         console.log("does this include the courses? planSems");
         console.log(planSems);
-        changePlan({ ...newPlan, semesters: planSems });
-        // console.log(plan);
-        // console.log(newPlan);
-        changePlanView({ ...newPlan, semesters: planSems });
+        const planToChange = { ...newPlan, semesters: planSems };
+        // console.log("plan to change");
+        // console.log(planToChange);
+        // changePlan(planToChange);
+        changePlanView(planToChange);
+
+        //  changeDegPlanSems(newPlan.semesters);
+        //  changePlan(newPlan);
 
         console.log("the plan state should also include the course");
+        console.log(plan);
     }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
@@ -141,6 +156,9 @@ export function App(): JSX.Element {
             changePlanView(null);
         } else {
             changePlanView(newPlan);
+            console.log("planview");
+            console.log(planView);
+            console.log(plan);
         }
     }
 
