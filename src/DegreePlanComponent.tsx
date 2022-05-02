@@ -85,21 +85,6 @@ export function DegreePlanComponent({
         changePlan(newPlan);
     }
 
-    function reset(s: Semester): void {
-        const newSem = { ...s, coursesTaken: [] };
-        const newSems = degPlanSems.map((sem: Semester) => {
-            if (sem.semesterName === s.semesterName) {
-                return newSem;
-            } else {
-                return { ...sem };
-            }
-        });
-        changePlan({ ...degreePlan, semesters: newSems });
-        const newPlan = { ...degreePlan, semesters: newSems };
-        changeSemList(newSems);
-        //changeDegPlanSems(newSems);
-        updatePlans(newPlan, degreePlan);
-    }
     //updatePlanView(newPlan);
 
     function save() {
@@ -202,10 +187,11 @@ export function DegreePlanComponent({
                                     updateSemesters={updateSemesters}
                                     removing={removing}
                                     removeSemester={removeSemester}
-                                    reset={reset}
+                                    //reset={reset}
                                     plan={degreePlan}
                                     changePlan={changePlan}
                                     updatePlans={updatePlans}
+                                    changeSemList={changeSemList}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (

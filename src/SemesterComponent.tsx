@@ -10,10 +10,11 @@ export function SemesterComponent({
     updateSemesters,
     removing,
     removeSemester,
-    reset,
+    //reset,
     plan,
     changePlan,
-    updatePlans
+    updatePlans,
+    changeSemList
 }: // courses,
 // changeCourses,
 // addCourse
@@ -22,10 +23,11 @@ export function SemesterComponent({
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
-    reset: (s: Semester) => void;
+    //reset: (s: Semester) => void;
     plan: Plan;
     changePlan: (plan: Plan) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
+    changeSemList: (sems: Semester[]) => void;
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -53,6 +55,23 @@ export function SemesterComponent({
     }
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
         changeCrsID(event.target.value);
+    }
+    function reset(s: Semester): void {
+        const newSem = { ...s, coursesTaken: [] };
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem.semesterName === s.semesterName) {
+                return newSem;
+            } else {
+                return { ...sem };
+            }
+        });
+        changeCrsList([]);
+        changeSemList(newSems);
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, plan);
     }
     function removeCourse(crsID: string): void {
         const newCourses = crsList.filter(
@@ -97,6 +116,7 @@ export function SemesterComponent({
                 return { ...sem };
             }
         });
+        updateSem(newSem);
         changePlan({ ...plan, semesters: newSems });
         const newPlan = { ...plan, semesters: newSems };
 

@@ -72,6 +72,7 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
+        //changePlan(newPlan);
         updatePlanView(newPlan);
     }
     function updatePlanView(newPlan: Plan): void {
