@@ -11,7 +11,6 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
 import { CoursePoolComponent } from "./CoursePoolComponent";
-import { convertCompilerOptionsFromJson } from "typescript";
 const PLANS = plans as Plan[];
 const filler = Object.values(catalog);
 let courses: string[] = [];
@@ -63,8 +62,14 @@ export function App(): JSX.Element {
         oldSemester: Semester,
         currentPlan: Plan
     ): void {
+        console.log("in update semesters");
+        console.log(newSemester);
+        console.log(oldSemester);
         const newSemesters = currentPlan.semesters.map((semester: Semester) => {
-            if (semester === oldSemester) {
+            if (
+                semester.season + semester.semesterName ===
+                oldSemester.season + oldSemester.semesterName
+            ) {
                 console.log("newsem found");
                 return newSemester;
             } else {
@@ -77,12 +82,15 @@ export function App(): JSX.Element {
         console.log("NEW SEMESTERS AFTER ADDING");
         console.log(newSemesters);
         const newPlan = { ...currentPlan, semesters: newSemesters };
-        // console.log(newPlan);
-        // changePlan(newPlan);
+        console.log("now new plan should include course");
+        console.log(newPlan);
         updatePlan(newPlan);
         changeDegPlanSems(newSemesters);
         updatePlans(newPlan, currentPlan);
         updatePlanView(newPlan);
+
+        console.log("back in updateSems");
+        console.log(plan);
 
         // console.log(allPlans);
     }
@@ -95,12 +103,14 @@ export function App(): JSX.Element {
         const planSems = newPlan.semesters.map((sem: Semester): Semester => {
             return { ...sem, coursesTaken: [...sem.coursesTaken] };
         });
+        console.log("does this include the courses? planSems");
+        console.log(planSems);
         changePlan({ ...newPlan, semesters: planSems });
         // console.log(plan);
         // console.log(newPlan);
-        changePlanView(newPlan);
+        changePlanView({ ...newPlan, semesters: planSems });
 
-        // console.log(plan);
+        console.log("the plan state should also include the course");
     }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
@@ -278,7 +288,6 @@ export function App(): JSX.Element {
                         coursePool={coursePool}
                         updateCoursePool={updateCoursePool}
                         currentPlan={plan}
-                        changePlan={updatePlan}
                         updateSemesters={updateSemesters}
                     ></CoursePoolComponent>
                 </Col>
