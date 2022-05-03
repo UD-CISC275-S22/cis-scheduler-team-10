@@ -37,7 +37,9 @@ export function CourseComponent({
             <FormGroup>
                 {!editMode && (
                     <div data-testid="course-code">
-                        <b>{courseCode}</b>
+                        <b>
+                            {courseCode}: {credits} Credits
+                        </b>
                     </div>
                 )}
                 {removingCourse ? (

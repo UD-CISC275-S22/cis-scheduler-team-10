@@ -38,6 +38,7 @@ export function SemesterComponent({
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
     const [courseSearch, setCourseSearch] = useState<string[]>();
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
+    const [credits, changeCredits] = useState<string>("0");
     function chooseCourse(): void {
         setCourseSearch(courseSearch);
     }
@@ -141,13 +142,16 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
-                <Button
-                    onClick={() => reset(currentSem)}
-                    variant="danger"
-                    className="me-4"
-                >
-                    Reset
-                </Button>
+                <div>Credit Limit: {semester.creditLimit}</div>
+                <div>
+                    <Button
+                        onClick={() => reset(currentSem)}
+                        variant="danger"
+                        className="me-4"
+                    >
+                        Reset
+                    </Button>
+                </div>
             </Col>
             <Col
                 style={{
@@ -213,6 +217,16 @@ export function SemesterComponent({
                                 <Form.Control
                                     value={crsID}
                                     onChange={updateCrsID}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formCredits">
+                                <Form.Label>Number of Credits:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={credits}
+                                    onChange={(
+                                        event: React.ChangeEvent<HTMLInputElement>
+                                    ) => changeCredits(event.target.value)}
                                 />
                             </Form.Group>
                             <Button variant="success" onClick={save}>
