@@ -108,6 +108,7 @@ export function CourseComponent({
                             };
                             updateCourse(newCourse);
                             updateCourses(newCourse, currentCourse);
+
                             changeEditMode(!editMode);
                         }}
                         variant="success"

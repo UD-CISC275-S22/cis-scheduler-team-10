@@ -49,9 +49,20 @@ export function SemesterComponent({
                 return course;
             }
         });
-        const newSem = { ...currentSem, coursesTaken: newCourses };
-        updateSemesters(newSem, currentSem);
-        updateSem(newSem);
+        changeCrsList(newCourses);
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changeSemList(newSems);
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+        updatePlans(newPlan, plan);
     }
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
         changeCrsID(event.target.value);
