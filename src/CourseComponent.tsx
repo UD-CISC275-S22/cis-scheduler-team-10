@@ -43,7 +43,8 @@ export function CourseComponent({
     const [currentCourse, updateCourse] = useState<Course>(course);
     const [popUp, changePopUp] = useState<boolean>(false);
     const [tempSemester, changeTempSemester] = useState<Semester>(
-        currentSemester !== plan.semesters[0]
+        currentSemester.season + currentSemester.semesterName !==
+            plan.semesters[0].season + plan.semesters[0].semesterName
             ? plan.semesters[0]
             : plan.semesters[1]
     );
@@ -150,7 +151,10 @@ export function CourseComponent({
                                 {plan.semesters
                                     .filter(
                                         (semester: Semester): boolean =>
-                                            semester !== currentSemester
+                                            semester.season +
+                                                semester.semesterName !==
+                                            currentSemester.season +
+                                                currentSemester.semesterName
                                     )
                                     .map((semester: Semester) => (
                                         <option
@@ -178,6 +182,7 @@ export function CourseComponent({
                                     currentSemester,
                                     tempSemester
                                 );
+                                // updateTempSemester({...tempSemester, courses})
                                 // addCourse(courseCode, tempSemester, plan);
                                 changePopUp(false);
                             }}

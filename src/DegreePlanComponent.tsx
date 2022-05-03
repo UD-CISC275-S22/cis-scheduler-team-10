@@ -76,9 +76,7 @@ export function DegreePlanComponent({
         movingCourse: Course,
         previousSemester: Semester,
         newSemester: Semester
-        // plan: Plan
     ): void {
-        //removing course from current semester - working
         const removedCourseList = previousSemester.coursesTaken.filter(
             (c: Course): boolean => c.courseCode !== movingCourse.courseCode
         );
@@ -86,6 +84,7 @@ export function DegreePlanComponent({
             ...previousSemester,
             coursesTaken: removedCourseList
         };
+        console.log("updated prev sem");
         console.log(updatedPreviousSemester);
         // updateSemesters(updatedPreviousSemester, previousSemester, plan);
         // finished removing
@@ -95,11 +94,9 @@ export function DegreePlanComponent({
             ...newSemester,
             coursesTaken: addedCourseList
         };
+        console.log("updated new sem");
         console.log(updatedNewSemester);
 
-        // const newCourses = [...newSemester.coursesTaken, movingCourse];
-        // changeCrsList(newCourses);
-        // const newSem = { ...newSemester, coursesTaken: newCourses };
         const newSemesters = plan.semesters.map((sem: Semester) => {
             if (sem === newSemester) {
                 return { ...updatedNewSemester };
@@ -111,10 +108,9 @@ export function DegreePlanComponent({
         });
         console.log("new semesters from moving");
         console.log(newSemesters);
-        // // updateSem(newSem);
-        changePlan({ ...plan, semesters: newSemesters });
         const newPlan = { ...plan, semesters: newSemesters };
         updatePlans(newPlan, plan);
+        updatePlan(newPlan);
 
         // updateSemesters(newSemester, semester, plan);
     }
