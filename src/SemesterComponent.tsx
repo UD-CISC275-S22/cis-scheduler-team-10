@@ -4,7 +4,7 @@ import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
-
+import { Typeahead } from "react-bootstrap-typeahead";
 export function SemesterComponent({
     semester,
     updateSemesters,
@@ -14,7 +14,8 @@ export function SemesterComponent({
     plan,
     changePlan,
     updatePlans,
-    changeSemList
+    changeSemList,
+    courses
 }: // courses,
 // changeCourses,
 // addCourse
@@ -28,6 +29,7 @@ export function SemesterComponent({
     changePlan: (plan: Plan) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     changeSemList: (sems: Semester[]) => void;
+    courses: string[];
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -38,8 +40,9 @@ export function SemesterComponent({
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
     const [courseSearch, setCourseSearch] = useState<string[]>();
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
-    function chooseCourse(): void {
+    function chooseCourse(event: React.ChangeEvent<HTMLInputElement>): void {
         setCourseSearch(courseSearch);
+        changeCrsID(event.target.value);
     }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
@@ -208,12 +211,18 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group controlId="formCourseID">
-                                <Form.Label>Course ID:</Form.Label>
-                                <Form.Control
-                                    value={crsID}
-                                    onChange={updateCrsID}
-                                />
+                            <Form.Group>
+                                <Form.Label>Select Course</Form.Label>
+                                <Typeahead
+                                    id="basic-typeahead-single"
+                                    labelKey="course-name"
+                                    //value={crsID}
+                                    onChange={() => updateCrsID}
+                                    options={courses}
+                                    placeholder="Course Search..."
+                                    selected={courseSearch}
+                                    //ref={crsID}
+                                ></Typeahead>
                             </Form.Group>
                             <Button variant="success" onClick={save}>
                                 Save Course
