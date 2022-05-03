@@ -8,7 +8,6 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export function CourseComponent({
     course,
     updateCourses,
-    //semester,
     plan,
     changePlan,
     updatePlans,
@@ -96,10 +95,21 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
+                {/* {!editMode && !coursePool.includes(currentCourse) && (
+                    <Button
+                        onClick={() => {
+                            updateCoursePool(currentCourse);
+                            removeCourse(courseCode);
+                        }}
+                    >
+                        {"→"}
+                    </Button>
+                )} */}
                 {editMode && (
                     <Button
                         data-testid="save-course"
                         onClick={() => {
+                            // console.log
                             const newCourse = {
                                 ...currentCourse,
                                 courseCode: courseCode,

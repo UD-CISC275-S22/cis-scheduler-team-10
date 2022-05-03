@@ -97,6 +97,7 @@ export function SemesterComponent({
                 return { ...sem };
             }
         });
+        updateSem(newSem);
         changePlan({ ...plan, semesters: newSems });
         const newPlan = { ...plan, semesters: newSems };
 
