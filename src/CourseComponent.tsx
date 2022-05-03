@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
+import { Semester } from "./interfaces/semester";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -12,7 +13,11 @@ export function CourseComponent({
     updateCoursePool,
     updatePlans,
     removingCourse,
-    removeCourse
+    removeCourse,
+    addCourse,
+    moveCourse,
+    plan,
+    currentSemester
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
@@ -23,12 +28,37 @@ export function CourseComponent({
     plan: Plan;
     removingCourse: boolean;
     removeCourse: (crsID: string) => void;
+    addCourse: (crsID: string, semester: Semester, plan: Plan) => void;
+    moveCourse: (
+        movingCourse: Course,
+        previousSemester: Semester,
+        newSemester: Semester
+    ) => void;
+    currentSemester: Semester;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
     const [credits, changeCredits] = useState<number>(course.numCredits);
     const [currentCourse, updateCourse] = useState<Course>(course);
+    const [popUp, changePopUp] = useState<boolean>(false);
+    const [tempSemester, changeTempSemester] = useState<Semester>(
+        currentSemester !== plan.semesters[0]
+            ? plan.semesters[0]
+            : plan.semesters[1]
+    );
+
+    function updateTempSemester(event: React.ChangeEvent<HTMLSelectElement>) {
+        const newSemester = plan.semesters.find(
+            (semester: Semester) =>
+                semester.season + semester.semesterName === event.target.value
+        );
+        if (newSemester !== undefined) {
+            changeTempSemester(newSemester);
+        } else {
+            console.log("ERROR: DID NOT FIND SEMESTER TO ADD BACK");
+        }
+    }
 
     return (
         <div
@@ -97,14 +127,72 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
+                <Modal show={popUp} onHide={() => changePopUp(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-sm">
+                            Move Course to Another Semester
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group>
+                            <Form.Label>Move to...</Form.Label>
+                            <Form.Select
+                                value={
+                                    tempSemester.season +
+                                    tempSemester.semesterName
+                                }
+                                onChange={(
+                                    event: React.ChangeEvent<HTMLSelectElement>
+                                ) => {
+                                    updateTempSemester(event);
+                                }}
+                            >
+                                {plan.semesters
+                                    .filter(
+                                        (semester: Semester): boolean =>
+                                            semester !== currentSemester
+                                    )
+                                    .map((semester: Semester) => (
+                                        <option
+                                            key={
+                                                "option" +
+                                                semester.season +
+                                                semester.semesterName
+                                            }
+                                            value={
+                                                semester.season +
+                                                semester.semesterName
+                                            }
+                                        >
+                                            {semester.season.toUpperCase() +
+                                                semester.semesterName}
+                                        </option>
+                                    ))}
+                            </Form.Select>
+                        </Form.Group>
+                        <Button
+                            onClick={() => {
+                                // removeCourse(courseCode);
+                                moveCourse(
+                                    course,
+                                    currentSemester,
+                                    tempSemester
+                                );
+                                // addCourse(courseCode, tempSemester, plan);
+                                changePopUp(false);
+                            }}
+                        >
+                            Save
+                        </Button>
+                    </Modal.Body>
+                </Modal>
                 {!editMode && !coursePool.includes(currentCourse) && (
                     <Button
                         onClick={() => {
-                            updateCoursePool(currentCourse);
-                            removeCourse(courseCode);
+                            changePopUp(true);
                         }}
                     >
-                        {"→"}
+                        {"Move Course"}
                     </Button>
                 )}
                 {editMode && (

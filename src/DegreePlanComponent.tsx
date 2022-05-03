@@ -72,6 +72,53 @@ export function DegreePlanComponent({
     //     updatePlans(newPlan, degreePlan);
     // }
 
+    function moveCourse(
+        movingCourse: Course,
+        previousSemester: Semester,
+        newSemester: Semester
+        // plan: Plan
+    ): void {
+        //removing course from current semester - working
+        const removedCourseList = previousSemester.coursesTaken.filter(
+            (c: Course): boolean => c.courseCode !== movingCourse.courseCode
+        );
+        const updatedPreviousSemester = {
+            ...previousSemester,
+            coursesTaken: removedCourseList
+        };
+        console.log(updatedPreviousSemester);
+        // updateSemesters(updatedPreviousSemester, previousSemester, plan);
+        // finished removing
+
+        const addedCourseList = [...newSemester.coursesTaken, movingCourse];
+        const updatedNewSemester = {
+            ...newSemester,
+            coursesTaken: addedCourseList
+        };
+        console.log(updatedNewSemester);
+
+        // const newCourses = [...newSemester.coursesTaken, movingCourse];
+        // changeCrsList(newCourses);
+        // const newSem = { ...newSemester, coursesTaken: newCourses };
+        const newSemesters = plan.semesters.map((sem: Semester) => {
+            if (sem === newSemester) {
+                return { ...updatedNewSemester };
+            } else if (sem === previousSemester) {
+                return { ...updatedPreviousSemester };
+            } else {
+                return { ...sem };
+            }
+        });
+        console.log("new semesters from moving");
+        console.log(newSemesters);
+        // // updateSem(newSem);
+        changePlan({ ...plan, semesters: newSemesters });
+        const newPlan = { ...plan, semesters: newSemesters };
+        updatePlans(newPlan, plan);
+
+        // updateSemesters(newSemester, semester, plan);
+    }
+
     function updateSemList() {
         let numCredits = 0;
         if (semSeason === "fall" || semSeason === "spring") {
@@ -218,6 +265,7 @@ export function DegreePlanComponent({
                                     plan={degreePlan}
                                     changePlan={changePlan}
                                     updatePlans={updatePlans}
+                                    moveCourse={moveCourse}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (
