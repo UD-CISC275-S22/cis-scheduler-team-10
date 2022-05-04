@@ -4,14 +4,14 @@ import { DegreePlanComponent } from "./DegreePlanComponent";
 import { Plan } from "./interfaces/plan";
 import plans from "./data/degreePlans.json";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
-// import { Course } from "./interfaces/course";
+import { Course } from "./interfaces/course";
 import { Catalog } from "./interfaces/catalog";
 import catalog from "./data/catalog.json";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { CoursePoolComponent } from "./CoursePoolComponent";
 const PLANS = plans as Plan[];
-
 const filler = Object.values(catalog);
 let courses: string[] = [];
 for (let i = 0; i < filler.length; i++) {
@@ -43,14 +43,89 @@ export function App(): JSX.Element {
         plan.semesters
     );
     const [courseSearch, setCourseSearch] = useState<string[]>();
+    const [coursePool, changeCoursePool] = useState<Course[]>([]);
+
+    function updateCoursePool(newCourse: Course): void {
+        let newPool = [...coursePool];
+        if (coursePool.includes(newCourse)) {
+            newPool = newPool.filter(
+                (course: Course): boolean => course !== newCourse
+            );
+        } else {
+            newPool = [...newPool, newCourse];
+        }
+        changeCoursePool(newPool);
+    }
+
+    function updateSemesters(
+        newSemester: Semester,
+        oldSemester: Semester,
+        currentPlan: Plan
+    ): void {
+        console.log("in update semesters");
+        // console.log(newSemester);
+        // console.log(oldSemester);
+        const newSemesters = currentPlan.semesters.map((semester: Semester) => {
+            if (
+                semester.season + semester.semesterName ===
+                oldSemester.season + oldSemester.semesterName
+            ) {
+                console.log("newsem found");
+                return newSemester;
+            } else {
+                return {
+                    ...semester,
+                    coursesTaken: [...semester.coursesTaken]
+                };
+            }
+        });
+        console.log(newSemesters);
+
+        //from addcourse
+        // updateSem(newSemester);
+        changePlan({ ...plan, semesters: newSemesters });
+        const newPlan = { ...plan, semesters: newSemesters };
+        updatePlans(newPlan, plan);
+
+        // not from addcourse
+        // console.log("NEW SEMESTERS AFTER ADDING");
+        // console.log(newSemesters);
+        // const newPlan = { ...currentPlan, semesters: newSemesters };
+        // console.log("now new plan should include course");
+        // console.log(newPlan);
+        // updatePlan(newPlan);
+        // changeDegPlanSems(newSemesters);
+        // updatePlans(newPlan, plan); //currentPlan
+        // updatePlanView(newPlan);
+
+        console.log("back in updateSems");
+        console.log(plan);
+        console.log(allPlans);
+
+        // console.log(allPlans);
+    }
 
     function chooseCourse(): void {
         setCourseSearch(courseSearch);
     }
 
-    function updatePlan(plan: Plan) {
-        changePlan(plan);
-        changePlanView(plan);
+    function updatePlan(newPlan: Plan) {
+        const planSems = newPlan.semesters.map((sem: Semester): Semester => {
+            return { ...sem, coursesTaken: [...sem.coursesTaken] };
+        });
+        console.log("does this include the courses? planSems");
+        console.log(planSems);
+        const planToChange = { ...newPlan, semesters: planSems };
+        // console.log("plan to change");
+        // console.log(planToChange);
+        // changePlan(planToChange);
+        changePlanView(planToChange);
+
+        //  changeDegPlanSems(newPlan.semesters);
+        //  changePlan(newPlan);
+
+        console.log("the plan state should also include the course");
+        console.log(plan);
     }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
@@ -77,15 +152,14 @@ export function App(): JSX.Element {
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
-
         changePlan(newPlan);
-        //updatePlans(newPlan, plan);
-        //
-
         if (newPlan === planView) {
             changePlanView(null);
         } else {
             changePlanView(newPlan);
+            console.log("planview");
+            console.log(planView);
+            console.log(plan);
         }
     }
 
@@ -142,38 +216,7 @@ export function App(): JSX.Element {
         //
         updatePlanView(newPlan);
     }
-    // function addCourse(crsID: string, semester: Semester, plan: Plan) {
-    //     //changeSem(semester);
 
-    //     changePlan(plan);
-    //     const newCourse: Course = {
-    //         courseCode: crsID,
-    //         courseTitle: "",
-    //         numCredits: 0,
-    //         preReqs: [],
-    //         courseDescription: "",
-    //         complete: true,
-    //         required: true,
-    //         requirementType: "university"
-    //     };
-    //     const newCourses = [...courses, newCourse];
-    //     changeCourses(newCourses);
-    //     const newSem = { ...semester, coursesTaken: newCourses };
-    //     //const newSems = [...degPlanSems, newSem];
-    //     const newSems = degPlanSems.map((sem: Semester) => {
-    //         if (sem === semester) {
-    //             return { ...newSem };
-    //         } else {
-    //             return { ...sem };
-    //         }
-    //     });
-    //     changeDegPlanSems(newSems);
-    //     const newPlan = { ...plan, semesters: newSems };
-
-    //     //changeDegPlanSems(newSems);
-    //     updatePlans(newPlan, plan);
-    //     updatePlanView(newPlan);
-    // }
     return (
         <div className="App">
             <header className="App-header">Scheduler (Team 10)</header>
@@ -200,9 +243,12 @@ export function App(): JSX.Element {
                             degPlanSems={degPlanSems}
                             updatePlans={updatePlans}
                             changeDegPlanSems={changeDegPlanSems}
+                            coursePool={coursePool}
+                            updateCoursePool={updateCoursePool}
                             changePlan={updatePlan}
                             addSemester={addSemester}
                             removeSemester={removeSemester}
+                            updateSemesters={updateSemesters}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
@@ -257,6 +303,12 @@ export function App(): JSX.Element {
                             selected={courseSearch}
                         ></Typeahead>
                     </Form.Group>
+                    <CoursePoolComponent
+                        coursePool={coursePool}
+                        updateCoursePool={updateCoursePool}
+                        currentPlan={plan}
+                        updateSemesters={updateSemesters}
+                    ></CoursePoolComponent>
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>

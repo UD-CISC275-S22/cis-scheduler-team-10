@@ -7,20 +7,29 @@ import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
     semester,
-    // updateSemesters,
+    updateSemesters,
+    coursePool,
+    updateCoursePool,
     removing,
     removeSemester,
     //reset,
     plan,
     changePlan,
     updatePlans,
-    changeSemList
+    changeSemList,
+    moveCourse
 }: // courses,
 // changeCourses,
 // addCourse
 {
     semester: Semester;
-    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    updateSemesters: (
+        newSemester: Semester,
+        oldSemester: Semester,
+        plan: Plan
+    ) => void;
+    coursePool: Course[];
+    updateCoursePool: (updated: Course) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
     //reset: (s: Semester) => void;
@@ -28,6 +37,11 @@ export function SemesterComponent({
     changePlan: (plan: Plan) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     changeSemList: (sems: Semester[]) => void;
+    moveCourse: (
+        movingCourse: Course,
+        previousSemester: Semester,
+        newSemester: Semester
+    ) => void;
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -42,27 +56,21 @@ export function SemesterComponent({
     //     setCourseSearch(courseSearch);
     // }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
+        console.log("plan in sem component");
+        console.log(plan);
+        console.log(currentSem);
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
-            if (course === oldCourse) {
+            if (course.courseCode === oldCourse.courseCode) {
                 return newCourse;
             } else {
                 return course;
             }
         });
-        changeCrsList(newCourses);
-        const newSem = { ...semester, coursesTaken: newCourses };
-        //const newSems = [...degPlanSems, newSem];
-        const newSems = plan.semesters.map((sem: Semester) => {
-            if (sem === semester) {
-                return { ...newSem };
-            } else {
-                return { ...sem };
-            }
-        });
-        changeSemList(newSems);
-        changePlan({ ...plan, semesters: newSems });
-        const newPlan = { ...plan, semesters: newSems };
-        updatePlans(newPlan, plan);
+        const newSem = { ...currentSem, coursesTaken: newCourses };
+        console.log("THESE NEXT 2 SHOULD BE THE SAME");
+        console.log(newSem);
+        updateSemesters(newSem, currentSem, plan);
+        updateSem(newSem);
     }
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
         changeCrsID(event.target.value);
@@ -84,27 +92,51 @@ export function SemesterComponent({
         //changeDegPlanSems(newSems);
         updatePlans(newPlan, plan);
     }
+    // function moveCourse(
+    //     movingCourse: Course,
+    //     newSemester: Semester,
+    //     plan: Plan
+    // ): void {
+    //     //removing course from current semester - working
+    //     const removeCourseList = crsList.filter(
+    //         (c: Course): boolean => c.courseCode !== movingCourse.courseCode
+    //     );
+    //     changeCrsList(removeCourseList);
+    //     const previousSemester = {
+    //         ...semester,
+    //         coursesTaken: removeCourseList
+    //     };
+    //     updateSemesters(previousSemester, semester, plan);
+    //     // finished removing
+    //     console.log(plan);
+
+    //     // const newCourses = [...newSemester.coursesTaken, movingCourse];
+    //     // changeCrsList(newCourses);
+    //     // const newSem = { ...newSemester, coursesTaken: newCourses };
+    //     // const newSems = plan.semesters.map((sem: Semester) => {
+    //     //     if (sem === semester) {
+    //     //         return { ...newSem };
+    //     //     } else {
+    //     //         return { ...sem };
+    //     //     }
+    //     // });
+    //     // updateSem(newSem);
+    //     // changePlan({ ...plan, semesters: newSems });
+    //     // const newPlan = { ...plan, semesters: newSems };
+    //     // updatePlans(newPlan, plan);
+
+    //     // updateSemesters(newSem, semester, plan);
+    // }
+
     function removeCourse(crsID: string): void {
         const newCourses = crsList.filter(
             (c: Course): boolean => c.courseCode !== crsID
         );
         changeCrsList(newCourses);
         const newSem = { ...semester, coursesTaken: newCourses };
-        //const newSems = [...degPlanSems, newSem];
-        const newSems = plan.semesters.map((sem: Semester) => {
-            if (sem === semester) {
-                return { ...newSem };
-            } else {
-                return { ...sem };
-            }
-        });
-        changePlan({ ...plan, semesters: newSems });
-        const newPlan = { ...plan, semesters: newSems };
-
-        //changeDegPlanSems(newSems);
-        updatePlans(newPlan, plan);
-        //updatePlanView(newPlan);
+        updateSemesters(newSem, semester, plan);
     }
+
     function addCourse(crsID: string, semester: Semester, plan: Plan) {
         const newCourse: Course = {
             courseCode: crsID,
@@ -119,7 +151,6 @@ export function SemesterComponent({
         const newCourses = [...crsList, newCourse];
         changeCrsList(newCourses);
         const newSem = { ...semester, coursesTaken: newCourses };
-        //const newSems = [...degPlanSems, newSem];
         const newSems = plan.semesters.map((sem: Semester) => {
             if (sem === semester) {
                 return { ...newSem };
@@ -192,11 +223,16 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
-                                // plan={plan}
-                                // changePlan={changePlan}
-                                // updatePlans={updatePlans}
+                                coursePool={coursePool}
+                                updateCoursePool={updateCoursePool}
+                                plan={plan}
+                                changePlan={changePlan}
+                                updatePlans={updatePlans}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
+                                addCourse={addCourse}
+                                moveCourse={moveCourse}
+                                currentSemester={currentSem}
                             ></CourseComponent>
                         </div>
                     );

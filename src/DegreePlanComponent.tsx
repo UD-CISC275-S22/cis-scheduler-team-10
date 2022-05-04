@@ -10,7 +10,7 @@ import {
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
-// import { Course } from "./interfaces/course";
+import { Course } from "./interfaces/course";
 
 export function DegreePlanComponent({
     degreePlan,
@@ -18,14 +18,19 @@ export function DegreePlanComponent({
     degPlanSems,
     changeDegPlanSems,
     changePlan,
+    coursePool,
+    updateCoursePool,
     addSemester,
-    removeSemester
+    removeSemester,
+    updateSemesters
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     degPlanSems: Semester[];
     changeDegPlanSems: (sems: Semester[]) => void;
     changePlan: (plan: Plan) => void;
+    coursePool: Course[];
+    updateCoursePool: (updated: Course) => void;
     addSemester: (
         sems: Semester[],
         plan: Plan,
@@ -33,12 +38,17 @@ export function DegreePlanComponent({
         semSeason: string
     ) => void;
     removeSemester: (semName: string) => void;
+    updateSemesters: (
+        newSemester: Semester,
+        oldSemester: Semester,
+        plan: Plan
+    ) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
-    // const [plan, updatePlan] = useState<Plan>(degreePlan);
+    const [plan, updatePlan] = useState<Plan>(degreePlan);
     const [invalid, updateInvalid] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
 
@@ -61,6 +71,49 @@ export function DegreePlanComponent({
     //     updatePlan(newPlan);
     //     updatePlans(newPlan, degreePlan);
     // }
+
+    function moveCourse(
+        movingCourse: Course,
+        previousSemester: Semester,
+        newSemester: Semester
+    ): void {
+        const removedCourseList = previousSemester.coursesTaken.filter(
+            (c: Course): boolean => c.courseCode !== movingCourse.courseCode
+        );
+        const updatedPreviousSemester = {
+            ...previousSemester,
+            coursesTaken: removedCourseList
+        };
+        console.log("updated prev sem");
+        console.log(updatedPreviousSemester);
+        // updateSemesters(updatedPreviousSemester, previousSemester, plan);
+        // finished removing
+
+        const addedCourseList = [...newSemester.coursesTaken, movingCourse];
+        const updatedNewSemester = {
+            ...newSemester,
+            coursesTaken: addedCourseList
+        };
+        console.log("updated new sem");
+        console.log(updatedNewSemester);
+
+        const newSemesters = plan.semesters.map((sem: Semester) => {
+            if (sem === newSemester) {
+                return { ...updatedNewSemester };
+            } else if (sem === previousSemester) {
+                return { ...updatedPreviousSemester };
+            } else {
+                return { ...sem };
+            }
+        });
+        console.log("new semesters from moving");
+        console.log(newSemesters);
+        const newPlan = { ...plan, semesters: newSemesters };
+        updatePlans(newPlan, plan);
+        updatePlan(newPlan);
+
+        // updateSemesters(newSemester, semester, plan);
+    }
 
     function updateSemList() {
         let numCredits = 0;
@@ -198,7 +251,9 @@ export function DegreePlanComponent({
                             >
                                 <SemesterComponent
                                     semester={sem}
-                                    // updateSemesters={updateSemesters}
+                                    updateSemesters={updateSemesters}
+                                    coursePool={coursePool}
+                                    updateCoursePool={updateCoursePool}
                                     removing={removing}
                                     removeSemester={removeSemester}
                                     //reset={reset}
@@ -206,6 +261,7 @@ export function DegreePlanComponent({
                                     changePlan={changePlan}
                                     updatePlans={updatePlans}
                                     changeSemList={changeSemList}
+                                    moveCourse={moveCourse}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (
