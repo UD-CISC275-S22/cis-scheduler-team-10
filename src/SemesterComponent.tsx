@@ -10,7 +10,7 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export function SemesterComponent({
     semester,
-    updateSemesters,
+    // updateSemesters,
     removing,
     removeSemester,
     //reset,
@@ -24,7 +24,7 @@ export function SemesterComponent({
 // addCourse
 {
     semester: Semester;
-    updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
     //reset: (s: Semester) => void;
