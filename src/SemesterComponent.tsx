@@ -7,7 +7,7 @@ import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
     semester,
-    updateSemesters,
+    // updateSemesters,
     removing,
     removeSemester,
     //reset,
@@ -20,7 +20,7 @@ export function SemesterComponent({
 // addCourse
 {
     semester: Semester;
-    updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
     //reset: (s: Semester) => void;
@@ -36,12 +36,20 @@ export function SemesterComponent({
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
     const [crsID, changeCrsID] = useState<string>("Insert Course ID");
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
-    const [courseSearch, setCourseSearch] = useState<string[]>();
+    // const [courseSearch, setCourseSearch] = useState<string[]>();
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [credits, changeCredits] = useState<string>("0");
-    function chooseCourse(): void {
-        setCourseSearch(courseSearch);
+    //const [totCredits, changeTotCredits] = useState<number>(0);
+    function updateCredits(event: React.ChangeEvent<HTMLInputElement>) {
+        changeCredits(event.target.value);
+        //const creds = +credits;
+        //changeTotCredits(totCredits + creds);
+        //const newCourse
     }
+
+    // function chooseCourse(): void {
+    //     setCourseSearch(courseSearch);
+    // }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -50,9 +58,20 @@ export function SemesterComponent({
                 return course;
             }
         });
-        const newSem = { ...currentSem, coursesTaken: newCourses };
-        updateSemesters(newSem, currentSem);
-        updateSem(newSem);
+        changeCrsList(newCourses);
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changeSemList(newSems);
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+        updatePlans(newPlan, plan);
     }
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
         changeCrsID(event.target.value);
@@ -95,11 +114,16 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
         //updatePlanView(newPlan);
     }
-    function addCourse(crsID: string, semester: Semester, plan: Plan) {
+    function addCourse(
+        crsID: string,
+        credits: number,
+        semester: Semester,
+        plan: Plan
+    ) {
         const newCourse: Course = {
             courseCode: crsID,
             courseTitle: "",
-            numCredits: 0,
+            numCredits: credits,
             preReqs: [],
             courseDescription: "",
             complete: true,
@@ -128,13 +152,14 @@ export function SemesterComponent({
     function save() {
         //changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
-        addCourse(crsID, semester, plan);
+        addCourse(crsID, +credits, semester, plan);
         changeAddingCourse(!addingCourse);
         changeCrsID("Insert Course ID");
     }
 
     return (
         <div
+            data-testid="sem"
             className="semester"
             style={{ border: "1px solid black", padding: "20px" }}
         >
@@ -144,14 +169,20 @@ export function SemesterComponent({
                     semester.semesterName.toUpperCase()}
                 <div>Credit Limit: {semester.creditLimit}</div>
                 <div>
-                    <Button
-                        onClick={() => reset(currentSem)}
-                        variant="danger"
-                        className="me-4"
-                    >
-                        Reset
-                    </Button>
+                    Credits Filled:{" "}
+                    {semester.coursesTaken.reduce(
+                        (credTot, { numCredits }) => credTot + numCredits,
+                        0
+                    )}
                 </div>
+                <Button
+                    data-testid="reset"
+                    onClick={() => reset(currentSem)}
+                    variant="danger"
+                    className="me-4"
+                >
+                    Reset
+                </Button>
             </Col>
             <Col
                 style={{
@@ -160,6 +191,7 @@ export function SemesterComponent({
             >
                 {removing ? (
                     <Button
+                        data-testid="removeSem"
                         onClick={() => removeSemester(semester.semesterName)}
                         variant="danger"
                         className="me-4"
@@ -182,9 +214,9 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
-                                plan={plan}
-                                changePlan={changePlan}
-                                updatePlans={updatePlans}
+                                // plan={plan}
+                                // changePlan={changePlan}
+                                // updatePlans={updatePlans}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
                             ></CourseComponent>
@@ -194,11 +226,13 @@ export function SemesterComponent({
                 <div style={{ padding: "2px" }}>
                     <ButtonGroup>
                         <Button
+                            data-testid="addCourseButton"
                             onClick={() => changeAddingCourse(!addingCourse)}
                         >
                             Add Course
                         </Button>
                         <Button
+                            data-testid="removeCourseOpt"
                             variant="danger"
                             onClick={() =>
                                 changeRemovingCourse(!removingCourse)
@@ -212,7 +246,10 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group controlId="formCourseID">
+                            <Form.Group
+                                data-testid="addCrsID"
+                                controlId="formCourseID"
+                            >
                                 <Form.Label>Course ID:</Form.Label>
                                 <Form.Control
                                     value={crsID}
@@ -224,12 +261,15 @@ export function SemesterComponent({
                                 <Form.Control
                                     type="number"
                                     value={credits}
-                                    onChange={(
-                                        event: React.ChangeEvent<HTMLInputElement>
-                                    ) => changeCredits(event.target.value)}
+                                    onChange={updateCredits}
                                 />
                             </Form.Group>
-                            <Button variant="success" onClick={save}>
+
+                            <Button
+                                data-testid="saveCourse"
+                                variant="success"
+                                onClick={save}
+                            >
                                 Save Course
                             </Button>
                         </div>
