@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup } from "react-bootstrap";
 import { Course } from "./interfaces/course";
+import { Plan } from "./interfaces/plan";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export function CourseComponent({
     course,
-    updateCourses
+    updateCourses,
+    plan,
+    changePlan,
+    updatePlans,
+    removingCourse,
+    removeCourse
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
+    changePlan: (plan: Plan) => void;
+    updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
+    plan: Plan;
+    removingCourse: boolean;
+    removeCourse: (crsID: string) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
@@ -28,8 +39,21 @@ export function CourseComponent({
                         <b>{courseCode}</b>
                     </div>
                 )}
+                {removingCourse ? (
+                    <Button
+                        data-testid="removeCourse"
+                        variant="danger"
+                        className="me-4"
+                        onClick={() => removeCourse(courseCode)}
+                    >
+                        Remove Course
+                    </Button>
+                ) : (
+                    <span></span>
+                )}
                 {editMode && (
                     <Form.Control
+                        data-testid="changeCodeBox"
                         type="textbox"
                         value={courseCode}
                         onChange={(event: ChangeEvent) =>
@@ -73,10 +97,21 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
+                {/* {!editMode && !coursePool.includes(currentCourse) && (
+                    <Button
+                        onClick={() => {
+                            updateCoursePool(currentCourse);
+                            removeCourse(courseCode);
+                        }}
+                    >
+                        {"→"}
+                    </Button>
+                )} */}
                 {editMode && (
                     <Button
                         data-testid="save-course"
                         onClick={() => {
+                            // console.log
                             const newCourse = {
                                 ...currentCourse,
                                 courseCode: courseCode,
@@ -85,6 +120,7 @@ export function CourseComponent({
                             };
                             updateCourse(newCourse);
                             updateCourses(newCourse, currentCourse);
+
                             changeEditMode(!editMode);
                         }}
                         variant="success"
