@@ -68,9 +68,11 @@ export function SemesterComponent({
         changeCrsID(event.target.value);
     }
     function reset(s: Semester): void {
+        console.log("resetting");
+        console.log(plan.semesters);
         const newSem = { ...s, coursesTaken: [] };
         const newSems = plan.semesters.map((sem: Semester) => {
-            if (sem.semesterName === s.semesterName) {
+            if (sem.season + sem.semesterName === s.season + s.semesterName) {
                 return newSem;
             } else {
                 return { ...sem };
