@@ -40,29 +40,29 @@ export function DegreePlanComponent({
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
     const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
-    // const [plan, updatePlan] = useState<Plan>(degreePlan);
+    const [plan, updatePlan] = useState<Plan>(degreePlan);
     const [invalid, updateInvalid] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
 
-    // function updateSemesters(
-    //     newSemester: Semester,
-    //     oldSemester: Semester
-    // ): void {
-    //     const newSemesters = degreePlan.semesters.map((semester: Semester) => {
-    //         if (semester === oldSemester) {
-    //             return newSemester;
-    //         } else {
-    //             return {
-    //                 ...semester,
-    //                 coursesTaken: [...semester.coursesTaken]
-    //             };
-    //         }
-    //     });
-    //     const newPlan = { ...degreePlan, semesters: newSemesters };
-    //     changeDegPlanSems(newSemesters);
-    //     updatePlan(newPlan);
-    //     updatePlans(newPlan, degreePlan);
-    // }
+    function updateSemesters(
+        newSemester: Semester,
+        oldSemester: Semester
+    ): void {
+        const newSemesters = degreePlan.semesters.map((semester: Semester) => {
+            if (semester === oldSemester) {
+                return newSemester;
+            } else {
+                return {
+                    ...semester,
+                    coursesTaken: [...semester.coursesTaken]
+                };
+            }
+        });
+        const newPlan = { ...degreePlan, semesters: newSemesters };
+        changeDegPlanSems(newSemesters);
+        updatePlan(newPlan);
+        updatePlans(newPlan, degreePlan);
+    }
 
     function updateSemList() {
         let numCredits = 0;
@@ -107,8 +107,6 @@ export function DegreePlanComponent({
         changeSemSeason(event.target.value);
     }
 
-    //^(19|20)\d{2}$
-    // /^[0-9\b]+$/
     function updateSemName(event: React.ChangeEvent<HTMLInputElement>) {
         if (
             /^[0-9\b]+$/.test(event.target.value) ||
@@ -192,7 +190,6 @@ export function DegreePlanComponent({
             <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
-                        {/* {degreePlan.semesters.map((sem: Semester) => ( */}
                         {degPlanSems.map((sem: Semester) => (
                             <div
                                 key={degreePlan + sem.season + sem.semesterName}
@@ -200,7 +197,7 @@ export function DegreePlanComponent({
                             >
                                 <SemesterComponent
                                     semester={sem}
-                                    // updateSemesters={updateSemesters}
+                                    updateSemesters={updateSemesters}
                                     removing={removing}
                                     removeSemester={removeSemester}
                                     //reset={reset}
