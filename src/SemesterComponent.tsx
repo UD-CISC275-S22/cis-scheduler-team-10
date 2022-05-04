@@ -145,6 +145,7 @@ export function SemesterComponent({
 
     return (
         <div
+            data-testid="sem"
             className="semester"
             style={{ border: "1px solid black", padding: "20px" }}
         >
@@ -153,6 +154,7 @@ export function SemesterComponent({
                     " " +
                     semester.semesterName.toUpperCase()}
                 <Button
+                    data-testid="reset"
                     onClick={() => reset(currentSem)}
                     variant="danger"
                     className="me-4"
@@ -167,6 +169,7 @@ export function SemesterComponent({
             >
                 {removing ? (
                     <Button
+                        data-testid="removeSem"
                         onClick={() => removeSemester(semester.semesterName)}
                         variant="danger"
                         className="me-4"
@@ -201,11 +204,13 @@ export function SemesterComponent({
                 <div style={{ padding: "2px" }}>
                     <ButtonGroup>
                         <Button
+                            data-testid="addCourseButton"
                             onClick={() => changeAddingCourse(!addingCourse)}
                         >
                             Add Course
                         </Button>
                         <Button
+                            data-testid="removeCourseOpt"
                             variant="danger"
                             onClick={() =>
                                 changeRemovingCourse(!removingCourse)
@@ -219,14 +224,21 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group controlId="formCourseID">
+                            <Form.Group
+                                data-testid="addCrsID"
+                                controlId="formCourseID"
+                            >
                                 <Form.Label>Course ID:</Form.Label>
                                 <Form.Control
                                     value={crsID}
                                     onChange={updateCrsID}
                                 />
                             </Form.Group>
-                            <Button variant="success" onClick={save}>
+                            <Button
+                                data-testid="saveCourse"
+                                variant="success"
+                                onClick={save}
+                            >
                                 Save Course
                             </Button>
                         </div>

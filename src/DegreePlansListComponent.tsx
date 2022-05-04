@@ -89,6 +89,7 @@ export function DegreePlansListComponent({
                 return (
                     <Row key={plan.name}>
                         <Col
+                            data-testid="planName"
                             // key={plan.name}
                             onClick={() => updatePlanView(plan)}
                         >
