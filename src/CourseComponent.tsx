@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup } from "react-bootstrap";
 import { Course } from "./interfaces/course";
-import { Plan } from "./interfaces/plan";
+// import { Plan } from "./interfaces/plan";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export function CourseComponent({
     course,
     updateCourses,
-    plan,
-    changePlan,
-    updatePlans,
+    // plan,
+    // changePlan,
+    // updatePlans,
     removingCourse,
     removeCourse
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
-    changePlan: (plan: Plan) => void;
-    updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
-    plan: Plan;
+    // changePlan: (plan: Plan) => void;
+    // updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
+    // plan: Plan;
     removingCourse: boolean;
     removeCourse: (crsID: string) => void;
 }): JSX.Element {

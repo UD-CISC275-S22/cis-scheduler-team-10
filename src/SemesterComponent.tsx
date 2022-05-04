@@ -7,7 +7,7 @@ import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
     semester,
-    updateSemesters,
+    // updateSemesters,
     removing,
     removeSemester,
     //reset,
@@ -20,7 +20,7 @@ export function SemesterComponent({
 // addCourse
 {
     semester: Semester;
-    updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
     //reset: (s: Semester) => void;
@@ -36,11 +36,11 @@ export function SemesterComponent({
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
     const [crsID, changeCrsID] = useState<string>("Insert Course ID");
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
-    const [courseSearch, setCourseSearch] = useState<string[]>();
+    // const [courseSearch, setCourseSearch] = useState<string[]>();
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
-    function chooseCourse(): void {
-        setCourseSearch(courseSearch);
-    }
+    // function chooseCourse(): void {
+    //     setCourseSearch(courseSearch);
+    // }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -192,9 +192,9 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
-                                plan={plan}
-                                changePlan={changePlan}
-                                updatePlans={updatePlans}
+                                // plan={plan}
+                                // changePlan={changePlan}
+                                // updatePlans={updatePlans}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
                             ></CourseComponent>
