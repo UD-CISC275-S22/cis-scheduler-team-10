@@ -10,10 +10,11 @@ export function SemesterComponent({
     updateSemesters,
     removing,
     removeSemester,
-    reset,
+    //reset,
     plan,
     changePlan,
-    updatePlans
+    updatePlans,
+    changeSemList
 }: // courses,
 // changeCourses,
 // addCourse
@@ -22,10 +23,11 @@ export function SemesterComponent({
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
-    reset: (s: Semester) => void;
+    //reset: (s: Semester) => void;
     plan: Plan;
     changePlan: (plan: Plan) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
+    changeSemList: (sems: Semester[]) => void;
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -47,12 +49,40 @@ export function SemesterComponent({
                 return course;
             }
         });
-        const newSem = { ...currentSem, coursesTaken: newCourses };
-        updateSemesters(newSem, currentSem);
-        updateSem(newSem);
+        changeCrsList(newCourses);
+        const newSem = { ...semester, coursesTaken: newCourses };
+        //const newSems = [...degPlanSems, newSem];
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem === semester) {
+                return { ...newSem };
+            } else {
+                return { ...sem };
+            }
+        });
+        changeSemList(newSems);
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+        updatePlans(newPlan, plan);
     }
     function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
         changeCrsID(event.target.value);
+    }
+    function reset(s: Semester): void {
+        const newSem = { ...s, coursesTaken: [] };
+        const newSems = plan.semesters.map((sem: Semester) => {
+            if (sem.semesterName === s.semesterName) {
+                return newSem;
+            } else {
+                return { ...sem };
+            }
+        });
+        changeCrsList([]);
+        changeSemList(newSems);
+        changePlan({ ...plan, semesters: newSems });
+        const newPlan = { ...plan, semesters: newSems };
+
+        //changeDegPlanSems(newSems);
+        updatePlans(newPlan, plan);
     }
     function removeCourse(crsID: string): void {
         const newCourses = crsList.filter(
@@ -115,6 +145,7 @@ export function SemesterComponent({
 
     return (
         <div
+            data-testid="sem"
             className="semester"
             style={{ border: "1px solid black", padding: "20px" }}
         >
@@ -123,6 +154,7 @@ export function SemesterComponent({
                     " " +
                     semester.semesterName.toUpperCase()}
                 <Button
+                    data-testid="reset"
                     onClick={() => reset(currentSem)}
                     variant="danger"
                     className="me-4"
@@ -137,6 +169,7 @@ export function SemesterComponent({
             >
                 {removing ? (
                     <Button
+                        data-testid="removeSem"
                         onClick={() => removeSemester(semester.semesterName)}
                         variant="danger"
                         className="me-4"
@@ -171,11 +204,13 @@ export function SemesterComponent({
                 <div style={{ padding: "2px" }}>
                     <ButtonGroup>
                         <Button
+                            data-testid="addCourseButton"
                             onClick={() => changeAddingCourse(!addingCourse)}
                         >
                             Add Course
                         </Button>
                         <Button
+                            data-testid="removeCourseOpt"
                             variant="danger"
                             onClick={() =>
                                 changeRemovingCourse(!removingCourse)
@@ -189,14 +224,21 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group controlId="formCourseID">
+                            <Form.Group
+                                data-testid="addCrsID"
+                                controlId="formCourseID"
+                            >
                                 <Form.Label>Course ID:</Form.Label>
                                 <Form.Control
                                     value={crsID}
                                     onChange={updateCrsID}
                                 />
                             </Form.Group>
-                            <Button variant="success" onClick={save}>
+                            <Button
+                                data-testid="saveCourse"
+                                variant="success"
+                                onClick={save}
+                            >
                                 Save Course
                             </Button>
                         </div>

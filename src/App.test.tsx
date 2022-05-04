@@ -44,4 +44,42 @@ describe("Scheduler Tests", () => {
         const code2 = screen.getByText("EGG101123");
         expect(code2).toBeInTheDocument();
     });
+    test("Buttons to add and remove semesters visible when inside of a plan", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        expect(screen.getByTestId("createNewSem")).toBeInTheDocument();
+        expect(screen.getByTestId("removeSemOption")).toBeInTheDocument();
+    });
+    test("Pressing remove semester button creates new buttons to remove each semester in plan", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        screen.getByTestId("removeSemOption").click();
+        const remButtons = screen.getAllByTestId("removeSem");
+        expect(remButtons.length).toEqual(2);
+    });
+    test("Pressing remove semester button removes semester from plan", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        screen.getByTestId("removeSemOption").click();
+        const remButtons = screen.getAllByTestId("removeSem");
+        const origSems = screen.getAllByTestId("sem");
+        expect(origSems.length).toEqual(2);
+        remButtons[0].click();
+        const sems = screen.getAllByTestId("sem");
+        expect(sems.length).toEqual(1);
+    });
+    test("A removed semester stays removed when you exit the plan and return to it", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        screen.getByTestId("removeSemOption").click();
+        const remButtons = screen.getAllByTestId("removeSem");
+        const origSems = screen.getAllByTestId("sem");
+        expect(origSems.length).toEqual(2);
+        remButtons[0].click();
+        degreePlans[0].click();
+        degreePlans[0].click();
+        degreePlans[0].click(); //trying to figure out why we have to double click
+        const sems = screen.getAllByTestId("sem");
+        expect(sems.length).toEqual(1);
+    });
 });

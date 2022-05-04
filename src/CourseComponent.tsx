@@ -41,6 +41,7 @@ export function CourseComponent({
                 )}
                 {removingCourse ? (
                     <Button
+                        data-testid="removeCourse"
                         variant="danger"
                         className="me-4"
                         onClick={() => removeCourse(courseCode)}
@@ -52,6 +53,7 @@ export function CourseComponent({
                 )}
                 {editMode && (
                     <Form.Control
+                        data-testid="changeCodeBox"
                         type="textbox"
                         value={courseCode}
                         onChange={(event: ChangeEvent) =>
@@ -118,6 +120,7 @@ export function CourseComponent({
                             };
                             updateCourse(newCourse);
                             updateCourses(newCourse, currentCourse);
+
                             changeEditMode(!editMode);
                         }}
                         variant="success"

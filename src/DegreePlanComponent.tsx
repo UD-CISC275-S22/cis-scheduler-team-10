@@ -85,21 +85,6 @@ export function DegreePlanComponent({
         changePlan(newPlan);
     }
 
-    function reset(s: Semester): void {
-        const newSem = { ...s, coursesTaken: [] };
-        const newSems = degPlanSems.map((sem: Semester) => {
-            if (sem.semesterName === s.semesterName) {
-                return newSem;
-            } else {
-                return { ...sem };
-            }
-        });
-        changePlan({ ...degreePlan, semesters: newSems });
-        const newPlan = { ...degreePlan, semesters: newSems };
-        changeSemList(newSems);
-        //changeDegPlanSems(newSems);
-        updatePlans(newPlan, degreePlan);
-    }
     //updatePlanView(newPlan);
 
     function save() {
@@ -139,10 +124,14 @@ export function DegreePlanComponent({
 
             <div style={{ padding: "5px" }}>
                 <ButtonGroup>
-                    <Button onClick={() => changeAddSem(!addSem)}>
+                    <Button
+                        data-testid="createNewSem"
+                        onClick={() => changeAddSem(!addSem)}
+                    >
                         Create New Semester
                     </Button>
                     <Button
+                        data-testid="removeSemOption"
                         variant="danger"
                         onClick={() => changeRemoving(!removing)}
                     >
@@ -151,7 +140,10 @@ export function DegreePlanComponent({
                 </ButtonGroup>
                 {addSem ? (
                     <div>
-                        <Form.Group controlId="semSeasonsInsert">
+                        <Form.Group
+                            data-testid="semSeasonInsert"
+                            controlId="semSeasonsInsert"
+                        >
                             <Form.Label>Add Semester by Season:</Form.Label>
                             <Form.Select
                                 value={semSeason}
@@ -164,7 +156,10 @@ export function DegreePlanComponent({
                                 <option value="summer2">Summer II</option>
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group controlId="formSemesterName">
+                        <Form.Group
+                            data-testid="formSemesterName"
+                            controlId="formSemesterName"
+                        >
                             <Form.Label>Semester Year:</Form.Label>
                             <Form.Control
                                 value={semYear}
@@ -178,7 +173,11 @@ export function DegreePlanComponent({
                             </span>
                         )}
                         <div style={{ padding: "2px" }}>
-                            <Button variant="success" onClick={save}>
+                            <Button
+                                data-testid="saveSemButton"
+                                variant="success"
+                                onClick={save}
+                            >
                                 Save Semester
                             </Button>
                         </div>
@@ -202,10 +201,11 @@ export function DegreePlanComponent({
                                     updateSemesters={updateSemesters}
                                     removing={removing}
                                     removeSemester={removeSemester}
-                                    reset={reset}
+                                    //reset={reset}
                                     plan={degreePlan}
                                     changePlan={changePlan}
                                     updatePlans={updatePlans}
+                                    changeSemList={changeSemList}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (
