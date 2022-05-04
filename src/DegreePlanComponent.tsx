@@ -19,7 +19,8 @@ export function DegreePlanComponent({
     changeDegPlanSems,
     changePlan,
     addSemester,
-    removeSemester
+    removeSemester,
+    courses
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
@@ -33,6 +34,7 @@ export function DegreePlanComponent({
         semSeason: string
     ) => void;
     removeSemester: (semName: string) => void;
+    courses: string[];
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
@@ -206,6 +208,7 @@ export function DegreePlanComponent({
                                     changePlan={changePlan}
                                     updatePlans={updatePlans}
                                     changeSemList={changeSemList}
+                                    courses={courses}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (
