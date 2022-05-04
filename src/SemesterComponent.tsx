@@ -6,11 +6,9 @@ import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 import { Typeahead } from "react-bootstrap-typeahead";
 
-type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
-
 export function SemesterComponent({
     semester,
-    updateSemesters,
+    // updateSemesters,
     removing,
     removeSemester,
     //reset,
@@ -24,7 +22,7 @@ export function SemesterComponent({
 // addCourse
 {
     semester: Semester;
-    updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
+    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (semName: string) => void;
     //reset: (s: Semester) => void;
@@ -41,7 +39,7 @@ export function SemesterComponent({
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
     const [crsID, changeCrsID] = useState<string>("Insert Course ID");
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
-    const [courseSearch, setCourseSearch] = useState<string[]>();
+    // const [courseSearch, setCourseSearch] = useState<string[]>();
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     // function chooseCourse(event: React.ChangeEvent<HTMLInputElement>): void {
     //     setCourseSearch(courseSearch);
@@ -236,13 +234,11 @@ export function SemesterComponent({
                                     onChange={(selected) => {
                                         if (selected.length === 1) {
                                             changeCrsID(selected[0].toString());
-                                        } else {
-                                            // setCourseSearch(courseSearch);
                                         }
                                     }}
                                     options={courses}
                                     placeholder="Course Search..."
-                                    selected={courseSearch}
+                                    // selected={courseSearch}
                                     //ref={crsID}
                                 ></Typeahead>
                             </Form.Group>
