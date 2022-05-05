@@ -15,29 +15,20 @@ import { Semester } from "./interfaces/semester";
 export function DegreePlanComponent({
     degreePlan,
     updatePlans,
-    degPlanSems,
-    changeDegPlanSems,
     changePlan,
     addSemester,
     removeSemester
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
-    degPlanSems: Semester[];
-    changeDegPlanSems: (sems: Semester[]) => void;
     changePlan: (plan: Plan) => void;
-    addSemester: (
-        sems: Semester[],
-        plan: Plan,
-        semName: string,
-        semSeason: string
-    ) => void;
-    removeSemester: (semName: string) => void;
+    addSemester: (plan: Plan, semName: string, semSeason: string) => void;
+    removeSemester: (plan: Plan, semName: string) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
-    const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
+    const [semList, changeSemList] = useState<Semester[]>(degreePlan.semesters);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
     const [invalid, updateInvalid] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
@@ -78,21 +69,20 @@ export function DegreePlanComponent({
         const newSemList = [...semList, newSem];
         //updateSems(newSem, degPlanSems);
         changeSemList(newSemList);
-        changeDegPlanSems(newSemList);
         const newPlan = { ...degreePlan, semesters: [...newSemList] };
         updatePlans(newPlan, degreePlan);
         changePlan(newPlan);
     }
 
     function reset(s: Semester): void {
-        const newSems = degPlanSems.map((sem: Semester) => {
+        const newSems = semList.map((sem: Semester) => {
             if (sem.semesterName === s.semesterName) {
                 return { ...sem, coursesTaken: [] };
             } else {
                 return { ...sem };
             }
         });
-        changeDegPlanSems(newSems);
+        changeSemList(newSems);
     }
 
     function save() {
@@ -100,7 +90,6 @@ export function DegreePlanComponent({
             updateInvalid(false);
             updateSemList();
             changeSemList(degreePlan.semesters);
-            changeDegPlanSems(semList);
             addSemester(semList, degreePlan, semYear, semSeason);
             changeAddSem(!addSem);
             changeSemYear("");
@@ -185,7 +174,7 @@ export function DegreePlanComponent({
                 <Row>
                     <Col>
                         {/* {degreePlan.semesters.map((sem: Semester) => ( */}
-                        {degPlanSems.map((sem: Semester) => (
+                        {semList.map((sem: Semester) => (
                             <div
                                 key={degreePlan + sem.season + sem.semesterName}
                                 data-testid="semester"

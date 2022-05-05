@@ -35,26 +35,29 @@ for (let i = 0; i < filler.length; i++) {
 //     })
 // );
 
+let loadedData = PLANS;
+const saveDataKey = "My-Plan-Data";
+const previousData = localStorage.getItem(saveDataKey);
+if (previousData !== null) {
+    loadedData = JSON.parse(previousData);
+}
+console.log(loadedData);
+
 export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
-    const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
-    const [plan, changePlan] = useState<Plan>(PLANS[0]);
-    const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
-        plan.semesters
-    );
+    const [allPlans, changeAllPlans] = useState<Plan[]>(loadedData);
     const [courseSearch, setCourseSearch] = useState<string[]>();
+
+    function saveData() {
+        localStorage.setItem(saveDataKey, JSON.stringify(allPlans));
+    }
 
     function chooseCourse(): void {
         setCourseSearch(courseSearch);
     }
-
-    function updatePlan(plan: Plan) {
-        changePlan(plan);
-        changePlanView(plan);
-    }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
-            if (plan === p) {
+            if (plan.name === p.name) {
                 return { name: p.name, semesters: [] };
             } else {
                 return { ...plan };
@@ -72,15 +75,8 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
-        // updatePlanView()
     }
     function updatePlanView(newPlan: Plan): void {
-        changeDegPlanSems(newPlan.semesters);
-
-        changePlan(newPlan);
-        //updatePlans(newPlan, plan);
-        //
-
         if (newPlan === planView) {
             changePlanView(null);
         } else {
@@ -89,9 +85,13 @@ export function App(): JSX.Element {
     }
 
     function addPlan(newPlanName: string): void {
-        const newPlan: Plan = { name: newPlanName, semesters: [] };
-
-        changeAllPlans([...allPlans, newPlan]);
+        const index = allPlans.findIndex(
+            (p: Plan): boolean => p.name === newPlanName
+        );
+        if (index === -1) {
+            const newPlan: Plan = { name: newPlanName, semesters: [] };
+            changeAllPlans([...allPlans, newPlan]);
+        }
     }
 
     function removePlan(planName: string): void {
@@ -102,24 +102,18 @@ export function App(): JSX.Element {
             changePlanView(null);
         }
     }
-    function removeSemester(semName: string): void {
-        const newSems = degPlanSems.filter(
-            (s: Semester): boolean => s.semesterName !== semName
+    function removeSemester(plan: Plan, semName: string): void {
+        const index = allPlans.findIndex(
+            (p: Plan): boolean => p.name === plan.name
         );
-        //changeDegPlanSems(newSems);
+        const newSems = allPlans[index].semesters.filter(
+            (s: Semester): boolean => s.semesterName === semName
+        );
         const newPlan = { ...plan, semesters: newSems };
-        changePlan(newPlan);
         updatePlans(newPlan, plan);
         updatePlanView(newPlan);
     }
-    function addSemester(
-        sems: Semester[],
-        plan: Plan,
-        semName: string,
-        semSeason: string
-    ): void {
-        changePlan(plan);
-        //changeDegPlanSems(sems);
+    function addSemester(plan: Plan, semName: string, semSeason: string): void {
         let numCredits = 0;
         if (semSeason === "fall" || semSeason === "spring") {
             numCredits = 18;
@@ -133,12 +127,9 @@ export function App(): JSX.Element {
             season: semSeason,
             coursesTaken: []
         };
-        const newSems = [...degPlanSems, newSem];
+        const newSems = [...plan.semesters, newSem];
         const newPlan = { ...plan, semesters: newSems };
         updatePlans(newPlan, plan);
-        // changeDegPlanSems(newSems);
-
-        //
         updatePlanView(newPlan);
     }
     // function addCourse(crsID: string, semester: Semester, plan: Plan) {
@@ -175,7 +166,10 @@ export function App(): JSX.Element {
     // }
     return (
         <div className="App">
-            <header className="App-header">Scheduler (Team 10)</header>
+            <header className="App-header">
+                Scheduler (Team 10){" "}
+                <Button onClick={saveData}>Save Data</Button>
+            </header>
             <Row
                 style={{
                     padding: "10px"
@@ -186,8 +180,6 @@ export function App(): JSX.Element {
                         degreePlans={allPlans}
                         updatePlanView={updatePlanView}
                         addPlan={addPlan}
-                        degPlanSems={degPlanSems}
-                        changeDegPlanSems={changeDegPlanSems}
                         removePlan={removePlan}
                     ></DegreePlansListComponent>
                 </Col>
@@ -196,9 +188,7 @@ export function App(): JSX.Element {
                         <DegreePlanComponent
                             data-testid="degreePlan"
                             degreePlan={planView}
-                            degPlanSems={degPlanSems}
                             updatePlans={updatePlans}
-                            changeDegPlanSems={changeDegPlanSems}
                             changePlan={updatePlan}
                             addSemester={addSemester}
                             removeSemester={removeSemester}

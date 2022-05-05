@@ -53,15 +53,11 @@ export function DegreePlansListComponent({
     degreePlans,
     updatePlanView,
     addPlan,
-    // degPlanSems,
-    // changeDegPlanSems,
     removePlan
 }: {
     degreePlans: Plan[];
     updatePlanView: (plan: Plan) => void;
     addPlan: (newPlanName: string) => void;
-    degPlanSems: Semester[];
-    changeDegPlanSems: (sems: Semester[]) => void;
     removePlan: (planName: string) => void;
 }): JSX.Element {
     const [planName, setPlanName] = useState<string>("Insert Name Here");
