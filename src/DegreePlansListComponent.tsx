@@ -38,7 +38,12 @@ function InsertPlan({
                 />
             </Col>
             <Col>
-                <Button onClick={save} variant="success" className="me-4">
+                <Button
+                    data-testid={"save-plan"}
+                    onClick={save}
+                    variant="success"
+                    className="me-4"
+                >
                     Save
                 </Button>
                 <Button onClick={cancel} variant="warning" className="me-4">
@@ -78,6 +83,7 @@ export function DegreePlansListComponent({
                 <span></span>
             ) : (
                 <Button
+                    data-testid={"add-plan"}
                     onClick={() => changeAdding(!adding)}
                     variant="success"
                     className="me-4"
@@ -100,6 +106,7 @@ export function DegreePlansListComponent({
                             {editing ? (
                                 <Button
                                     onClick={() => removePlan(plan.name)}
+                                    data-testid={"remove-plan"}
                                     variant="danger"
                                     className="me-4"
                                 >
@@ -123,6 +130,7 @@ export function DegreePlansListComponent({
             ) : (
                 <Button
                     onClick={() => changeEditing(!editing)}
+                    data-testid={"remove-plan-bool"}
                     variant="danger"
                     className="me-4"
                 >

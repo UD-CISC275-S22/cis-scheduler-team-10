@@ -225,12 +225,11 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group>
+                            <Form.Group data-testid="course-search">
                                 <Form.Label>Select Course</Form.Label>
                                 <Typeahead
                                     id="basic-typeahead-single"
                                     labelKey="course-name"
-                                    // value={crsID}
                                     onChange={(selected) => {
                                         if (selected.length === 1) {
                                             changeCrsID(selected[0].toString());
@@ -238,8 +237,6 @@ export function SemesterComponent({
                                     }}
                                     options={courses}
                                     placeholder="Course Search..."
-                                    // selected={courseSearch}
-                                    //ref={crsID}
                                 ></Typeahead>
                             </Form.Group>
                             <Button
