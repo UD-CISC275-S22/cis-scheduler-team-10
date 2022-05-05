@@ -247,7 +247,7 @@ export function App(): JSX.Element {
                             Reset
                         </Button>
                     )}
-                    <Form.Group>
+                    {/* <Form.Group>
                         <Form.Label>Select Course</Form.Label>
                         <Typeahead
                             id="basic-typeahead-single"
@@ -257,7 +257,7 @@ export function App(): JSX.Element {
                             placeholder="Course Search..."
                             selected={courseSearch}
                         ></Typeahead>
-                    </Form.Group>
+                    </Form.Group> */}
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
