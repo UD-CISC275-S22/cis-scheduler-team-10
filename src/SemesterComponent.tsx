@@ -5,7 +5,6 @@ import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 export function SemesterComponent({
     semester,
     // updateSemesters,
@@ -153,6 +152,7 @@ export function SemesterComponent({
     function save() {
         //changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
+        updateSem(semester);
         addCourse(crsID, +credits, semester, plan);
         changeAddingCourse(!addingCourse);
         changeCrsID("Insert Course ID");
@@ -168,9 +168,9 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
-                <div data-testid="credLim">
-                    Credit Limit: {semester.creditLimit}
-                </div>
+                {/* <div data-testid="credLim">
+                    Credit Limit: {currentSem.creditLimit}
+                </div> */}
                 <div data-testid="credFill">
                     Credits Filled:{" "}
                     {semester.coursesTaken.reduce(
