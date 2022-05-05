@@ -19,7 +19,8 @@ export function DegreePlanComponent({
     changeDegPlanSems,
     changePlan,
     addSemester,
-    removeSemester
+    removeSemester,
+    courses
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
@@ -33,6 +34,7 @@ export function DegreePlanComponent({
         semSeason: string
     ) => void;
     removeSemester: (semName: string) => void;
+    courses: string[];
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
@@ -105,8 +107,6 @@ export function DegreePlanComponent({
         changeSemSeason(event.target.value);
     }
 
-    //^(19|20)\d{2}$
-    // /^[0-9\b]+$/
     function updateSemName(event: React.ChangeEvent<HTMLInputElement>) {
         if (
             /^[0-9\b]+$/.test(event.target.value) ||
@@ -190,7 +190,6 @@ export function DegreePlanComponent({
             <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
-                        {/* {degreePlan.semesters.map((sem: Semester) => ( */}
                         {degPlanSems.map((sem: Semester) => (
                             <div
                                 key={degreePlan + sem.season + sem.semesterName}
@@ -206,6 +205,7 @@ export function DegreePlanComponent({
                                     changePlan={changePlan}
                                     updatePlans={updatePlans}
                                     changeSemList={changeSemList}
+                                    courses={courses}
                                 ></SemesterComponent>
                                 {/* <Col key={sem.semesterName}>
                                     {removing ? (

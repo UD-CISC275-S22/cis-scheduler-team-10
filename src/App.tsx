@@ -3,14 +3,20 @@ import "./App.css";
 import { DegreePlanComponent } from "./DegreePlanComponent";
 import { Plan } from "./interfaces/plan";
 import plans from "./data/degreePlans.json";
-import { Row, Col, Container, Form, Button } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 // import { Course } from "./interfaces/course";
 import { Catalog } from "./interfaces/catalog";
 import catalog from "./data/catalog.json";
-import { Typeahead } from "react-bootstrap-typeahead";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
 const PLANS = plans as Plan[];
+
+let loadedData = PLANS;
+const saveDataKey = "My-Plan-Data";
+const previousData = localStorage.getItem(saveDataKey);
+if (previousData !== null) {
+    loadedData = JSON.parse(previousData);
+}
 
 const filler = Object.values(catalog);
 let courses: string[] = [];
@@ -37,15 +43,13 @@ for (let i = 0; i < filler.length; i++) {
 
 export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
-    const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
-    const [plan, changePlan] = useState<Plan>(PLANS[0]);
+    const [allPlans, changeAllPlans] = useState<Plan[]>(loadedData);
+    const [plan, changePlan] = useState<Plan>(loadedData[0]);
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
     );
-    const [courseSearch, setCourseSearch] = useState<string[]>();
-
-    function chooseCourse(): void {
-        setCourseSearch(courseSearch);
+    function saveData() {
+        localStorage.setItem(saveDataKey, JSON.stringify(allPlans));
     }
 
     function updatePlan(plan: Plan) {
@@ -176,7 +180,10 @@ export function App(): JSX.Element {
     // }
     return (
         <div className="App">
-            <header className="App-header">Scheduler (Team 10)</header>
+            <header className="App-header">
+                Scheduler (Team 10)
+                <Button onClick={saveData}>Save Data</Button>
+            </header>
             <Row
                 style={{
                     padding: "10px"
@@ -203,6 +210,7 @@ export function App(): JSX.Element {
                             changePlan={updatePlan}
                             addSemester={addSemester}
                             removeSemester={removeSemester}
+                            courses={courses}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
@@ -239,6 +247,7 @@ export function App(): JSX.Element {
                         <span></span>
                     ) : (
                         <Button
+                            data-testid="resetSem"
                             onClick={() => reset(plan)}
                             variant="danger"
                             className="me-4"
@@ -246,17 +255,6 @@ export function App(): JSX.Element {
                             Reset
                         </Button>
                     )}
-                    <Form.Group>
-                        <Form.Label>Select Course</Form.Label>
-                        <Typeahead
-                            id="basic-typeahead-single"
-                            labelKey="course-name"
-                            onChange={chooseCourse}
-                            options={courses}
-                            placeholder="Course Search..."
-                            selected={courseSearch}
-                        ></Typeahead>
-                    </Form.Group>
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
