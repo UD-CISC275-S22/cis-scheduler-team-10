@@ -115,4 +115,20 @@ describe("Scheduler Tests", () => {
     //     const fills = screen.getAllByTestId("credFill");
     //     expect(fills[0]).toHaveTextContent("Credits Filled: 18");
     // });
+    test("Resetting a plan removes all semesters from the plan", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        const semesters = screen.getAllByTestId("semester");
+        expect(semesters.length).toEqual(2);
+        screen.getByTestId("resetSem").click();
+        expect(screen.queryAllByTestId("semester")).not.toBeInTheDocument;
+    });
+    test("Resetting a semester removes all courses from the semester", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        const resets = screen.getAllByTestId("reset");
+        resets[0].click();
+        resets[1].click();
+        expect(screen.queryAllByTestId("course")).not.toBeInTheDocument;
+    });
 });
