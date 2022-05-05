@@ -153,4 +153,53 @@ describe("Scheduler Tests", () => {
         const newCourses = screen.getAllByTestId("course-code");
         expect(newCourses.length).toEqual(9);
     });
+    test("Viewing default plan shows credit limit and filled credits per semester", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        const lims = screen.getAllByTestId("credLim");
+        const fills = screen.getAllByTestId("credFill");
+        expect(lims.length).toEqual(2);
+        expect(fills.length).toEqual(2);
+    });
+    test("Editing a course's credits changes the number of credits filled", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        const editButtons = screen.getAllByTestId("edit-course");
+        editButtons[0].click();
+        const textboxes = screen.getAllByRole("textbox");
+        expect(textboxes.length).toEqual(3);
+        userEvent.type(textboxes[2], "0");
+        const save = screen.getByTestId("save-course");
+        save.click();
+        const fills = screen.getAllByTestId("credFill");
+        expect(fills[0]).toHaveTextContent("Credits Filled: 33");
+    });
+    // test("Adding a course changes the number of credits filled", () => {
+    //     const degreePlans = screen.getAllByTestId("planName");
+    //     degreePlans[0].click();
+    //     const addButtons = screen.getAllByTestId("addCourseButton");
+    //     addButtons[0].click();
+    //     const creds = screen.getByTestId("addCreds");
+    //     userEvent.type(creds, "3");
+    //     const save = screen.getByTestId("saveCourse");
+    //     save.click();
+    //     const fills = screen.getAllByTestId("credFill");
+    //     expect(fills[0]).toHaveTextContent("Credits Filled: 18");
+    // });
+    test("Resetting a plan removes all semesters from the plan", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        const semesters = screen.getAllByTestId("semester");
+        expect(semesters.length).toEqual(2);
+        screen.getByTestId("resetSem").click();
+        expect(screen.queryAllByTestId("semester")).not.toBeInTheDocument;
+    });
+    test("Resetting a semester removes all courses from the semester", () => {
+        const degreePlans = screen.getAllByTestId("planName");
+        degreePlans[0].click();
+        const resets = screen.getAllByTestId("reset");
+        resets[0].click();
+        resets[1].click();
+        expect(screen.queryAllByTestId("course")).not.toBeInTheDocument;
+    });
 });

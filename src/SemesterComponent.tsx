@@ -41,7 +41,16 @@ export function SemesterComponent({
     const [crsList, changeCrsList] = useState<Course[]>(semester.coursesTaken);
     // const [courseSearch, setCourseSearch] = useState<string[]>();
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
-    // function chooseCourse(event: React.ChangeEvent<HTMLInputElement>): void {
+    const [credits, changeCredits] = useState<string>("0");
+    //const [totCredits, changeTotCredits] = useState<number>(0);
+    function updateCredits(event: React.ChangeEvent<HTMLInputElement>) {
+        changeCredits(event.target.value);
+        //const creds = +credits;
+        //changeTotCredits(totCredits + creds);
+        //const newCourse
+    }
+
+    // function chooseCourse(): void {
     //     setCourseSearch(courseSearch);
     //     changeCrsID(event.target.value);
     // }
@@ -106,11 +115,16 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
         //updatePlanView(newPlan);
     }
-    function addCourse(crsID: string, semester: Semester, plan: Plan) {
+    function addCourse(
+        crsID: string,
+        credits: number,
+        semester: Semester,
+        plan: Plan
+    ) {
         const newCourse: Course = {
             courseCode: crsID,
             courseTitle: "",
-            numCredits: 0,
+            numCredits: credits,
             preReqs: [],
             courseDescription: "",
             complete: true,
@@ -139,7 +153,7 @@ export function SemesterComponent({
     function save() {
         //changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
-        addCourse(crsID, semester, plan);
+        addCourse(crsID, +credits, semester, plan);
         changeAddingCourse(!addingCourse);
         changeCrsID("Insert Course ID");
     }
@@ -154,6 +168,16 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
+                <div data-testid="credLim">
+                    Credit Limit: {semester.creditLimit}
+                </div>
+                <div data-testid="credFill">
+                    Credits Filled:{" "}
+                    {semester.coursesTaken.reduce(
+                        (credTot, { numCredits }) => credTot + numCredits,
+                        0
+                    )}
+                </div>
                 <Button
                     data-testid="reset"
                     onClick={() => reset(currentSem)}
@@ -239,6 +263,18 @@ export function SemesterComponent({
                                     placeholder="Course Search..."
                                 ></Typeahead>
                             </Form.Group>
+                            <Form.Group
+                                data-testid="addCreds"
+                                controlId="formCredits"
+                            >
+                                <Form.Label>Number of Credits:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={credits}
+                                    onChange={updateCredits}
+                                />
+                            </Form.Group>
+
                             <Button
                                 data-testid="saveCourse"
                                 variant="success"

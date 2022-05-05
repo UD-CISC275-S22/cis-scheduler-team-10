@@ -234,6 +234,7 @@ export function App(): JSX.Element {
                         <span></span>
                     ) : (
                         <Button
+                            data-testid="resetSem"
                             onClick={() => reset(plan)}
                             variant="danger"
                             className="me-4"
