@@ -4,7 +4,7 @@ import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
-
+import { Typeahead } from "react-bootstrap-typeahead";
 export function SemesterComponent({
     semester,
     // updateSemesters,
@@ -14,7 +14,8 @@ export function SemesterComponent({
     plan,
     changePlan,
     updatePlans,
-    changeSemList
+    changeSemList,
+    courses
 }: // courses,
 // changeCourses,
 // addCourse
@@ -28,6 +29,7 @@ export function SemesterComponent({
     changePlan: (plan: Plan) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     changeSemList: (sems: Semester[]) => void;
+    courses: string[];
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -152,6 +154,7 @@ export function SemesterComponent({
     function save() {
         //changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
+        updateSem(semester);
         addCourse(crsID, +credits, semester, plan);
         changeAddingCourse(!addingCourse);
         changeCrsID("Insert Course ID");
@@ -167,9 +170,9 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
-                <div data-testid="credLim">
-                    Credit Limit: {semester.creditLimit}
-                </div>
+                {/* <div data-testid="credLim">
+                    Credit Limit: {currentSem.creditLimit}
+                </div> */}
                 <div data-testid="credFill">
                     Credits Filled:{" "}
                     {semester.coursesTaken.reduce(
@@ -248,15 +251,19 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group
-                                data-testid="addCrsID"
-                                controlId="formCourseID"
-                            >
-                                <Form.Label>Course ID:</Form.Label>
-                                <Form.Control
-                                    value={crsID}
-                                    onChange={updateCrsID}
-                                />
+                            <Form.Group data-testid="course-search">
+                                <Form.Label>Select Course</Form.Label>
+                                <Typeahead
+                                    id="basic-typeahead-single"
+                                    labelKey="course-name"
+                                    onChange={(selected) => {
+                                        if (selected.length === 1) {
+                                            changeCrsID(selected[0].toString());
+                                        }
+                                    }}
+                                    options={courses}
+                                    placeholder="Course Search..."
+                                ></Typeahead>
                             </Form.Group>
                             <Form.Group
                                 data-testid="addCreds"

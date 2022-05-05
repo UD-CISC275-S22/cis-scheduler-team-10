@@ -203,6 +203,7 @@ export function App(): JSX.Element {
                             changePlan={updatePlan}
                             addSemester={addSemester}
                             removeSemester={removeSemester}
+                            courses={courses}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
