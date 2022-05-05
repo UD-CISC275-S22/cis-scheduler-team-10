@@ -11,6 +11,13 @@ import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
 const PLANS = plans as Plan[];
 
+let loadedData = PLANS;
+const saveDataKey = "My-Plan-Data";
+const previousData = localStorage.getItem(saveDataKey);
+if (previousData !== null) {
+    loadedData = JSON.parse(previousData);
+}
+
 const filler = Object.values(catalog);
 let courses: string[] = [];
 for (let i = 0; i < filler.length; i++) {
@@ -36,11 +43,14 @@ for (let i = 0; i < filler.length; i++) {
 
 export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
-    const [allPlans, changeAllPlans] = useState<Plan[]>(PLANS);
-    const [plan, changePlan] = useState<Plan>(PLANS[0]);
+    const [allPlans, changeAllPlans] = useState<Plan[]>(loadedData);
+    const [plan, changePlan] = useState<Plan>(loadedData[0]);
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
     );
+    function saveData() {
+        localStorage.setItem(saveDataKey, JSON.stringify(allPlans));
+    }
 
     function updatePlan(plan: Plan) {
         changePlan(plan);
@@ -170,7 +180,10 @@ export function App(): JSX.Element {
     // }
     return (
         <div className="App">
-            <header className="App-header">Scheduler (Team 10)</header>
+            <header className="App-header">
+                Scheduler (Team 10)
+                <Button onClick={saveData}>Save Data</Button>
+            </header>
             <Row
                 style={{
                     padding: "10px"
