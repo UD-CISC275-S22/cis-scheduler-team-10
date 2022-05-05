@@ -167,8 +167,10 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
-                <div>Credit Limit: {semester.creditLimit}</div>
-                <div>
+                <div data-testid="credLim">
+                    Credit Limit: {semester.creditLimit}
+                </div>
+                <div data-testid="credFill">
                     Credits Filled:{" "}
                     {semester.coursesTaken.reduce(
                         (credTot, { numCredits }) => credTot + numCredits,
@@ -256,7 +258,10 @@ export function SemesterComponent({
                                     onChange={updateCrsID}
                                 />
                             </Form.Group>
-                            <Form.Group controlId="formCredits">
+                            <Form.Group
+                                data-testid="addCreds"
+                                controlId="formCredits"
+                            >
                                 <Form.Label>Number of Credits:</Form.Label>
                                 <Form.Control
                                     type="number"
