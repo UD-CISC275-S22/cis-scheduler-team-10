@@ -126,7 +126,12 @@ export function App(): JSX.Element {
         changePlan(plan);
         //changeDegPlanSems(sems);
         let numCredits = 0;
-        if (semSeason === "fall" || semSeason === "spring") {
+        if (
+            semSeason === "fall" ||
+            semSeason === "spring" ||
+            semSeason === "Fall" ||
+            semSeason === "Spring"
+        ) {
             numCredits = 18;
         } else {
             numCredits = 7;
