@@ -5,6 +5,7 @@ import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 import { Typeahead } from "react-bootstrap-typeahead";
+import { Catalog } from "./interfaces/catalog";
 export function SemesterComponent({
     semester,
     // updateSemesters,
@@ -15,7 +16,8 @@ export function SemesterComponent({
     changePlan,
     updatePlans,
     changeSemList,
-    courses
+    courses,
+    content
 }: // courses,
 // changeCourses,
 // addCourse
@@ -30,6 +32,7 @@ export function SemesterComponent({
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     changeSemList: (sems: Semester[]) => void;
     courses: string[];
+    content: Catalog[];
     // courses: Course[];
     // changeCourses: (crses: Course[]) => void;
     // addCourse: (crsID: string, semester: Semester) => void;
@@ -118,17 +121,20 @@ export function SemesterComponent({
         crsID: string,
         credits: number,
         semester: Semester,
-        plan: Plan
+        plan: Plan,
+        courses: string[],
+        content: Catalog[]
     ) {
+        const location = courses.findIndex((crs: string) => crs === crsID);
         const newCourse: Course = {
             courseCode: crsID,
-            courseTitle: "",
+            courseTitle: content[location].name,
             numCredits: credits,
-            preReqs: [],
-            courseDescription: "",
+            preReqs: [content[location].preReq],
+            courseDescription: content[location].descr,
             complete: true,
             required: true,
-            requirementType: "university"
+            requirementType: content[location].typ
         };
         const newCourses = [...crsList, newCourse];
         changeCrsList(newCourses);
@@ -153,7 +159,7 @@ export function SemesterComponent({
         //changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
         updateSem(semester);
-        addCourse(crsID, +credits, semester, plan);
+        addCourse(crsID, +credits, semester, plan, courses, content);
         changeAddingCourse(!addingCourse);
         changeCrsID("Insert Course ID");
     }

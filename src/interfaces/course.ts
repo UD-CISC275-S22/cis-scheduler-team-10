@@ -1,6 +1,6 @@
 // Provides a Framework for a Single Course
 
-export type RequirementType = "university" | "college" | "major";
+//export type RequirementType = "university" | "college" | "major";
 
 export interface Course {
     // Code (string)
@@ -18,5 +18,5 @@ export interface Course {
     // Required (bool)
     required: boolean;
     // RequirementType (string)
-    requirementType: RequirementType;
+    requirementType: string;
 }

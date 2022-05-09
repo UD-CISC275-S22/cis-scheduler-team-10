@@ -216,6 +216,7 @@ export function App(): JSX.Element {
                             addSemester={addSemester}
                             removeSemester={removeSemester}
                             courses={courses}
+                            content={content}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
