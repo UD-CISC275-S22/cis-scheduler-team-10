@@ -51,6 +51,7 @@ export function SemesterComponent({
 
     // function chooseCourse(): void {
     //     setCourseSearch(courseSearch);
+    //     changeCrsID(event.target.value);
     // }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
@@ -62,7 +63,6 @@ export function SemesterComponent({
         });
         changeCrsList(newCourses);
         const newSem = { ...semester, coursesTaken: newCourses };
-        //const newSems = [...degPlanSems, newSem];
         const newSems = plan.semesters.map((sem: Semester) => {
             if (sem === semester) {
                 return { ...newSem };
@@ -75,13 +75,11 @@ export function SemesterComponent({
         const newPlan = { ...plan, semesters: newSems };
         updatePlans(newPlan, plan);
     }
-    function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
-        changeCrsID(event.target.value);
-    }
+
     function reset(s: Semester): void {
         const newSem = { ...s, coursesTaken: [] };
         const newSems = plan.semesters.map((sem: Semester) => {
-            if (sem.semesterName === s.semesterName) {
+            if (sem.season + sem.semesterName === s.season + s.semesterName) {
                 return newSem;
             } else {
                 return { ...sem };
