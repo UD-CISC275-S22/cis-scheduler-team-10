@@ -170,9 +170,9 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
-                {/* <div data-testid="credLim">
+                <div data-testid="credLim">
                     Credit Limit: {currentSem.creditLimit}
-                </div> */}
+                </div>
                 <div data-testid="credFill">
                     Credits Filled:{" "}
                     {semester.coursesTaken.reduce(
