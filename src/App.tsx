@@ -9,7 +9,14 @@ import { Catalog } from "./interfaces/catalog";
 import catalog from "./data/catalog.json";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 const PLANS = plans as Plan[];
+
+declare global {
+    interface Navigator {
+        msSaveBlob?: (blob: any, defaultName?: string) => boolean;
+    }
+}
 
 let loadedData = PLANS;
 const saveDataKey = "My-Plan-Data";
@@ -48,8 +55,54 @@ export function App(): JSX.Element {
     const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
         plan.semesters
     );
+
     function saveData() {
         localStorage.setItem(saveDataKey, JSON.stringify(allPlans));
+    }
+
+    function exportToCSV(fileName: string, mimeType: string) {
+        let csvContent = "";
+        plan.semesters.forEach((semester: Semester, index: number) => {
+            // semester.coursesTaken.
+            let coursesData = "";
+            semester.coursesTaken.forEach((course: Course) => {
+                coursesData += course.courseCode + ";";
+            });
+            // coursesData = semester.coursesTaken.join(";");
+            csvContent +=
+                index < plan.semesters.length
+                    ? coursesData + "\n"
+                    : coursesData;
+        });
+
+        // separate in example
+        const a = document.createElement("a");
+        mimeType = mimeType || "application/octet-stream";
+
+        if (navigator.msSaveBlob) {
+            // IE10
+            navigator.msSaveBlob(
+                new Blob([csvContent], {
+                    type: mimeType
+                }),
+                fileName
+            );
+        } else if (URL && "download" in a) {
+            //html5 A[download]
+            a.href = URL.createObjectURL(
+                new Blob([csvContent], {
+                    type: mimeType
+                })
+            );
+            a.setAttribute("download", fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            location.href =
+                "data:application/octet-stream," +
+                encodeURIComponent(csvContent); // only this mime type is supported
+        }
     }
 
     function updatePlan(plan: Plan) {
@@ -253,6 +306,18 @@ export function App(): JSX.Element {
                             className="me-4"
                         >
                             Reset
+                        </Button>
+                    )}
+                    {planView !== null && (
+                        <Button
+                            onClick={() => {
+                                exportToCSV(
+                                    plan.name.replace(/\s/g, "") + ".csv",
+                                    "text/csv;encoding:utf-8"
+                                );
+                            }}
+                        >
+                            Download Plan
                         </Button>
                     )}
                 </Col>
