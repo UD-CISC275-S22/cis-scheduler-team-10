@@ -63,12 +63,11 @@ export function App(): JSX.Element {
     function exportToCSV(fileName: string, mimeType: string) {
         let csvContent = "";
         plan.semesters.forEach((semester: Semester, index: number) => {
-            // semester.coursesTaken.
             let coursesData = "";
             semester.coursesTaken.forEach((course: Course) => {
                 coursesData += course.courseCode + ";";
             });
-            // coursesData = semester.coursesTaken.join(";");
+            // const coursesData = semester.coursesTaken.join(";");
             csvContent +=
                 index < plan.semesters.length
                     ? coursesData + "\n"
