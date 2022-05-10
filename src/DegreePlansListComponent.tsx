@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-//import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
-import { Semester } from "./interfaces/semester";
 
 function InsertPlan({
     planName,
@@ -63,7 +61,6 @@ export function DegreePlansListComponent({
     const [planName, setPlanName] = useState<string>("Insert Name Here");
     const [adding, changeAdding] = useState<boolean>(false);
     const [editing, changeEditing] = useState<boolean>(false);
-    // const [plan, changePLan] = useState<Plan>(degreePlans[0]);
     return (
         <div
             className="degreePlansList"
@@ -84,14 +81,10 @@ export function DegreePlansListComponent({
             {degreePlans.map((plan: Plan) => {
                 return (
                     <Row key={plan.name}>
-                        <Col
-                            // key={plan.name}
-                            onClick={() => updatePlanView(plan)}
-                        >
+                        <Col onClick={() => updatePlanView(plan)}>
                             {plan.name}
                         </Col>
                         <Col>
-                            {/* // key={plan.name} */}
                             {editing ? (
                                 <Button
                                     onClick={() => removePlan(plan.name)}

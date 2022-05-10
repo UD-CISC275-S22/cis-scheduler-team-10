@@ -75,6 +75,7 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
+        updatePlanView(newPlan);
     }
     function updatePlanView(newPlan: Plan): void {
         if (newPlan === planView) {
@@ -107,7 +108,7 @@ export function App(): JSX.Element {
             (p: Plan): boolean => p.name === plan.name
         );
         const newSems = allPlans[index].semesters.filter(
-            (s: Semester): boolean => s.semesterName === semName
+            (s: Semester): boolean => s.semesterName !== semName
         );
         const newPlan = { ...plan, semesters: newSems };
         updatePlans(newPlan, plan);
@@ -132,38 +133,7 @@ export function App(): JSX.Element {
         updatePlans(newPlan, plan);
         updatePlanView(newPlan);
     }
-    // function addCourse(crsID: string, semester: Semester, plan: Plan) {
-    //     //changeSem(semester);
 
-    //     changePlan(plan);
-    //     const newCourse: Course = {
-    //         courseCode: crsID,
-    //         courseTitle: "",
-    //         numCredits: 0,
-    //         preReqs: [],
-    //         courseDescription: "",
-    //         complete: true,
-    //         required: true,
-    //         requirementType: "university"
-    //     };
-    //     const newCourses = [...courses, newCourse];
-    //     changeCourses(newCourses);
-    //     const newSem = { ...semester, coursesTaken: newCourses };
-    //     //const newSems = [...degPlanSems, newSem];
-    //     const newSems = degPlanSems.map((sem: Semester) => {
-    //         if (sem === semester) {
-    //             return { ...newSem };
-    //         } else {
-    //             return { ...sem };
-    //         }
-    //     });
-    //     changeDegPlanSems(newSems);
-    //     const newPlan = { ...plan, semesters: newSems };
-
-    //     //changeDegPlanSems(newSems);
-    //     updatePlans(newPlan, plan);
-    //     updatePlanView(newPlan);
-    // }
     return (
         <div className="App">
             <header className="App-header">
@@ -189,7 +159,6 @@ export function App(): JSX.Element {
                             data-testid="degreePlan"
                             degreePlan={planView}
                             updatePlans={updatePlans}
-                            changePlan={updatePlan}
                             addSemester={addSemester}
                             removeSemester={removeSemester}
                         ></DegreePlanComponent>
@@ -228,7 +197,7 @@ export function App(): JSX.Element {
                         <span></span>
                     ) : (
                         <Button
-                            onClick={() => reset(plan)}
+                            onClick={() => reset(planView)}
                             variant="danger"
                             className="me-4"
                         >

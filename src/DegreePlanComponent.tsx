@@ -10,25 +10,21 @@ import {
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
-// import { Course } from "./interfaces/course";
 
 export function DegreePlanComponent({
     degreePlan,
     updatePlans,
-    changePlan,
     addSemester,
     removeSemester
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
-    changePlan: (plan: Plan) => void;
     addSemester: (plan: Plan, semName: string, semSeason: string) => void;
     removeSemester: (plan: Plan, semName: string) => void;
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
-    const [semList, changeSemList] = useState<Semester[]>(degreePlan.semesters);
     const [plan, updatePlan] = useState<Plan>(degreePlan);
     const [invalid, updateInvalid] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
@@ -66,31 +62,30 @@ export function DegreePlanComponent({
             season: semSeason,
             coursesTaken: []
         };
-        const newSemList = [...semList, newSem];
-        //updateSems(newSem, degPlanSems);
-        changeSemList(newSemList);
-        const newPlan = { ...degreePlan, semesters: [...newSemList] };
+        const newPlan = {
+            ...degreePlan,
+            semesters: [...degreePlan.semesters, newSem]
+        };
         updatePlans(newPlan, degreePlan);
-        changePlan(newPlan);
     }
 
     function reset(s: Semester): void {
-        const newSems = semList.map((sem: Semester) => {
-            if (sem.semesterName === s.semesterName) {
+        const newSems = degreePlan.semesters.map((sem: Semester) => {
+            if (sem.season + sem.semesterName === s.season + s.semesterName) {
                 return { ...sem, coursesTaken: [] };
             } else {
                 return { ...sem };
             }
         });
-        changeSemList(newSems);
+        const newPlan = { ...degreePlan, semesters: newSems };
+        updatePlans(newPlan, degreePlan);
     }
 
     function save() {
         if (semYear.length === 4 && parseInt(semYear) >= 2000) {
             updateInvalid(false);
             updateSemList();
-            changeSemList(degreePlan.semesters);
-            addSemester(semList, degreePlan, semYear, semSeason);
+            addSemester(degreePlan, semYear, semSeason);
             changeAddSem(!addSem);
             changeSemYear("");
         } else {
@@ -102,8 +97,6 @@ export function DegreePlanComponent({
         changeSemSeason(event.target.value);
     }
 
-    //^(19|20)\d{2}$
-    // /^[0-9\b]+$/
     function updateSemName(event: React.ChangeEvent<HTMLInputElement>) {
         if (
             /^[0-9\b]+$/.test(event.target.value) ||
@@ -151,7 +144,6 @@ export function DegreePlanComponent({
                             <Form.Control
                                 value={semYear}
                                 onChange={updateSemName}
-                                // type={"number"}
                             />
                         </Form.Group>
                         {invalid && (
@@ -173,34 +165,19 @@ export function DegreePlanComponent({
             <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
-                        {/* {degreePlan.semesters.map((sem: Semester) => ( */}
-                        {semList.map((sem: Semester) => (
+                        {degreePlan.semesters.map((sem: Semester) => (
                             <div
                                 key={degreePlan + sem.season + sem.semesterName}
                                 data-testid="semester"
                             >
                                 <SemesterComponent
+                                    plan={degreePlan}
                                     semester={sem}
                                     updateSemesters={updateSemesters}
                                     removing={removing}
                                     removeSemester={removeSemester}
                                     reset={reset}
                                 ></SemesterComponent>
-                                {/* <Col key={sem.semesterName}>
-                                    {removing ? (
-                                        <Button
-                                            onClick={() =>
-                                                removeSemester(sem.semesterName)
-                                            }
-                                            variant="danger"
-                                            className="me-4"
-                                        >
-                                            Remove Semester
-                                        </Button>
-                                    ) : (
-                                        <span></span>
-                                    )}
-                                </Col> */}
                             </div>
                         ))}
                     </Col>

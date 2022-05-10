@@ -2,31 +2,26 @@ import React, { useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
+import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 
 export function SemesterComponent({
+    plan,
     semester,
     updateSemesters,
     removing,
     removeSemester,
     reset
-}: // courses,
-// changeCourses,
-// addCourse
-{
+}: {
+    plan: Plan;
     semester: Semester;
     updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
-    removeSemester: (semName: string) => void;
+    removeSemester: (plan: Plan, semName: string) => void;
     reset: (s: Semester) => void;
-    // courses: Course[];
-    // changeCourses: (crses: Course[]) => void;
-    // addCourse: (crsID: string, semester: Semester) => void;
 }): JSX.Element {
     const [currentSem, updateSem] = useState<Semester>(semester);
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
-    //const [crsID, changeCrsID] = useState<string>("Insert Course ID");
-    // const [crsList, changeCrsList] = useState<Course[]>(courses);
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -39,9 +34,7 @@ export function SemesterComponent({
         updateSemesters(newSem, currentSem);
         updateSem(newSem);
     }
-    // function updateCrsID(event: React.ChangeEvent<HTMLInputElement>) {
-    // changeCrsID(event.target.value);
-    // }
+
     function save() {
         // changeCrsList(semester.coursesTaken);
         // changeCourses(crsList);
@@ -74,7 +67,9 @@ export function SemesterComponent({
             >
                 {removing ? (
                     <Button
-                        onClick={() => removeSemester(semester.semesterName)}
+                        onClick={() =>
+                            removeSemester(plan, semester.semesterName)
+                        }
                         variant="danger"
                         className="me-4"
                     >
