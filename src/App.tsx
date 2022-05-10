@@ -61,20 +61,31 @@ export function App(): JSX.Element {
     }
 
     function exportToCSV(fileName: string, mimeType: string) {
-        let csvContent = "";
-        plan.semesters.forEach((semester: Semester, index: number) => {
-            let coursesData = "";
-            semester.coursesTaken.forEach((course: Course) => {
-                coursesData += course.courseCode + ";";
-            });
-            // const coursesData = semester.coursesTaken.join(";");
-            csvContent +=
-                index < plan.semesters.length
+        let csvContentHeader = "Semester;";
+        let csvContentBody = "";
+        let longestCoursesLength = plan.semesters[0].coursesTaken.length;
+        plan.semesters.forEach((semester: Semester, semesterIndex: number) => {
+            let coursesData =
+                semester.season.toUpperCase() + semester.semesterName + ";";
+
+            semester.coursesTaken.forEach(
+                (course: Course, courseIndex: number) => {
+                    coursesData += course.courseCode + ";";
+                    if (semesterIndex === 0) {
+                        csvContentHeader += "Course " + (courseIndex + 1) + ";";
+                    } else if (courseIndex >= longestCoursesLength) {
+                        longestCoursesLength = courseIndex + 1;
+                        csvContentHeader += "Course " + (courseIndex + 1) + ";";
+                    }
+                }
+            );
+            csvContentBody +=
+                semesterIndex < plan.semesters.length
                     ? coursesData + "\n"
                     : coursesData;
         });
+        const csvContent = csvContentHeader + "\n" + csvContentBody;
 
-        // separate in example
         const a = document.createElement("a");
         mimeType = mimeType || "application/octet-stream";
 
