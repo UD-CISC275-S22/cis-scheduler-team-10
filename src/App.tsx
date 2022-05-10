@@ -285,15 +285,18 @@ export function App(): JSX.Element {
                                 }}
                             >
                                 This program is intended to help you visualize a
-                                path to graduation. To begin, select a
-                                previously-made degree plan, or create a new
-                                plan. Add your desired courses into the
-                                semesters you plan to take them, keeping your
-                                degree requirements in mind. You can edit each
-                                semester until you are satisfied with its
-                                contents. You can also make multiple degree
-                                plans to explore other combinations of classes
-                                to fulfill all of your requirements.
+                                path to graduation. To begin, select the title
+                                of a previously-made degree plan from the list
+                                on the left of your screen, or create a new plan
+                                by clicking the + and selecting a name. Add your
+                                desired courses into the semesters you plan to
+                                take them, keeping your degree requirements in
+                                mind. You can edit each semester until you are
+                                satisfied with its contents. You can also make
+                                multiple degree plans to explore other
+                                combinations of classes to fulfill all of your
+                                requirements. Click the name of the desired plan
+                                to navigate between your degree plans.
                             </Container>
                         </Container>
                     )}
