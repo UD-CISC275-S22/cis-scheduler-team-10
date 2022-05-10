@@ -28,6 +28,7 @@ export function SemesterComponent({
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
     const [credits, changeCredits] = useState<string>("0");
+    const [invalid, changeInvalidity] = useState<boolean>(false);
 
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = semester.coursesTaken.map((course: Course) => {
@@ -70,13 +71,13 @@ export function SemesterComponent({
     }
 
     function addCourse(
-        crsID: string,
+        courseID: string,
         credits: number,
         semester: Semester,
         plan: Plan
     ) {
         const newCourse: Course = {
-            courseCode: crsID,
+            courseCode: courseID,
             courseTitle: "",
             numCredits: credits,
             preReqs: [],
@@ -101,9 +102,18 @@ export function SemesterComponent({
     }
 
     function save() {
-        addCourse(courseID, +credits, semester, plan);
-        changeAddingCourse(!addingCourse);
-        changeCourseID("Insert Course ID");
+        if (
+            semester.coursesTaken.find(
+                (course: Course) => course.courseCode === courseID
+            ) === undefined
+        ) {
+            addCourse(courseID, +credits, semester, plan);
+            changeAddingCourse(!addingCourse);
+            changeCourseID("Insert Course ID");
+            changeInvalidity(false);
+        } else {
+            changeInvalidity(true);
+        }
     }
 
     return (
@@ -198,41 +208,47 @@ export function SemesterComponent({
                 <div>
                     {addingCourse ? (
                         <div>
-                            <Form.Group data-testid="course-search">
-                                <Form.Label>Select Course</Form.Label>
-                                <Typeahead
-                                    id="basic-typeahead-single"
-                                    labelKey="course-name"
-                                    onChange={(selected) => {
-                                        if (selected.length === 1) {
-                                            changeCourseID(
-                                                selected[0].toString()
-                                            );
-                                        }
-                                    }}
-                                    options={courses}
-                                    placeholder="Course Search..."
-                                ></Typeahead>
-                            </Form.Group>
-                            <Form.Group
-                                data-testid="addCreds"
-                                controlId="formCredits"
-                            >
-                                <Form.Label>Number of Credits:</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    value={credits}
-                                    onChange={updateCredits}
-                                />
-                            </Form.Group>
-
-                            <Button
-                                data-testid="saveCourse"
-                                variant="success"
-                                onClick={save}
-                            >
-                                Save Course
-                            </Button>
+                            <div>
+                                <Form.Group data-testid="course-search">
+                                    <Form.Label>Select Course</Form.Label>
+                                    <Typeahead
+                                        id="basic-typeahead-single"
+                                        labelKey="course-name"
+                                        onChange={(selected) => {
+                                            if (selected.length === 1) {
+                                                changeCourseID(
+                                                    selected[0].toString()
+                                                );
+                                            }
+                                        }}
+                                        options={courses}
+                                        placeholder="Course Search..."
+                                    ></Typeahead>
+                                </Form.Group>
+                                <Form.Group
+                                    data-testid="addCreds"
+                                    controlId="formCredits"
+                                >
+                                    <Form.Label>Number of Credits:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        value={credits}
+                                        onChange={updateCredits}
+                                    />
+                                </Form.Group>
+                                <Button
+                                    data-testid="saveCourse"
+                                    variant="success"
+                                    onClick={save}
+                                >
+                                    Save Course
+                                </Button>
+                            </div>
+                            {invalid && (
+                                <span style={{ color: "red" }}>
+                                    You cannot add the same course twice.
+                                </span>
+                            )}
                         </div>
                     ) : (
                         <div></div>

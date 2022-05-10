@@ -28,29 +28,8 @@ export function DegreePlanComponent({
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
-    const [plan, updatePlan] = useState<Plan>(degreePlan);
     const [invalid, updateInvalid] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
-
-    // function updateSemesters(
-    //     newSemester: Semester,
-    //     oldSemester: Semester
-    // ): void {
-    //     const newSemesters = degreePlan.semesters.map((semester: Semester) => {
-    //         if (semester === oldSemester) {
-    //             return newSemester;
-    //         } else {
-    //             return {
-    //                 ...semester,
-    //                 coursesTaken: [...semester.coursesTaken]
-    //             };
-    //         }
-    //     });
-    //     const newPlan = { ...degreePlan, semesters: newSemesters };
-    //     changeDegPlanSems(newSemesters);
-    //     updatePlan(newPlan);
-    //     updatePlans(newPlan, degreePlan);
-    // }
 
     function updateSemList() {
         let numCredits = 0;
@@ -86,7 +65,11 @@ export function DegreePlanComponent({
     }
 
     function save() {
-        if (semYear.length === 4 && parseInt(semYear) >= 2000) {
+        if (
+            semYear.length === 4 &&
+            parseInt(semYear) >= 1900 &&
+            parseInt(semYear) <= 2100
+        ) {
             updateInvalid(false);
             updateSemList();
             addSemester(degreePlan, semYear, semSeason);
@@ -162,7 +145,7 @@ export function DegreePlanComponent({
                         </Form.Group>
                         {invalid && (
                             <span style={{ color: "red" }}>
-                                Please enter a valid year after 2000.
+                                Please enter a valid year.
                             </span>
                         )}
                         <div style={{ padding: "2px" }}>
