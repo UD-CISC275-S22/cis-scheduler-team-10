@@ -3,14 +3,26 @@ import "./App.css";
 import { DegreePlanComponent } from "./DegreePlanComponent";
 import { Plan } from "./interfaces/plan";
 import plans from "./data/degreePlans.json";
-import { Row, Col, Container, Form, Button } from "react-bootstrap";
-// import { Course } from "./interfaces/course";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { Catalog } from "./interfaces/catalog";
 import catalog from "./data/catalog.json";
-import { Typeahead } from "react-bootstrap-typeahead";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 const PLANS = plans as Plan[];
+
+declare global {
+    interface Navigator {
+        msSaveBlob?: (blob: Blob, defaultName?: string) => boolean;
+    }
+}
+
+let loadedData = PLANS;
+const saveDataKey = "My-Plan-Data";
+const previousData = localStorage.getItem(saveDataKey);
+if (previousData !== null) {
+    loadedData = JSON.parse(previousData);
+}
 
 const filler = Object.values(catalog);
 let courses: string[] = [];
@@ -22,38 +34,71 @@ let content: Catalog[] = [];
 for (let i = 0; i < filler.length; i++) {
     content = [...content, ...Object.values(filler[i])];
 }
-// const COURSES = content.map(
-//     (c: Catalog): Course => ({
-//         courseCode: c.code,
-//         courseTitle: c.name,
-//         numCredits: parseInt(c.credits),
-//         preReqs: /*temporary fix*/ [c.preReq],
-//         courseDescription: c.descr,
-//         complete: false,
-//         required: false,
-//         requirementType: /*c.breadth*/ "university"
-//     })
-// );
-
-let loadedData = PLANS;
-const saveDataKey = "My-Plan-Data";
-const previousData = localStorage.getItem(saveDataKey);
-if (previousData !== null) {
-    loadedData = JSON.parse(previousData);
-}
-console.log(loadedData);
 
 export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
     const [allPlans, changeAllPlans] = useState<Plan[]>(loadedData);
-    const [courseSearch, setCourseSearch] = useState<string[]>();
 
     function saveData() {
         localStorage.setItem(saveDataKey, JSON.stringify(allPlans));
     }
 
-    function chooseCourse(): void {
-        setCourseSearch(courseSearch);
+    function exportToCSV(fileName: string, mimeType: string) {
+        let csvContentHeader = "Semester;";
+        let csvContentBody = "";
+        let longestCoursesLength =
+            planView?.semesters[0].coursesTaken.length ?? 0;
+        planView?.semesters.forEach(
+            (semester: Semester, semesterIndex: number) => {
+                let coursesData =
+                    semester.season.toUpperCase() + semester.semesterName + ";";
+
+                semester.coursesTaken.forEach(
+                    (course: Course, courseIndex: number) => {
+                        coursesData += course.courseCode + ";";
+                        if (semesterIndex === 0) {
+                            csvContentHeader +=
+                                "Course " + (courseIndex + 1) + ";";
+                        } else if (courseIndex >= longestCoursesLength) {
+                            longestCoursesLength = courseIndex + 1;
+                            csvContentHeader +=
+                                "Course " + (courseIndex + 1) + ";";
+                        }
+                    }
+                );
+                csvContentBody +=
+                    semesterIndex < planView.semesters.length
+                        ? coursesData + "\n"
+                        : coursesData;
+            }
+        );
+        const csvContent = csvContentHeader + "\n" + csvContentBody;
+
+        const a = document.createElement("a");
+        mimeType = mimeType || "application/octet-stream";
+
+        if (navigator.msSaveBlob) {
+            navigator.msSaveBlob(
+                new Blob([csvContent], {
+                    type: mimeType
+                }),
+                fileName
+            );
+        } else if (URL && "download" in a) {
+            a.href = URL.createObjectURL(
+                new Blob([csvContent], {
+                    type: mimeType
+                })
+            );
+            a.setAttribute("download", fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            location.href =
+                "data:application/octet-stream," +
+                encodeURIComponent(csvContent); // only this mime type is supported
+        }
     }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
@@ -137,7 +182,7 @@ export function App(): JSX.Element {
     return (
         <div className="App">
             <header className="App-header">
-                Scheduler (Team 10){" "}
+                Scheduler (Team 10)
                 <Button onClick={saveData}>Save Data</Button>
             </header>
             <Row
@@ -161,6 +206,7 @@ export function App(): JSX.Element {
                             updatePlans={updatePlans}
                             addSemester={addSemester}
                             removeSemester={removeSemester}
+                            courses={courses}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
@@ -179,15 +225,18 @@ export function App(): JSX.Element {
                                 }}
                             >
                                 This program is intended to help you visualize a
-                                path to graduation. To begin, select a
-                                previously-made degree plan, or create a new
-                                plan. Add your desired courses into the
-                                semesters you plan to take them, keeping your
-                                degree requirements in mind. You can edit each
-                                semester until you are satisfied with its
-                                contents. You can also make multiple degree
-                                plans to explore other combinations of classes
-                                to fulfill all of your requirements.
+                                path to graduation. To begin, select the title
+                                of a previously-made degree plan from the list
+                                on the left of your screen, or create a new plan
+                                by clicking the + and selecting a name. Add your
+                                desired courses into the semesters you plan to
+                                take them, keeping your degree requirements in
+                                mind. You can edit each semester until you are
+                                satisfied with its contents. You can also make
+                                multiple degree plans to explore other
+                                combinations of classes to fulfill all of your
+                                requirements. Click the name of the desired plan
+                                to navigate between your degree plans.
                             </Container>
                         </Container>
                     )}
@@ -197,6 +246,7 @@ export function App(): JSX.Element {
                         <span></span>
                     ) : (
                         <Button
+                            data-testid="resetSem"
                             onClick={() => reset(planView)}
                             variant="danger"
                             className="me-4"
@@ -204,17 +254,18 @@ export function App(): JSX.Element {
                             Reset
                         </Button>
                     )}
-                    <Form.Group>
-                        <Form.Label>Select Course</Form.Label>
-                        <Typeahead
-                            id="basic-typeahead-single"
-                            labelKey="course-name"
-                            onChange={chooseCourse}
-                            options={courses}
-                            placeholder="Course Search..."
-                            selected={courseSearch}
-                        ></Typeahead>
-                    </Form.Group>
+                    {planView !== null && (
+                        <Button
+                            onClick={() => {
+                                exportToCSV(
+                                    planView.name.replace(/\s/g, "") + ".csv",
+                                    "text/csv;encoding:utf-8"
+                                );
+                            }}
+                        >
+                            Download Plan
+                        </Button>
+                    )}
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>

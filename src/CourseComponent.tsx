@@ -6,30 +6,45 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export function CourseComponent({
     course,
-    updateCourses
+    updateCourses,
+    removingCourse,
+    removeCourse
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
+    removingCourse: boolean;
+    removeCourse: (crsID: string) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
     const [credits, changeCredits] = useState<number>(course.numCredits);
-    const [currentCourse, updateCourse] = useState<Course>(course);
 
     return (
-        <div
-            // className="course"
-            style={{ border: "1px solid black", padding: "10px" }}
-        >
+        <div style={{ border: "1px solid black", padding: "10px" }}>
             <FormGroup>
                 {!editMode && (
                     <div data-testid="course-code">
-                        <b>{courseCode}</b>
+                        <b>
+                            {courseCode}: {credits} Credits
+                        </b>
                     </div>
+                )}
+                {removingCourse ? (
+                    <Button
+                        data-testid="removeCourse"
+                        variant="danger"
+                        className="me-4"
+                        onClick={() => removeCourse(courseCode)}
+                    >
+                        Remove Course
+                    </Button>
+                ) : (
+                    <span></span>
                 )}
                 {editMode && (
                     <Form.Control
+                        data-testid="changeCodeBox"
                         type="textbox"
                         value={courseCode}
                         onChange={(event: ChangeEvent) =>
@@ -78,13 +93,13 @@ export function CourseComponent({
                         data-testid="save-course"
                         onClick={() => {
                             const newCourse = {
-                                ...currentCourse,
+                                ...course,
                                 courseCode: courseCode,
                                 courseTitle: courseTitle,
                                 numCredits: credits
                             };
-                            updateCourse(newCourse);
-                            updateCourses(newCourse, currentCourse);
+                            updateCourses(newCourse, course);
+
                             changeEditMode(!editMode);
                         }}
                         variant="success"
@@ -96,9 +111,9 @@ export function CourseComponent({
                 {editMode && (
                     <Button
                         onClick={() => {
-                            changeCode(currentCourse.courseCode);
-                            changeTitle(currentCourse.courseTitle);
-                            changeCredits(currentCourse.numCredits);
+                            changeCode(course.courseCode);
+                            changeTitle(course.courseTitle);
+                            changeCredits(course.numCredits);
                             changeEditMode(!editMode);
                         }}
                         variant="warning"
