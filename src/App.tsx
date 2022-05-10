@@ -14,7 +14,7 @@ const PLANS = plans as Plan[];
 
 declare global {
     interface Navigator {
-        msSaveBlob?: (blob: any, defaultName?: string) => boolean;
+        msSaveBlob?: (blob: Blob, defaultName?: string) => boolean;
     }
 }
 
@@ -90,7 +90,6 @@ export function App(): JSX.Element {
         mimeType = mimeType || "application/octet-stream";
 
         if (navigator.msSaveBlob) {
-            // IE10
             navigator.msSaveBlob(
                 new Blob([csvContent], {
                     type: mimeType
@@ -98,7 +97,6 @@ export function App(): JSX.Element {
                 fileName
             );
         } else if (URL && "download" in a) {
-            //html5 A[download]
             a.href = URL.createObjectURL(
                 new Blob([csvContent], {
                     type: mimeType
@@ -139,15 +137,11 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
-        //changePlan(newPlan);
         updatePlanView(newPlan);
     }
     function updatePlanView(newPlan: Plan): void {
         changeDegPlanSems(newPlan.semesters);
-
         changePlan(newPlan);
-        //updatePlans(newPlan, plan);
-        //
 
         if (newPlan === planView) {
             changePlanView(null);
@@ -174,7 +168,6 @@ export function App(): JSX.Element {
         const newSems = degPlanSems.filter(
             (s: Semester): boolean => s.semesterName !== semName
         );
-        //changeDegPlanSems(newSems);
         const newPlan = { ...plan, semesters: newSems };
         changePlan(newPlan);
         updatePlans(newPlan, plan);
