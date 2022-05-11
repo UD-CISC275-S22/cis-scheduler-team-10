@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Button, ButtonGroup, Col, Form } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
@@ -8,7 +8,6 @@ import { Typeahead } from "react-bootstrap-typeahead";
 export function SemesterComponent({
     plan,
     semester,
-    // updateSemesters,
     removing,
     removeSemester,
     resetSemester,
@@ -17,7 +16,6 @@ export function SemesterComponent({
 }: {
     plan: Plan;
     semester: Semester;
-    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (plan: Plan, semName: string) => void;
     resetSemester: (s: Semester) => void;
@@ -29,6 +27,13 @@ export function SemesterComponent({
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
     const [credits, changeCredits] = useState<string>("0");
     const [invalid, changeInvalidity] = useState<boolean>(false);
+    const [tempSemester, changeTempSemester] = useState<Semester>(
+        plan.semesters[0]
+    );
+
+    function updateTempSemester(event: ChangeEvent<HTMLSelectElement>) {
+        // changeTempSemester(event.target.selectedOptions[0]);
+    }
 
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = semester.coursesTaken.map((course: Course) => {
@@ -177,11 +182,16 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
-                                // plan={plan}
-                                // changePlan={changePlan}
-                                // updatePlans={updatePlans}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
+                                tempSemester={tempSemester}
+                                updateTempSemester={updateTempSemester}
+                                otherSemesters={plan.semesters.filter(
+                                    (planSemester: Semester): boolean =>
+                                        planSemester.season +
+                                            planSemester.semesterName !==
+                                        semester.season + semester.semesterName
+                                )}
                             ></CourseComponent>
                         </div>
                     );

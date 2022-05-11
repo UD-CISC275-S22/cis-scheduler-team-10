@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { Course } from "./interfaces/course";
+import { Semester } from "./interfaces/semester";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -8,17 +9,24 @@ export function CourseComponent({
     course,
     updateCourses,
     removingCourse,
-    removeCourse
+    removeCourse,
+    tempSemester,
+    updateTempSemester,
+    otherSemesters
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
     removingCourse: boolean;
     removeCourse: (crsID: string) => void;
+    tempSemester: Semester;
+    updateTempSemester: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    otherSemesters: Semester[];
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
     const [credits, changeCredits] = useState<number>(course.numCredits);
+    const [popUp, changePopUp] = useState<boolean>(false);
 
     return (
         <div style={{ border: "1px solid black", padding: "10px" }}>
@@ -86,6 +94,75 @@ export function CourseComponent({
                         className="me-4"
                     >
                         Edit
+                    </Button>
+                )}
+                <Modal show={popUp} onHide={() => changePopUp(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-sm">
+                            Move Course to Another Semester
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group>
+                            <Form.Label>Move to...</Form.Label>
+                            <Form.Select
+                                value={
+                                    tempSemester.season +
+                                    tempSemester.semesterName
+                                }
+                                onChange={(
+                                    event: React.ChangeEvent<HTMLSelectElement>
+                                ) => {
+                                    updateTempSemester(event);
+                                }}
+                            >
+                                {/* {plan.semesters
+                                    .filter(
+                                        (semester: Semester): boolean =>
+                                            semester.season +
+                                                semester.semesterName !==
+                                            currentSemester.season +
+                                                currentSemester.semesterName
+                                    ) */}
+                                {otherSemesters.map((semester: Semester) => (
+                                    <option
+                                        key={
+                                            "option" +
+                                            semester.season +
+                                            semester.semesterName
+                                        }
+                                        value={
+                                            semester.season +
+                                            semester.semesterName
+                                        }
+                                    >
+                                        {semester.season.toUpperCase() +
+                                            semester.semesterName}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                        <Button
+                            onClick={() => {
+                                // moveCourse(
+                                //     course,
+                                //     currentSemester,
+                                //     tempSemester
+                                // );
+                                changePopUp(false);
+                            }}
+                        >
+                            Save
+                        </Button>
+                    </Modal.Body>
+                </Modal>
+                {!editMode && (
+                    <Button
+                        onClick={() => {
+                            changePopUp(true);
+                        }}
+                    >
+                        {"Move Course"}
                     </Button>
                 )}
                 {editMode && (
