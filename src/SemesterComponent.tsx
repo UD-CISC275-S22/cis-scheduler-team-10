@@ -139,7 +139,6 @@ export function SemesterComponent({
         const newCourses = [...crsList, newCourse];
         changeCrsList(newCourses);
         const newSem = { ...semester, coursesTaken: newCourses };
-        //const newSems = [...degPlanSems, newSem];
         const newSems = plan.semesters.map((sem: Semester) => {
             if (sem === semester) {
                 return { ...newSem };
@@ -150,14 +149,9 @@ export function SemesterComponent({
         updateSem(newSem);
         changePlan({ ...plan, semesters: newSems });
         const newPlan = { ...plan, semesters: newSems };
-
-        //changeDegPlanSems(newSems);
         updatePlans(newPlan, plan);
-        //updatePlanView(newPlan);
     }
     function save() {
-        //changeCrsList(semester.coursesTaken);
-        // changeCourses(crsList);
         updateSem(semester);
         addCourse(crsID, +credits, semester, plan, courses, content);
         changeAddingCourse(!addingCourse);
@@ -184,6 +178,27 @@ export function SemesterComponent({
                         0
                     )}
                 </div>
+                {/* <div>{if((semester.coursesTaken.reduce(
+                        (credTot, { numCredits }) => credTot + numCredits,
+                        0))>currentSem.creditLimit){
+                            return (<div style={{ color: "red" }}>
+                            Warning: Credits filled exceeds credit limit - check
+                            with advisor to make sure your plan is feasible.
+                        </div>);
+}}</div> */}
+                {/* <div>
+                    {semester.coursesTaken.reduce(
+                        (credTot, { numCredits }) => credTot + numCredits,
+                        0
+                    ) > currentSem.creditLimit ? (
+                        <div style={{ color: "red" }}>
+                            Warning: Credits filled exceeds credit limit - check
+                            with advisor to make sure your plan is feasible.
+                        </div>
+                    ) : (
+                        <span></span>
+                    )}
+                </div> */}
                 <Button
                     data-testid="reset"
                     onClick={() => reset(currentSem)}
@@ -223,11 +238,18 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
-                                // plan={plan}
+                                plan={plan}
                                 // changePlan={changePlan}
                                 // updatePlans={updatePlans}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
+                                sem={currentSem}
+                                changePlan={changePlan}
+                                updatePlans={updatePlans}
+                                changeSemList={changeSemList}
+                                courses={courses}
+                                content={content}
+                                changeCrsList={changeCrsList}
                             ></CourseComponent>
                         </div>
                     );
