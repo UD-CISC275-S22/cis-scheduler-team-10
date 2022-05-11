@@ -10,23 +10,27 @@ export function CourseComponent({
     updateCourses,
     removingCourse,
     removeCourse,
+    moveCourses,
     tempSemester,
     updateTempSemester,
-    otherSemesters
+    semesterOptions,
+    moveCourse
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
     removingCourse: boolean;
     removeCourse: (crsID: string) => void;
+    moveCourses: boolean;
     tempSemester: Semester;
-    updateTempSemester: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    otherSemesters: Semester[];
+    updateTempSemester: (semesterTitle: string) => void;
+    semesterOptions: Semester[];
+    moveCourse: (movingCourse: Course, newSemester: Semester) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
     const [credits, changeCredits] = useState<number>(course.numCredits);
-    const [popUp, changePopUp] = useState<boolean>(false);
+    const [popUp, showPopUp] = useState<boolean>(false);
 
     return (
         <div style={{ border: "1px solid black", padding: "10px" }}>
@@ -96,7 +100,7 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
-                <Modal show={popUp} onHide={() => changePopUp(false)}>
+                <Modal show={popUp} onHide={() => showPopUp(false)}>
                     <Modal.Header closeButton>
                         <Modal.Title id="example-modal-sizes-title-sm">
                             Move Course to Another Semester
@@ -113,18 +117,12 @@ export function CourseComponent({
                                 onChange={(
                                     event: React.ChangeEvent<HTMLSelectElement>
                                 ) => {
-                                    updateTempSemester(event);
+                                    updateTempSemester(
+                                        event.target.value.toString()
+                                    );
                                 }}
                             >
-                                {/* {plan.semesters
-                                    .filter(
-                                        (semester: Semester): boolean =>
-                                            semester.season +
-                                                semester.semesterName !==
-                                            currentSemester.season +
-                                                currentSemester.semesterName
-                                    ) */}
-                                {otherSemesters.map((semester: Semester) => (
+                                {semesterOptions.map((semester: Semester) => (
                                     <option
                                         key={
                                             "option" +
@@ -144,22 +142,21 @@ export function CourseComponent({
                         </Form.Group>
                         <Button
                             onClick={() => {
-                                // moveCourse(
-                                //     course,
-                                //     currentSemester,
-                                //     tempSemester
-                                // );
-                                changePopUp(false);
+                                moveCourse(course, tempSemester);
+                                showPopUp(false);
                             }}
                         >
                             Save
                         </Button>
                     </Modal.Body>
                 </Modal>
-                {!editMode && (
+                {!editMode && moveCourses && (
                     <Button
                         onClick={() => {
-                            changePopUp(true);
+                            updateTempSemester(
+                                tempSemester.season + tempSemester.semesterName
+                            );
+                            showPopUp(true);
                         }}
                     >
                         {"Move Course"}

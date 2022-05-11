@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { Button, ButtonGroup, Col, Form } from "react-bootstrap";
 import { CourseComponent } from "./CourseComponent";
 import { Course } from "./interfaces/course";
@@ -26,13 +26,64 @@ export function SemesterComponent({
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
     const [credits, changeCredits] = useState<string>("0");
-    const [invalid, changeInvalidity] = useState<boolean>(false);
+    const [invalidCourse, changeInvalidity] = useState<boolean>(false);
+    // temporary to move course to:
     const [tempSemester, changeTempSemester] = useState<Semester>(
-        plan.semesters[0]
+        semester.season + semester.semesterName !==
+            plan.semesters[0].season + plan.semesters[0].semesterName
+            ? plan.semesters[0]
+            : plan.semesters[1]
     );
+    const [moveCourses, changeMoveCourses] = useState<boolean>(false);
 
-    function updateTempSemester(event: ChangeEvent<HTMLSelectElement>) {
-        // changeTempSemester(event.target.selectedOptions[0]);
+    function updateTempSemester(semesterTitle: string) {
+        const newSemester = plan.semesters.find(
+            (planSemester: Semester) =>
+                planSemester.season + planSemester.semesterName ===
+                semesterTitle
+        );
+        if (newSemester !== undefined) {
+            changeTempSemester(newSemester);
+        } else {
+            console.log("ERROR: DID NOT FIND SEMESTER TO ADD BACK");
+        }
+    }
+
+    function moveCourse(movingCourse: Course, newSemester: Semester): void {
+        const withoutMovingCourse = semester.coursesTaken.filter(
+            (course: Course): boolean =>
+                course.courseCode !== movingCourse.courseCode
+        );
+        const updatedPreviousSemester = {
+            ...semester,
+            coursesTaken: withoutMovingCourse
+        };
+
+        const addedMovingCourse = [...newSemester.coursesTaken, movingCourse];
+        const updatedNewSemester = {
+            ...newSemester,
+            coursesTaken: addedMovingCourse
+        };
+
+        const newSemesters = plan.semesters.map((planSemester: Semester) => {
+            if (
+                planSemester.season + planSemester.semesterName ===
+                newSemester.season + newSemester.semesterName
+            ) {
+                return { ...updatedNewSemester };
+            } else if (
+                planSemester.season + planSemester.semesterName ===
+                semester.season + semester.semesterName
+            ) {
+                return { ...updatedPreviousSemester };
+            } else {
+                return { ...planSemester };
+            }
+        });
+
+        const newPlan = { ...plan, semesters: newSemesters };
+        changeTempSemester(updatedNewSemester);
+        updatePlans(newPlan, plan);
     }
 
     function updateCourses(newCourse: Course, oldCourse: Course): void {
@@ -100,8 +151,6 @@ export function SemesterComponent({
                 return { ...sem };
             }
         });
-        // updateSem(newSem);
-        // changePlan({ ...plan, semesters: newSems });
         const newPlan = { ...plan, semesters: newSemesters };
         updatePlans(newPlan, plan);
     }
@@ -149,6 +198,13 @@ export function SemesterComponent({
                 >
                     Reset
                 </Button>
+                <Button
+                    onClick={() => {
+                        changeMoveCourses(!moveCourses);
+                    }}
+                >
+                    Move Courses
+                </Button>
             </Col>
             <Col
                 style={{
@@ -184,14 +240,16 @@ export function SemesterComponent({
                                 updateCourses={updateCourses}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
+                                moveCourses={moveCourses}
                                 tempSemester={tempSemester}
                                 updateTempSemester={updateTempSemester}
-                                otherSemesters={plan.semesters.filter(
+                                semesterOptions={plan.semesters.filter(
                                     (planSemester: Semester): boolean =>
                                         planSemester.season +
                                             planSemester.semesterName !==
                                         semester.season + semester.semesterName
                                 )}
+                                moveCourse={moveCourse}
                             ></CourseComponent>
                         </div>
                     );
@@ -254,7 +312,7 @@ export function SemesterComponent({
                                     Save Course
                                 </Button>
                             </div>
-                            {invalid && (
+                            {invalidCourse && (
                                 <span style={{ color: "red" }}>
                                     You cannot add the same course twice.
                                 </span>
