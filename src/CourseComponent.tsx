@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup } from "react-bootstrap";
 import { Catalog } from "./interfaces/catalog";
 import { Course } from "./interfaces/course";
-import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
-// import { Plan } from "./interfaces/plan";
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -27,8 +25,7 @@ export function CourseComponent({
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
-    const [credits, changeCredits] = useState<number>(course.numCredits);
-    const [currentCourse, updateCourse] = useState<Course>(course);
+    const [courseCredits, changeCredits] = useState<number>(course.numCredits);
     const [courseDescription, changeDescription] = useState<string>(
         course.courseDescription
     );
@@ -39,33 +36,18 @@ export function CourseComponent({
         const newCourse: Course = {
             courseCode: content[location].code,
             courseTitle: content[location].name,
-            numCredits: +content[location].credits,
+            numCredits: parseInt(content[location].credits),
             preReqs: [content[location].preReq],
             courseDescription: content[location].descr,
             complete: true,
             required: true,
             requirementType: content[location].typ
         };
-        // const newCourses = sem.coursesTaken.map((crs: Course) => {
-        //     if (crs.courseCode === c.courseCode) {
-        //         return newCourse;
-        //     } else {
-        //         return { ...crs };
-        //     }
-        // });
-        // const newSem = { ...sem, coursesTaken: newCourses };
-        // const newSems = plan.semesters.map((sm: Semester) => {
-        //     if (sem === sm) {
-        //         return { ...newSem };
-        //     } else {
-        //         return { ...sm };
-        //     }
-        // });
+        changeCode(newCourse.courseCode);
+        changeTitle(newCourse.courseTitle);
+        changeCredits(newCourse.numCredits);
+        changeDescription(newCourse.courseDescription);
         updateCourses(newCourse, c);
-        // changeSemList(newSems);
-        // changePlan({ ...plan, semesters: newSems });
-        // const newPlan = { ...plan, semesters: newSems };
-        // updatePlans(newPlan, plan);
         changeEditMode(!editMode);
     }
     return (
@@ -74,7 +56,7 @@ export function CourseComponent({
                 {!editMode && (
                     <div data-testid="course-code">
                         <b>
-                            {courseCode}: {credits} Credits
+                            {course.courseCode}: {course.numCredits} Credits
                         </b>
                     </div>
                 )}
@@ -129,7 +111,11 @@ export function CourseComponent({
                 {editMode && (
                     <Form.Control
                         type="textbox"
-                        value={!isNaN(credits) ? credits.toString() : ""}
+                        value={
+                            !isNaN(courseCredits)
+                                ? courseCredits.toString()
+                                : ""
+                        }
                         onChange={(event: ChangeEvent) =>
                             changeCredits(parseInt(event.target.value))
                         }
@@ -147,21 +133,11 @@ export function CourseComponent({
                         Edit
                     </Button>
                 )}
-                {/* {!editMode && !coursePool.includes(currentCourse) && (
-                    <Button
-                        onClick={() => {
-                            updateCoursePool(currentCourse);
-                            removeCourse(courseCode);
-                        }}
-                    >
-                        {"→"}
-                    </Button>
-                )} */}
                 <div style={{ padding: "5px" }}>
                     {editMode && (
                         <Button
                             data-testid="restoreCourseInfo"
-                            onClick={() => resetCourse(currentCourse)}
+                            onClick={() => resetCourse(course)}
                         >
                             Reset Course to Default Info
                         </Button>
@@ -176,7 +152,7 @@ export function CourseComponent({
                                 courseCode: courseCode,
                                 courseTitle: courseTitle,
                                 courseDescription: courseDescription,
-                                numCredits: credits
+                                numCredits: courseCredits
                             };
                             updateCourses(newCourse, course);
 
@@ -192,10 +168,10 @@ export function CourseComponent({
                 {editMode && (
                     <Button
                         onClick={() => {
-                            changeCode(currentCourse.courseCode);
-                            changeTitle(currentCourse.courseTitle);
-                            changeDescription(currentCourse.courseDescription);
-                            changeCredits(currentCourse.numCredits);
+                            changeCode(course.courseCode);
+                            changeTitle(course.courseTitle);
+                            changeDescription(course.courseDescription);
+                            changeCredits(course.numCredits);
                             changeEditMode(!editMode);
                         }}
                         variant="warning"
