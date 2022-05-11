@@ -102,7 +102,6 @@ export function DegreePlansListComponent({
                             {plan.name}
                         </Col>
                         <Col>
-                            {/* // key={plan.name} */}
                             {editing ? (
                                 <Button
                                     onClick={() => removePlan(plan.name)}

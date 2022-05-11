@@ -47,15 +47,7 @@ export function SemesterComponent({
     //const [totCredits, changeTotCredits] = useState<number>(0);
     function updateCredits(event: React.ChangeEvent<HTMLInputElement>) {
         changeCredits(event.target.value);
-        //const creds = +credits;
-        //changeTotCredits(totCredits + creds);
-        //const newCourse
     }
-
-    // function chooseCourse(): void {
-    //     setCourseSearch(courseSearch);
-    //     changeCrsID(event.target.value);
-    // }
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = currentSem.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
