@@ -11,33 +11,18 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export function CourseComponent({
     course,
     updateCourses,
-    plan,
-    // changePlan,
-    // updatePlans,
     removingCourse,
     removeCourse,
-    sem,
-    changePlan,
-    updatePlans,
-    changeSemList,
     courses,
-    content,
-    changeCrsList
+    content
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
-    // changePlan: (plan: Plan) => void;
-    // updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
-    plan: Plan;
     removingCourse: boolean;
     removeCourse: (crsID: string) => void;
     sem: Semester;
-    changePlan: (plan: Plan) => void;
-    updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
-    changeSemList: (sems: Semester[]) => void;
     courses: string[];
     content: Catalog[];
-    changeCrsList: (crses: Course[]) => void;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
@@ -84,10 +69,7 @@ export function CourseComponent({
         changeEditMode(!editMode);
     }
     return (
-        <div
-            // className="course"
-            style={{ border: "1px solid black", padding: "10px" }}
-        >
+        <div style={{ border: "1px solid black", padding: "10px" }}>
             <FormGroup>
                 {!editMode && (
                     <div data-testid="course-code">
@@ -189,16 +171,14 @@ export function CourseComponent({
                     <Button
                         data-testid="save-course"
                         onClick={() => {
-                            // console.log
                             const newCourse = {
-                                ...currentCourse,
+                                ...course,
                                 courseCode: courseCode,
                                 courseTitle: courseTitle,
                                 courseDescription: courseDescription,
                                 numCredits: credits
                             };
-                            updateCourse(newCourse);
-                            updateCourses(newCourse, currentCourse);
+                            updateCourses(newCourse, course);
 
                             changeEditMode(!editMode);
                         }}
