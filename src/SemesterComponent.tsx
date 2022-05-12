@@ -54,7 +54,15 @@ export function SemesterComponent({
         }
     }
 
-    function moveCourse(movingCourse: Course, newSemester: Semester): void {
+    function moveCourse(movingCourse: Course, newSemester: Semester): boolean {
+        if (
+            newSemester.coursesTaken.find(
+                (course: Course) =>
+                    course.courseCode === movingCourse.courseCode
+            ) !== undefined
+        ) {
+            return false;
+        }
         const withoutMovingCourse = semester.coursesTaken.filter(
             (course: Course): boolean =>
                 course.courseCode !== movingCourse.courseCode
@@ -89,6 +97,7 @@ export function SemesterComponent({
         const newPlan = { ...plan, semesters: newSemesters };
         changeTempSemester(updatedNewSemester);
         updatePlans(newPlan, plan);
+        return true;
     }
 
     function updateCourses(newCourse: Course, oldCourse: Course): void {

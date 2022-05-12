@@ -24,13 +24,14 @@ export function CourseComponent({
     tempSemester: Semester;
     updateTempSemester: (semesterTitle: string) => void;
     semesterOptions: Semester[];
-    moveCourse: (movingCourse: Course, newSemester: Semester) => void;
+    moveCourse: (movingCourse: Course, newSemester: Semester) => boolean;
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
     const [credits, changeCredits] = useState<number>(course.numCredits);
     const [popUp, showPopUp] = useState<boolean>(false);
+    const [moveCourseCopy, updateMoveCourseCopy] = useState<boolean>(false);
 
     return (
         <div style={{ border: "1px solid black", padding: "10px" }}>
@@ -140,13 +141,36 @@ export function CourseComponent({
                                 ))}
                             </Form.Select>
                         </Form.Group>
+                        {moveCourseCopy && (
+                            <span style={{ color: "red" }}>
+                                This semester already has this course.
+                            </span>
+                        )}
                         <Button
+                            variant="success"
                             onClick={() => {
-                                moveCourse(course, tempSemester);
-                                showPopUp(false);
+                                const validCourse = moveCourse(
+                                    course,
+                                    tempSemester
+                                );
+                                if (validCourse && !moveCourseCopy) {
+                                    showPopUp(false);
+                                    updateMoveCourseCopy(false);
+                                } else {
+                                    updateMoveCourseCopy(true);
+                                }
                             }}
                         >
                             Save
+                        </Button>
+                        <Button
+                            variant="warning"
+                            onClick={() => {
+                                showPopUp(false);
+                                updateMoveCourseCopy(false);
+                            }}
+                        >
+                            Cancel
                         </Button>
                     </Modal.Body>
                 </Modal>
