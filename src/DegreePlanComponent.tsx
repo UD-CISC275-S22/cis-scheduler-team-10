@@ -28,8 +28,9 @@ export function DegreePlanComponent({
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
-    const [invalid, updateInvalid] = useState<boolean>(false);
+    const [invalidYear, updateInvalidYear] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
+    const [copiedSemester, updateCopiedSemester] = useState<boolean>(false);
 
     function updateSemList() {
         let numCredits = 0;
@@ -66,17 +67,29 @@ export function DegreePlanComponent({
 
     function save() {
         if (
-            semYear.length === 4 &&
-            parseInt(semYear) >= 1900 &&
-            parseInt(semYear) <= 2100
+            degreePlan.semesters.find(
+                (semester: Semester) =>
+                    semSeason + semYear ===
+                    semester.season + semester.semesterName
+            ) === undefined
         ) {
-            updateInvalid(false);
-            updateSemList();
-            addSemester(degreePlan, semYear, semSeason);
-            changeAddSem(!addSem);
-            changeSemYear("");
+            updateCopiedSemester(false);
+            if (
+                semYear.length === 4 &&
+                parseInt(semYear) >= 1900 &&
+                parseInt(semYear) <= 2100
+            ) {
+                updateInvalidYear(false);
+                updateSemList();
+                addSemester(degreePlan, semYear, semSeason);
+                changeAddSem(!addSem);
+                changeSemYear("");
+            } else {
+                updateInvalidYear(true);
+            }
         } else {
-            updateInvalid(true);
+            updateInvalidYear(false);
+            updateCopiedSemester(true);
         }
     }
 
@@ -143,9 +156,15 @@ export function DegreePlanComponent({
                                 onChange={updateSemName}
                             />
                         </Form.Group>
-                        {invalid && (
+                        {invalidYear && (
                             <span style={{ color: "red" }}>
                                 Please enter a valid year.
+                            </span>
+                        )}
+                        {copiedSemester && (
+                            <span style={{ color: "red" }}>
+                                This semester has already been added to the
+                                plan.
                             </span>
                         )}
                         <div style={{ padding: "2px" }}>

@@ -154,7 +154,8 @@ export function CourseComponent({
                     <Button
                         onClick={() => {
                             updateTempSemester(
-                                tempSemester.season + tempSemester.semesterName
+                                semesterOptions[0].season +
+                                    semesterOptions[0].semesterName
                             );
                             showPopUp(true);
                         }}

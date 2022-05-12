@@ -29,12 +29,17 @@ export function SemesterComponent({
     const [invalidCourse, changeInvalidity] = useState<boolean>(false);
     // temporary to move course to:
     const [tempSemester, changeTempSemester] = useState<Semester>(
-        semester.season + semester.semesterName !==
+        semester.season + semester.semesterName ===
             plan.semesters[0].season + plan.semesters[0].semesterName
-            ? plan.semesters[0]
-            : plan.semesters[1]
+            ? plan.semesters.length !== 1
+                ? plan.semesters[1]
+                : plan.semesters[0]
+            : plan.semesters[0]
     );
     const [moveCourses, changeMoveCourses] = useState<boolean>(false);
+
+    const movingIsValid =
+        plan.semesters.length !== 1 && semester.coursesTaken.length !== 0;
 
     function updateTempSemester(semesterTitle: string) {
         const newSemester = plan.semesters.find(
@@ -198,13 +203,15 @@ export function SemesterComponent({
                 >
                     Reset
                 </Button>
-                <Button
-                    onClick={() => {
-                        changeMoveCourses(!moveCourses);
-                    }}
-                >
-                    Move Courses
-                </Button>
+                {movingIsValid && (
+                    <Button
+                        onClick={() => {
+                            changeMoveCourses(!moveCourses);
+                        }}
+                    >
+                        Move Courses
+                    </Button>
+                )}
             </Col>
             <Col
                 style={{
