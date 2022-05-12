@@ -29,6 +29,7 @@ export function CourseComponent({
     const [courseDescription, changeDescription] = useState<string>(
         course.courseDescription
     );
+    const [metPreReq, changeMetPreReq] = useState<boolean>(false);
     function resetCourse(c: Course) {
         const location = courses.findIndex(
             (crs: string) => crs === c.courseCode
@@ -37,7 +38,7 @@ export function CourseComponent({
             courseCode: content[location].code,
             courseTitle: content[location].name,
             numCredits: parseInt(content[location].credits),
-            preReqs: [content[location].preReq],
+            preReqs: content[location].preReq,
             courseDescription: content[location].descr,
             complete: true,
             required: true,
@@ -45,7 +46,6 @@ export function CourseComponent({
         };
         changeCode(newCourse.courseCode);
         changeTitle(newCourse.courseTitle);
-        changeCredits(newCourse.numCredits);
         changeDescription(newCourse.courseDescription);
         updateCourses(newCourse, c);
         changeEditMode(!editMode);
@@ -120,6 +120,31 @@ export function CourseComponent({
                             changeCredits(parseInt(event.target.value))
                         }
                     ></Form.Control>
+                )}
+                {!editMode && (
+                    <div>
+                        <p data-testid="preReqs">
+                            {" "}
+                            <b>Prerequisites: </b>
+                            {course.preReqs === ""
+                                ? "None"
+                                : course.preReqs}{" "}
+                            {course.preReqs !== ""
+                                ? metPreReq
+                                    ? "✔️"
+                                    : "❌"
+                                : ""}
+                        </p>
+                    </div>
+                )}
+                {editMode && (
+                    <Form.Check
+                        type="checkbox"
+                        id="is-preReqMet-check"
+                        label="Satisfied all prerequisites"
+                        checked={metPreReq}
+                        onChange={() => changeMetPreReq(!metPreReq)}
+                    />
                 )}
                 {!editMode && (
                     <Button

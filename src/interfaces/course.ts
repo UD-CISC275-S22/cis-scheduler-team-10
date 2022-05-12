@@ -10,7 +10,7 @@ export interface Course {
     // Credits (number)
     numCredits: number;
     // Pre-Req (Course[])
-    preReqs: string[];
+    preReqs: string;
     // Desc (string)
     courseDescription: string;
     // Taken/Complete (bool)

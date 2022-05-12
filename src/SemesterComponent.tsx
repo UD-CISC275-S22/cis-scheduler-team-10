@@ -84,7 +84,7 @@ export function SemesterComponent({
             courseCode: courseID,
             courseTitle: content[location].name,
             numCredits: credits,
-            preReqs: [content[location].preReq],
+            preReqs: content[location].preReq,
             courseDescription: content[location].descr,
             complete: true,
             required: true,
