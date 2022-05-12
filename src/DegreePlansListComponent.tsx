@@ -1,56 +1,6 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { Plan } from "./interfaces/plan";
-
-function InsertPlan({
-    planName,
-    setPlanName,
-    addPlan,
-    adding,
-    changeAdding
-}: {
-    planName: string;
-    setPlanName: (name: string) => void;
-    addPlan: (newPlanName: string) => void;
-    adding: boolean;
-    changeAdding: (adding: boolean) => void;
-}): JSX.Element {
-    function save() {
-        addPlan(planName);
-        changeAdding(!adding);
-        setPlanName("Insert Name Here");
-    }
-    function cancel() {
-        changeAdding(!adding);
-        setPlanName("Insert Name Here");
-    }
-    return (
-        <Form.Group controlId="formPlanName" as={Row}>
-            <Col>
-                <Form.Control
-                    style={{ justifyContent: "center" }}
-                    value={planName}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setPlanName(event.target.value)
-                    }
-                />
-            </Col>
-            <Col>
-                <Button
-                    data-testid={"save-plan"}
-                    onClick={save}
-                    variant="success"
-                    className="me-4"
-                >
-                    Save
-                </Button>
-                <Button onClick={cancel} variant="warning" className="me-4">
-                    Cancel
-                </Button>
-            </Col>
-        </Form.Group>
-    );
-}
 
 export function DegreePlansListComponent({
     degreePlans,
@@ -64,8 +14,19 @@ export function DegreePlansListComponent({
     removePlan: (planName: string) => void;
 }): JSX.Element {
     const [planName, setPlanName] = useState<string>("Insert Name Here");
-    const [adding, changeAdding] = useState<boolean>(false);
     const [editing, changeEditing] = useState<boolean>(false);
+    const [addPlanPopUp, showAddPlanPopUp] = useState<boolean>(false);
+
+    function save() {
+        addPlan(planName);
+        showAddPlanPopUp(false);
+        setPlanName("Insert Name Here");
+    }
+    function cancel() {
+        showAddPlanPopUp(false);
+        setPlanName("Insert Name Here");
+    }
+
     return (
         <div
             className="degreePlansList"
@@ -77,7 +38,7 @@ export function DegreePlansListComponent({
             ) : (
                 <Button
                     data-testid={"add-plan"}
-                    onClick={() => changeAdding(!adding)}
+                    onClick={() => showAddPlanPopUp(true)}
                     variant="success"
                     className="me-4"
                 >
@@ -89,7 +50,6 @@ export function DegreePlansListComponent({
                     <Row key={plan.name}>
                         <Col
                             data-testid="planName"
-                            // key={plan.name}
                             onClick={() => updatePlanView(plan)}
                         >
                             {plan.name}
@@ -111,24 +71,51 @@ export function DegreePlansListComponent({
                     </Row>
                 );
             })}
-            {adding ? (
-                <InsertPlan
-                    planName={planName}
-                    setPlanName={setPlanName}
-                    addPlan={addPlan}
-                    adding={adding}
-                    changeAdding={changeAdding}
-                ></InsertPlan>
-            ) : (
-                <Button
-                    onClick={() => changeEditing(!editing)}
-                    data-testid={"remove-plan-bool"}
-                    variant="danger"
-                    className="me-4"
-                >
-                    Remove
-                </Button>
-            )}
+            <Modal show={addPlanPopUp} onHide={() => showAddPlanPopUp(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title id="example-modal-sizes-title-sm">
+                        Add A New Degree Plan
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Group controlId="formPlanName" as={Row}>
+                        <Col>
+                            <Form.Control
+                                style={{ justifyContent: "center" }}
+                                value={planName}
+                                onChange={(
+                                    event: React.ChangeEvent<HTMLInputElement>
+                                ) => setPlanName(event.target.value)}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                data-testid={"save-plan"}
+                                onClick={save}
+                                variant="success"
+                                className="me-4"
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                onClick={cancel}
+                                variant="warning"
+                                className="me-4"
+                            >
+                                Cancel
+                            </Button>
+                        </Col>
+                    </Form.Group>
+                </Modal.Body>
+            </Modal>
+            <Button
+                onClick={() => changeEditing(!editing)}
+                data-testid={"remove-plan-bool"}
+                variant="danger"
+                className="me-4"
+            >
+                Remove
+            </Button>
         </div>
     );
 }
