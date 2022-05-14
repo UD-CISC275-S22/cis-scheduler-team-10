@@ -256,6 +256,7 @@ export function App(): JSX.Element {
                     )}
                     {planView !== null && (
                         <Button
+                            data-testid={"export-plan"}
                             onClick={() => {
                                 exportToCSV(
                                     planView.name.replace(/\s/g, "") + ".csv",

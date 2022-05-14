@@ -111,6 +111,7 @@ export function CourseComponent({
                         <Form.Group>
                             <Form.Label>Move to...</Form.Label>
                             <Form.Select
+                                data-testid={"semester-select"}
                                 value={
                                     tempSemester.season +
                                     tempSemester.semesterName
@@ -148,6 +149,7 @@ export function CourseComponent({
                         )}
                         <Button
                             variant="success"
+                            data-testid={"save-move-course"}
                             onClick={() => {
                                 const validCourse = moveCourse(
                                     course,
@@ -164,6 +166,7 @@ export function CourseComponent({
                             Save
                         </Button>
                         <Button
+                            data-testid={"cancel-move"}
                             variant="warning"
                             onClick={() => {
                                 showPopUp(false);
@@ -176,6 +179,7 @@ export function CourseComponent({
                 </Modal>
                 {!editMode && moveCourses && (
                     <Button
+                        data-testid={"move-course"}
                         onClick={() => {
                             updateTempSemester(
                                 semesterOptions[0].season +
@@ -209,6 +213,7 @@ export function CourseComponent({
                 )}
                 {editMode && (
                     <Button
+                        data-testid={"cancel-edit-course"}
                         onClick={() => {
                             changeCode(course.courseCode);
                             changeTitle(course.courseTitle);

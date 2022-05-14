@@ -98,6 +98,7 @@ export function DegreePlansListComponent({
                                 Save
                             </Button>
                             <Button
+                                data-testid={"cancel-new-plan"}
                                 onClick={cancel}
                                 variant="warning"
                                 className="me-4"

@@ -49,8 +49,6 @@ export function SemesterComponent({
         );
         if (newSemester !== undefined) {
             changeTempSemester(newSemester);
-        } else {
-            console.log("ERROR: DID NOT FIND SEMESTER TO ADD BACK");
         }
     }
 
@@ -214,6 +212,7 @@ export function SemesterComponent({
                 </Button>
                 {movingIsValid && (
                     <Button
+                        data-testid={"move-courses"}
                         onClick={() => {
                             changeMoveCourses(!moveCourses);
                         }}
