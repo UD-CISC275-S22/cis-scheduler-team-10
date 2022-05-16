@@ -176,11 +176,16 @@ export function CourseComponent({
                     <Button
                         data-testid="save-course"
                         onClick={() => {
+                            const numCoursesRepeat = sem.coursesTaken.filter(
+                                (course: Course): boolean =>
+                                    course.courseCode === courseCode
+                            );
+                            if (courseCode !== course.courseCode) {
+                                console.log(numCoursesRepeat.length);
+                            }
                             if (
-                                sem.coursesTaken.find(
-                                    (course: Course) =>
-                                        course.courseCode === courseCode
-                                ) === undefined
+                                courseCode === course.courseCode ||
+                                numCoursesRepeat.length === 0
                             ) {
                                 const newCourse = {
                                     ...course,
@@ -190,7 +195,6 @@ export function CourseComponent({
                                     numCredits: courseCredits
                                 };
                                 updateCourses(newCourse, course);
-
                                 changeEditMode(!editMode);
                             } else {
                                 changeCanAdd(!canAdd);
