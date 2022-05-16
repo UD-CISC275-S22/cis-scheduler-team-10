@@ -9,7 +9,6 @@ import { Catalog } from "./interfaces/catalog";
 export function SemesterComponent({
     plan,
     semester,
-    // updateSemesters,
     removing,
     removeSemester,
     resetSemester,
@@ -19,7 +18,6 @@ export function SemesterComponent({
 }: {
     plan: Plan;
     semester: Semester;
-    // updateSemesters: (newSemester: Semester, oldSemester: Semester) => void;
     removing: boolean;
     removeSemester: (plan: Plan, semName: string) => void;
     resetSemester: (s: Semester) => void;
@@ -30,9 +28,7 @@ export function SemesterComponent({
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
-    const [credits, changeCredits] = useState<string>("0");
     const [invalid, changeInvalidity] = useState<boolean>(false);
-
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = semester.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -53,10 +49,6 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
     }
 
-    function updateCredits(event: React.ChangeEvent<HTMLInputElement>) {
-        changeCredits(event.target.value);
-    }
-
     function removeCourse(crsID: string): void {
         const newCourses = semester.coursesTaken.filter(
             (c: Course): boolean => c.courseCode !== crsID
@@ -73,17 +65,12 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
     }
 
-    function addCourse(
-        courseID: string,
-        credits: number,
-        semester: Semester,
-        plan: Plan
-    ) {
+    function addCourse(courseID: string, semester: Semester, plan: Plan) {
         const location = courses.findIndex((crs: string) => crs === courseID);
         const newCourse: Course = {
             courseCode: courseID,
             courseTitle: content[location].name,
-            numCredits: credits,
+            numCredits: parseInt(content[location].credits),
             preReqs: content[location].preReq,
             courseDescription: content[location].descr,
             complete: true,
@@ -99,8 +86,6 @@ export function SemesterComponent({
                 return { ...sem };
             }
         });
-        // updateSem(newSem);
-        // changePlan({ ...plan, semesters: newSems });
         const newPlan = { ...plan, semesters: newSemesters };
         updatePlans(newPlan, plan);
     }
@@ -111,7 +96,7 @@ export function SemesterComponent({
                 (course: Course) => course.courseCode === courseID
             ) === undefined
         ) {
-            addCourse(courseID, +credits, semester, plan);
+            addCourse(courseID, semester, plan);
             changeAddingCourse(!addingCourse);
             changeCourseID("Insert Course ID");
             changeInvalidity(false);
@@ -140,27 +125,6 @@ export function SemesterComponent({
                         0
                     )}
                 </div>
-                {/* <div>{if((semester.coursesTaken.reduce(
-                        (credTot, { numCredits }) => credTot + numCredits,
-                        0))>currentSem.creditLimit){
-                            return (<div style={{ color: "red" }}>
-                            Warning: Credits filled exceeds credit limit - check
-                            with advisor to make sure your plan is feasible.
-                        </div>);
-}}</div> */}
-                {/* <div>
-                    {semester.coursesTaken.reduce(
-                        (credTot, { numCredits }) => credTot + numCredits,
-                        0
-                    ) > currentSem.creditLimit ? (
-                        <div style={{ color: "red" }}>
-                            Warning: Credits filled exceeds credit limit - check
-                            with advisor to make sure your plan is feasible.
-                        </div>
-                    ) : (
-                        <span></span>
-                    )}
-                </div> */}
                 <Button
                     data-testid="reset"
                     onClick={() => resetSemester(semester)}
@@ -202,8 +166,6 @@ export function SemesterComponent({
                                 data-testid="course"
                                 course={course}
                                 updateCourses={updateCourses}
-                                // changePlan={changePlan}
-                                // updatePlans={updatePlans}
                                 removingCourse={removingCourse}
                                 removeCourse={removeCourse}
                                 sem={semester}
@@ -251,17 +213,6 @@ export function SemesterComponent({
                                         options={courses}
                                         placeholder="Course Search..."
                                     ></Typeahead>
-                                </Form.Group>
-                                <Form.Group
-                                    data-testid="addCreds"
-                                    controlId="formCredits"
-                                >
-                                    <Form.Label>Number of Credits:</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        value={credits}
-                                        onChange={updateCredits}
-                                    />
                                 </Form.Group>
                                 <Button
                                     data-testid="saveCourse"

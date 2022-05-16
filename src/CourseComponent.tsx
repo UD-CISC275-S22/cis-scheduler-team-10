@@ -11,6 +11,7 @@ export function CourseComponent({
     updateCourses,
     removingCourse,
     removeCourse,
+    sem,
     courses,
     content
 }: {
@@ -30,6 +31,7 @@ export function CourseComponent({
         course.courseDescription
     );
     const [metPreReq, changeMetPreReq] = useState<boolean>(false);
+    const [canAdd, changeCanAdd] = useState<boolean>(true);
     function resetCourse(c: Course) {
         const location = courses.findIndex(
             (crs: string) => crs === c.courseCode
@@ -44,12 +46,14 @@ export function CourseComponent({
             required: true,
             requirementType: content[location].typ
         };
+
         changeCode(newCourse.courseCode);
         changeTitle(newCourse.courseTitle);
         changeDescription(newCourse.courseDescription);
         updateCourses(newCourse, c);
         changeEditMode(!editMode);
     }
+
     return (
         <div style={{ border: "1px solid black", padding: "10px" }}>
             <FormGroup>
@@ -77,9 +81,9 @@ export function CourseComponent({
                         data-testid="changeCodeBox"
                         type="textbox"
                         value={courseCode}
-                        onChange={(event: ChangeEvent) =>
-                            changeCode(event.target.value)
-                        }
+                        onChange={(event: ChangeEvent) => {
+                            changeCode(event.target.value);
+                        }}
                     ></Form.Control>
                 )}
                 {!editMode && (
@@ -172,16 +176,25 @@ export function CourseComponent({
                     <Button
                         data-testid="save-course"
                         onClick={() => {
-                            const newCourse = {
-                                ...course,
-                                courseCode: courseCode,
-                                courseTitle: courseTitle,
-                                courseDescription: courseDescription,
-                                numCredits: courseCredits
-                            };
-                            updateCourses(newCourse, course);
+                            if (
+                                sem.coursesTaken.find(
+                                    (course: Course) =>
+                                        course.courseCode === courseCode
+                                ) === undefined
+                            ) {
+                                const newCourse = {
+                                    ...course,
+                                    courseCode: courseCode,
+                                    courseTitle: courseTitle,
+                                    courseDescription: courseDescription,
+                                    numCredits: courseCredits
+                                };
+                                updateCourses(newCourse, course);
 
-                            changeEditMode(!editMode);
+                                changeEditMode(!editMode);
+                            } else {
+                                changeCanAdd(!canAdd);
+                            }
                         }}
                         variant="success"
                         className="me-4"
@@ -189,7 +202,12 @@ export function CourseComponent({
                         Save
                     </Button>
                 )}
-
+                {!canAdd && editMode && (
+                    <div style={{ color: "red" }}>
+                        You cannot have two courses with the same code in one
+                        semester.
+                    </div>
+                )}
                 {editMode && (
                     <Button
                         onClick={() => {
