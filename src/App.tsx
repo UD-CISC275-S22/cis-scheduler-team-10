@@ -9,6 +9,7 @@ import catalog from "./data/catalog.json";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
+import { DegreePlanVizualizer } from "./DegreePlanVizualizer";
 const PLANS = plans as Plan[];
 
 declare global {
@@ -272,6 +273,9 @@ export function App(): JSX.Element {
                             Download Plan
                         </Button>
                     )}
+                    <DegreePlanVizualizer
+                        degreePlan={planView}
+                    ></DegreePlanVizualizer>
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
