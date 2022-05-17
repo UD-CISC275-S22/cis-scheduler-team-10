@@ -2,56 +2,48 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
-  console.error
-    Warning: Encountered two children with the same key, `[object Object]spring2022`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at div
-        at DegreePlanComponent (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/DegreePlanComponent.tsx:16:5)
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Col.js:72:8
-        at div
-        at /home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/node_modules/react-bootstrap/cjs/Row.js:22:3
-        at div
-        at App (/home/runner/work/cis-scheduler-team-10/cis-scheduler-team-10/src/App.tsx:45:40)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:13620:11)
-      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:13651:21)
-      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:14125:14)
-      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:16997:28)
-      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:17632:3)
-
-FAIL src/App.test.tsx
+FAIL src/App.test.tsx (10.946 s)
   Scheduler Tests
-    ✓ The App renders (38 ms)
-    ✓ List of plans and welcome message visible (21 ms)
-    ✓ Can add a new plan (119 ms)
-    ✓ Can remove a plan (14 ms)
-    ✓ Can view semester (45 ms)
-    ✕ Can edit courses (58 ms)
-    ✓ Buttons to add and remove semesters visible when inside of a plan (38 ms)
-    ✓ Pressing remove semester button creates new buttons to remove each semester in plan (43 ms)
-    ✓ Pressing remove semester button removes semester from plan (51 ms)
-    ✓ A removed semester stays removed when you exit the plan and return to it (66 ms)
-    ✓ Can add a new semester (249 ms)
-    ✓ Can add a new course to a semester (83 ms)
-    ✓ Pressing remove course button removes course from semester (48 ms)
-    ✕ Viewing default plan shows credit limit and filled credits per semester (42 ms)
-    ✓ Editing a course's credits changes the number of credits filled (118 ms)
-    ✓ Resetting a plan removes all semesters from the plan (34 ms)
-    ✓ Resetting a semester removes all courses from the semester (39 ms)
+    ✓ The App renders (66 ms)
+    ✓ List of plans and welcome message visible (30 ms)
+    ✓ Can toggle between view of degreen plan and welcome message (156 ms)
+    ✓ Can add a new plan (243 ms)
+    ✓ Can cancel a new plan (147 ms)
+    ✓ Can remove a plan (21 ms)
+    ✓ Can view semester (111 ms)
+    ✕ Can edit courses (138 ms)
+    ✓ Buttons to add and remove semesters visible when inside of a plan (123 ms)
+    ✓ Pressing remove semester button creates new buttons to remove each semester in plan (127 ms)
+    ✓ Pressing remove semester button removes semester from plan (135 ms)
+    ✓ A removed semester stays removed when you exit the plan and return to it (192 ms)
+    ✓ Can add a new semester (495 ms)
+    ✓ Can't add a previously existing semester (329 ms)
+    ✕ Can add a new course to a semester (166 ms)
+    ✓ Can edit courses (634 ms)
+    ✓ Cancelling editing courses returns original course data (408 ms)
+    ✓ Pressing remove course button removes course from semester (130 ms)
+    ✓ Viewing default plan shows credit limit and filled credits per semester (89 ms)
+    ✓ Editing a course's credits changes the number of credits filled (234 ms)
+    ✕ Adding a course changes the number of credits filled (186 ms)
+    ✓ Can move courses between semesters (632 ms)
+    ✕ Can't move a course to a semester that has the course already (519 ms)
+    ✓ Resetting a plan removes all the semesters from a plan (81 ms)
+    ✓ Resetting a plan does not remove other plan's semesters (254 ms)
+    ✓ Resetting a semester removes all courses from the semester (94 ms)
+    ✕ Course prerequisites render (unmet prerequisites show up with a red x, you can check a box in the edit screen to get a green check stating you met prereqs, and courses with no prereqs have None listed  (85 ms)
+    ✓ You can change a course's information, save it, and then reset the info back to the course's default values as without changing the course code (671 ms)
+    ✓ Editing a course's code, saving it, then resetting the information to default will swap the info to that of the new course (329 ms)
+    ✓ The user will be blocked and given a warning message when they attempt to edit a course code to a course that already exists within the semester (297 ms)
 
   ● Scheduler Tests › Can edit courses
 
-    TestingLibraryElementError: Unable to find an element with the text: EGG101. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+    TestingLibraryElementError: Unable to find an element with the text: EGG101: 2 Credits. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
 
     Ignored nodes: comments, <script />, <style />
-    [36m<body>[39m
+    [36m<body[39m
+      [33mclass[39m=[32m""[39m
+      [33mstyle[39m=[32m"padding-right: 1024px;"[39m
+    [36m>[39m
       [36m<div>[39m
         [36m<div[39m
           [33mclass[39m=[32m"App"[39m
@@ -93,6 +85,7 @@ FAIL src/App.test.tsx
                   [36m<div[39m
                     [33mclass[39m=[32m"col"[39m
                     [33mdata-testid[39m=[32m"planName"[39m
+                    [33mstyle[39m=[32m"border: 1px solid black; padding: 1px;"[39m
                   [36m>[39m
                     [0mFreshman Year[0m
                   [36m</div>[39m
@@ -171,6 +164,12 @@ FAIL src/App.test.tsx
                           [36m>[39m
                             [0mFALL 2021[0m
                             [36m<div[39m
+                              [33mdata-testid[39m=[32m"credLim"[39m
+                            [36m>[39m
+                              [0mCredit Limit: [0m
+                              [0m18[0m
+                            [36m</div>[39m
+                            [36m<div[39m
                               [33mdata-testid[39m=[32m"credFill"[39m
                             [36m>[39m
                               [0mCredits Filled:[0m
@@ -183,6 +182,13 @@ FAIL src/App.test.tsx
                               [33mtype[39m=[32m"button"[39m
                             [36m>[39m
                               [0mReset[0m
+                            [36m</button>[39m
+                            [36m<button[39m
+                              [33mclass[39m=[32m"btn btn-primary"[39m
+                              [33mdata-testid[39m=[32m"move-courses"[39m
+                              [33mtype[39m=[32m"button"[39m
+                            [36m>[39m
+                              [0mMove Courses[0m
                             [36m</button>[39m
                           [36m</div>[39m
                           [36m<div[39m
@@ -201,48 +207,37 @@ FAIL src/App.test.tsx
                                     [33mdata-testid[39m=[32m"course-code"[39m
                                   [36m>[39m
                                     [36m<b>[39m
-                                      [0mEGG101[0m
+                                      [0mEGGG 101[0m
                                       [0m: [0m
-                                      [0m2[0m
-                                      [0m Credits[0m
-                                    [36m</b>[39m
-                                  [36m</div>[39m
-                                  [36m<span />[39m
-                                  [36m<div[39m
-                                    [33mdata-testid[39m=[32m"course-title"[39m
-                                  [36m>[39m
-                                    [36m<i>[39m
-                                      [0mIntroduction to Engineering (FYE)[0m
-                                    [36m</i>[39m
-                                  [36m</div>[39m
-                                  [36m<p>[39m
-                                    [0m [0m
-                                    [0mIntroduction to profession, including disciplines of chemical, civil, computer, electrical...
+              ...
 
-      59 |         expect(degreePlans.length).toEqual(1);
-      60 |         degreePlans[0].click();
-    > 61 |         const code1 = screen.getByText("EGG101");
+      85 |         expect(degreePlans.length).toEqual(1);
+      86 |         degreePlans[0].click();
+    > 87 |         const code1 = screen.getByText("EGG101: 2 Credits");
          |                              ^
-      62 |         expect(code1).toBeInTheDocument();
-      63 |         const editCourseButtons = screen.getAllByTestId("edit-course");
-      64 |         editCourseButtons[0].click();
+      88 |         expect(code1).toBeInTheDocument();
+      89 |         const editCourseButtons = screen.getAllByTestId("edit-course");
+      90 |         editCourseButtons[0].click();
 
       at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
       at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
       at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
       at getByText (node_modules/@testing-library/dom/dist/query-helpers.js:111:19)
-      at Object.<anonymous> (src/App.test.tsx:61:30)
+      at Object.<anonymous> (src/App.test.tsx:87:30)
       at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
       at runJest (node_modules/@jest/core/build/runJest.js:404:19)
       at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
       at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
 
-  ● Scheduler Tests › Viewing default plan shows credit limit and filled credits per semester
+  ● Scheduler Tests › Can add a new course to a semester
 
-    TestingLibraryElementError: Unable to find an element by: [data-testid="credLim"]
+    TestingLibraryElementError: Unable to find an element by: [data-testid="addCreds"]
 
     Ignored nodes: comments, <script />, <style />
-    [36m<body>[39m
+    [36m<body[39m
+      [33mclass[39m=[32m""[39m
+      [33mstyle[39m=[32m"padding-right: 1024px;"[39m
+    [36m>[39m
       [36m<div>[39m
         [36m<div[39m
           [33mclass[39m=[32m"App"[39m
@@ -284,6 +279,7 @@ FAIL src/App.test.tsx
                   [36m<div[39m
                     [33mclass[39m=[32m"col"[39m
                     [33mdata-testid[39m=[32m"planName"[39m
+                    [33mstyle[39m=[32m"border: 1px solid black; padding: 1px;"[39m
                   [36m>[39m
                     [0mFreshman Year[0m
                   [36m</div>[39m
@@ -362,6 +358,12 @@ FAIL src/App.test.tsx
                           [36m>[39m
                             [0mFALL 2021[0m
                             [36m<div[39m
+                              [33mdata-testid[39m=[32m"credLim"[39m
+                            [36m>[39m
+                              [0mCredit Limit: [0m
+                              [0m18[0m
+                            [36m</div>[39m
+                            [36m<div[39m
                               [33mdata-testid[39m=[32m"credFill"[39m
                             [36m>[39m
                               [0mCredits Filled:[0m
@@ -374,6 +376,13 @@ FAIL src/App.test.tsx
                               [33mtype[39m=[32m"button"[39m
                             [36m>[39m
                               [0mReset[0m
+                            [36m</button>[39m
+                            [36m<button[39m
+                              [33mclass[39m=[32m"btn btn-primary"[39m
+                              [33mdata-testid[39m=[32m"move-courses"[39m
+                              [33mtype[39m=[32m"button"[39m
+                            [36m>[39m
+                              [0mMove Courses[0m
                             [36m</button>[39m
                           [36m</div>[39m
                           [36m<div[39m
@@ -392,59 +401,736 @@ FAIL src/App.test.tsx
                                     [33mdata-testid[39m=[32m"course-code"[39m
                                   [36m>[39m
                                     [36m<b>[39m
-                                      [0mEGG101[0m
+                                      [0mEGGG 101[0m
                                       [0m: [0m
-                                      [0m2[0m
-                                      [0m Credits[0m
-                                    [36m</b>[39m
-                                  [36m</div>[39m
-                                  [36m<span />[39m
-                                  [36m<div[39m
-                                    [33mdata-testid[39m=[32m"course-title"[39m
-                                  [36m>[39m
-                                    [36m<i>[39m
-                                      [0mIntroduction to Engineering (FYE)[0m
-                                    [36m</i>[39m
-                                  [36m</div>[39m
-                                  [36m<p>[39m
-                                    [0m [0m
-                                    [0mIntroduction to profession, including disciplines of chemical, civil, computer, electrical...
+              ...
 
-      157 |         const degreePlans = screen.getAllByTestId("planName");
-      158 |         degreePlans[0].click();
-    > 159 |         const lims = screen.getAllByTestId("credLim");
-          |                             ^
-      160 |         const fills = screen.getAllByTestId("credFill");
-      161 |         expect(lims.length).toEqual(2);
-      162 |         expect(fills.length).toEqual(2);
+      188 |         const courseSearch = screen.getAllByTestId("course-search");
+      189 |         expect(courseSearch).toHaveLength(1);
+    > 190 |         const creditAmount = screen.getByTestId("addCreds");
+          |                                     ^
+      191 |         userEvent.type(creditAmount, "3");
+      192 |         screen.getByTestId("saveCourse").click();
+      193 |         courses = screen.getAllByTestId("course-code");
 
       at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
       at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
-      at getAllByTestId (node_modules/@testing-library/dom/dist/query-helpers.js:130:15)
-      at Object.<anonymous> (src/App.test.tsx:159:29)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at getByTestId (node_modules/@testing-library/dom/dist/query-helpers.js:111:19)
+      at Object.<anonymous> (src/App.test.tsx:190:37)
       at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
       at runJest (node_modules/@jest/core/build/runJest.js:404:19)
       at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
       at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
 
--------------------------------|---------|----------|---------|---------|---------------------
-File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s   
--------------------------------|---------|----------|---------|---------|---------------------
-All files                      |    90.4 |     82.5 |   88.52 |    90.3 |                     
- src                           |    90.4 |     82.5 |   88.52 |    90.3 |                     
-  App.tsx                      |   90.47 |       70 |   93.33 |   90.16 | 18,52,64,75,107,132 
-  CourseComponent.tsx          |   68.42 |    95.45 |    62.5 |   68.42 | 62-76,137-140       
-  DegreePlanComponent.tsx      |   93.93 |    68.75 |     100 |   93.93 | 72,102              
-  DegreePlansListComponent.tsx |    87.5 |      100 |      90 |    87.5 | 26-27               
-  SemesterComponent.tsx        |   95.52 |     87.5 |      90 |   95.52 | 46,258-259          
- src/interfaces                |       0 |        0 |       0 |       0 |                     
-  catalog.ts                   |       0 |        0 |       0 |       0 |                     
-  course.ts                    |       0 |        0 |       0 |       0 |                     
-  plan.ts                      |       0 |        0 |       0 |       0 |                     
-  semester.ts                  |       0 |        0 |       0 |       0 |                     
--------------------------------|---------|----------|---------|---------|---------------------
+  ● Scheduler Tests › Adding a course changes the number of credits filled
+
+    expect(element).toHaveTextContent()
+
+    Expected element to have text content:
+      Credits Filled: 18
+    Received:
+      Credits Filled: 15
+
+      281 |         save.click();
+      282 |         const fills = screen.getAllByTestId("credFill");
+    > 283 |         expect(fills[0]).toHaveTextContent("Credits Filled: 18");
+          |                          ^
+      284 |     });
+      285 |     test("Can move courses between semesters", () => {
+      286 |         const degreePlans = screen.getAllByTestId("planName");
+
+      at Object.<anonymous> (src/App.test.tsx:283:26)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● Scheduler Tests › Can't move a course to a semester that has the course already
+
+    TestingLibraryElementError: Found multiple elements by: [data-testid="saveCourse"]
+
+    Here are the matching elements:
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<button[39m
+      [33mclass[39m=[32m"btn btn-success"[39m
+      [33mdata-testid[39m=[32m"saveCourse"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [0mSave Course[0m
+    [36m</button>[39m
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<button[39m
+      [33mclass[39m=[32m"btn btn-success"[39m
+      [33mdata-testid[39m=[32m"saveCourse"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [0mSave Course[0m
+    [36m</button>[39m
+
+    (If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body[39m
+      [33mclass[39m=[32m"modal-open"[39m
+      [33mdata-rr-ui-modal-open[39m=[32m""[39m
+      [33mstyle[39m=[32m"padding-right: 2048px;"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"App"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"App-header"[39m
+          [36m>[39m
+            [0mScheduler (Team 10)[0m
+            [36m<button[39m
+              [33mclass[39m=[32m"btn btn-primary"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSave Data[0m
+            [36m</button>[39m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"row"[39m
+            [33mstyle[39m=[32m"padding: 10px;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+              [33mdata-testid[39m=[32m"degreePlansList"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"degreePlansList"[39m
+                [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+              [36m>[39m
+                [0mSelect a Degree Plan:[0m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-success"[39m
+                  [33mdata-testid[39m=[32m"add-plan"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0m+[0m
+                [36m</button>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"row"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                    [33mdata-testid[39m=[32m"planName"[39m
+                    [33mstyle[39m=[32m"border: 1px solid black; padding: 1px;"[39m
+                  [36m>[39m
+                    [0mFreshman Year[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [36m<span />[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"row"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                    [33mdata-testid[39m=[32m"planName"[39m
+                    [33mstyle[39m=[32m"border: 1px solid black; padding: 1px;"[39m
+                  [36m>[39m
+                    [0mSample Plan[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [36m<span />[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                  [33mdata-testid[39m=[32m"remove-plan-bool"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mRemove[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"degreePlan col"[39m
+              [33mdata-testid[39m=[32m"degreePlan"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container"[39m
+                  [33mstyle[39m=[32m"border: 1px solid black;"[39m
+                [36m>[39m
+                  [0mSAMPLE PLAN[0m
+                  [0m DEGREE PLAN[0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"padding: 5px;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"btn-group"[39m
+                    [33mrole[39m=[32m"group"[39m
+                  [36m>[39m
+                    [36m<button[39m
+                      [33mclass[39m=[32m"btn btn-primary"[39m
+                      [33mdata-testid[39m=[32m"createNewSem"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [0mCreate New Semester[0m
+                    [36m</button>[39m
+                    [36m<button[39m
+                      [33mclass[39m=[32m"btn btn-danger"[39m
+                      [33mdata-testid[39m=[32m"removeSemOption"[39m
+                      [33mtype[39m=[32m"button"[39m
+                    [36m>[39m
+                      [0mRemove Semester[0m
+                    [36m</button>[39m
+                  [36m</div>[39m
+                  [36m<span />[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mstyle[39m=[32m"padding: 5px;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"row"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"col"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mdata-testid[39m=[32m"semester"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"semester"[39m
+                          [33mdata-testid[39m=[32m"sem"[39m
+                          [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"col"[39m
+                          [36m>[39m
+                            [0mFALL 2023[0m
+                            [36m<div[39m
+                              [33mdata-testid[39m=[32m"credLim"[39m
+                            [36m>[39m
+                              [0mCredit Limit: [0m
+                              [0m18[0m
+                            [36m</div>[39m
+                            [36m<div[39m
+                              [33mdata-testid[39m=[32m"credFill"[39m
+                            [36m>[39m
+                              [0mCredits Filled:[0m
+                              [0m [0m
+                              [0m0[0m
+                            [36m</div>[39m
+                            [36m<button[39m
+                              [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                              [33mdata-testid[39m=[32m"reset"[39m
+                              [33mtype[39m=[32m"button"[39m
+                            [36m>[39m
+                              [0mReset[0m
+                            [36m</button>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"col"[39m
+                            [33mstyle[39m=[32m"border: 1px solid black;"[39m
+                          [36m>[39m
+                            [36m<span />[39m
+                            [36m<div[39m
+                              [33mstyle[39m=[32m"padding: 2px;"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"btn-group"[39m
+                                [33mrole[39m=[32m"group"[39m
+                              [36m>[39m
+                                [36m<button[39m
+                                  [33mclass[39m=[32m"btn btn-primary"[39m
+                                  [33mdata-testid[39m=[32m"addCourseButton"[39m
+                                  [33mtype[39m=[32m"button"[39m
+                                [36m>[39m
+                                  [0mAdd Course[0m
+                                [36m</button>[39m
+                                [36m<button[39m
+                                  [33mclass[39m=[32m"btn btn-danger"[39m
+                                  [33mdata-testid[39m=[32m"removeCourseOpt"[39m
+                                  [33mtype[39m=[32m"button"[39m
+                                [36m>[39m
+                                  [0mRemove Course[0m
+                                [36m</button>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                            [36m<div>[39m
+                              [36m<div>[39m
+                                [36m<div>[39m
+                                  [36m<div[39m
+                                    [33mdata-testid[39m=[32m"course-search"[39m
+                                  [36m>[39m
+                                    [36m<label[39m
+                                      [33mclass[39m=[32m"form-label"[39m
+                                    [36m>[39m
+                                      [0mSelect Course[0m
+                                    [36m</label>[39m
+                                    [36m<div[39m
+                                      [33mclass[39m=[32m"rbt"[39m
+                                      [33mstyle[39m=[32m"outline: none; position: relative;"[39m
+                                      [33mtabindex[39m=[32m"-1"[39m
+                                    [36m>[39m
+                                      [36m<div[39m
+                                        [33mstyle[39m=[32m"display: flex; flex: 1; height: 100%; position: relative;"[39m
+                                      [36m>[39m
+                                        [36m<input[39m
+                                          [33maria-autocomplete[39m=[32m"both"[39m
+                                          [33maria-expanded[39m=[32m"false"[39m
+                                          [33maria-haspopup[39m=[32m"listbox"[39m
+                                          [33mautocomplete[39m=[32m"off"[39m
+                                          [33mclass[39m=[32m"rbt-input-main form-control rbt-input"[39m
+                                          [33mplaceholder[39m=[32m"Course Search..."[39m
+                                          [33mrole[39m=[32m"combobox"[39m
+                                          [33mtype[39m=[32m"text"[39m
+                                          [33mvalue[39m=[32m""[39m
+                                        [36m/>[39m
+                                        [36m<input[39m
+                                          [33maria-hidden[39m=[32m"true"[39m
+                                          [33mclass[39m=[32m"rbt-input-hint"[39m
+                                          [33mreadonly[39m=[32m""[39m
+                                          [33mstyle[39m=[32m"background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"[39m
+                                          [33mtabindex[39m=[32m"-1"[39m
+                                          [33mvalue[39m=[32m""[39m
+                                        [36m/>[39m
+                                      [36m</div>[39m
+                                    [36m</div>[39m
+                                  [36m</div>[39m
+                                  [36m<button[39m
+                                    [33mclass[39m=[32m"btn btn-success"[39m
+                                    [33mdata-testid[39m=[32m"saveCourse"[39m
+                                    [33mtype[39m=[32m"button"[39m
+                                  [36m>[39m
+                                    [0mSave Course[0m
+                                  [36m</button>[39m
+                                [36m</div>[39m
+                                [36m<span[39m
+                                  [33mstyle[39m=[32m"color: red;"[39m
+                                [36m>[39m
+                                  [0mPlease add a course from the course catalog.[0m
+                                [36m</span>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                      [36m<div[39m
+                        [33mdata-testid[39m=[32m"semester"[39m
+                      [36m>[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"semester"[39m
+                          [33mdata-testid[39m=[32m"sem"[39m
+                          [33mstyle[39m=[32m"border: 1px solid black; padding: 20px;"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"col"[39m
+                          [36m>[39m
+                            [0mSPRING 2024[0m
+                            [36m<div[39m
+                              [33mdata-testid[39m=[32m"credLim"[39m
+                            [36m>[39m
+                              [0mCredit Limit: [0m
+                              [0m18[0m
+                            [36m</div>[39m
+                            [36m<div[39m
+                              [33mdata-testid[39m=[32m"credFill"[39m
+                            [36m>[39m
+                              [0mCredits Filled:[0m
+                              [0m [0m
+                              [0m0[0m
+                            [36m</div>[39m
+                            [36m<button[39m
+                              [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                              [33mdata-testid[39m=[32m"reset"[39m
+                              [33mtype[39m=[32m"button"[39m
+                            [36m>[39m
+                              [0mReset[0m
+                            [36m</button>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"col"[39m
+                            [33mstyle[39m=[32m"border: 1px solid black;"[39m
+                          [36m>[39m
+                            [36m<span />[39m
+                            [36m<div[39m
+                              [33mstyle[39m=[32m"padding: 2px;"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"btn-group"[39m
+                                [33mrole[39m=[32m"group"[39m
+                              [36m>[39m
+                                [36m<button[39m
+                                  [33mclass[39m=[32m"btn btn-primary"[39m
+                                  [33mdata-testid[39m=[32m"addCourseButton"[39m
+                                  [33mtype[39m=[32m"button"[39m
+                                [36m>[39m
+                                  [0mAdd Course[0m
+                                [36m</button>[39m
+                                [36m<button[39m
+                                  [33mclass[39m=[32m"btn btn-danger"[39m
+                                  [33mdata-testid[39m=[32m"removeCourseOpt"[39m
+                                  [33mtype[39m=[32m"button"[39m
+                                [36m>[39m
+                                  [0mRemove Course[0m
+                                [36m</button>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                            [36m<div>[39m
+                              [36m<div>[39m
+                                [36m<div>[39m
+                                  [36m<div[39m
+                                    [33mdata-testid[39m=[32m"course-search"[39m
+                                  [36m>[39m
+                                    [36m<label[39m
+                                      [33mclass[39m=[32m"form-label"[39m
+                                    [36m>[39m
+                                      [0mSelect Course[0m
+                                    [36m</label>[39m
+                                    [36m<div[39m
+                                      [33mclass[39m=[32m"rbt"[39m
+                                      [33mstyle[39m=[32m"outline: none; position: relative;"[39m
+                                      [33mtabindex[39m=[32m"-1"[39m
+                                    [36m>[39m
+                                      [36m<div[39m
+                                        [33mstyle[39m=[32m"display: flex; flex: 1; height: 100%; position: relative;"[39m
+                                      [36m>[39m
+                                        [36m<input[39m
+                                          [33maria-autocomplete[39m=[32m"both"[39m
+                                          [33maria-expanded[39m=[32m"false"[39m
+                                          [33maria-haspopup[39m=[32m"listbox"[39m
+                                          [33mautocomplete[39m=[32m"off"[39m
+                                          [33mclass[39m=[32m"rbt-input-main form-control rbt-input"[39m
+                                          [33mplaceholder[39m=[32m"Course Search..."[39m
+                                          [33mrole[39m=[32m"combobox"[39m
+                                          [33mtype[39m=[32m"text"[39m
+                                          [33mvalue[39m=[32m""[39m
+                                        [36m/>[39m
+                                        [36m<input[39m
+                                          [33maria-hidden[39m=[32m"true"[39m
+                                          [33mclass[39m=[32m"rbt-input-hint"[39m
+                                          [33mreadonly[39m=[32m""[39m
+                                          [33mstyle[39m=[32m"background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"[39m
+                                          [33mtabindex[39m=[32m"-1"[39m
+                                          [33mvalue[39m=[32m""[39m
+                                        [36m/>[39m
+                                      [36m</div>[39m
+                                    [36m</div>[39m
+                                  [36m</div>[39m
+                                  [36m<button[39m
+                                    [33mclass[39m=[32m"btn btn-success"[39m
+                                    [33mdata-testid[39m=[32m"saveCourse"[39m
+                                    [33mtype[39m=[32m"button"[39m
+                                  [36m>[39m
+                                    [0mSave Course[0m
+                                  [36m</button>[39m
+                                [36m</div>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"me-4 btn btn-danger"[39m
+                [33mdata-testid[39m=[32m"resetSem"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mReset[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"btn btn-primary"[39m
+                [33mdata-testid[39m=[32m"export-plan"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mDownload Plan[0m
+              [36m</button>[39m
+              [36m<div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"btn btn-primary"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mSwitch[0m
+                [36m</button>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"row"[39m
+                [36m>[39m
+                  [36m<div>[39m
+                    [0mBachelor of Science [CS] -[0m
+                    [0m&gt;[0m
+                    [0m [0m
+                    [0m0[0m
+                    [0m/124 Credits[0m
+                  [36m</div>[39m
+                  [36m<div>[39m
+                    [0mUniversity Requirements[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mENGL 110[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mEGGG 101[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div>[39m
+                    [0mCollege (Breadth) Requirements -[0m
+                    [0m&gt;[0m
+                    [0m [0m
+                    [0m0[0m
+                    [0m/9 Credits[0m
+                  [36m</div>[39m
+                  [36m<div>[39m
+                    [0mMajor Requirements[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 108[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 181[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 210[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 220[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 260[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 275[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 303[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 320[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 361[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 372[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mCISC 355[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mMATH 210[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mMATH 241[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mMATH 242[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"col"[39m
+                  [36m>[39m
+                    [0mMATH 350[0m
+                    [0m ❌[0m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<p>[39m
+            [0mKatie Hoyt, Vedant Subramanian, Evelyn Welsh[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"fade modal-backdrop"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-modal[39m=[32m"true"[39m
+        [33mclass[39m=[32m"fade modal"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mstyle[39m=[32m"display: block; padding-right: 0px;"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"modal-dialog"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"modal-content"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"modal-header"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"modal-title h4"[39m
+                [33mid[39m=[32m"example-modal-sizes-title-sm"[39m
+              [36m>[39m
+                [0mAdd A New Degree Plan[0m
+              [36m</div>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Close"[39m
+                [33mclass[39m=[32m"btn-close"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"modal-body"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"row"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"col"[39m
+                [36m>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"form-control"[39m
+                    [33mid[39m=[32m"formPlanName"[39m
+                    [33mstyle[39m=[32m"justify-content: center;"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Insert Name Here"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"col"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"me-4 btn btn-success"[39m
+                    [33mdata-testid[39m=[32m"save-plan"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [0mSave[0m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"me-4 btn btn-warning"[39m
+                    [33mdata-testid[39m=[32m"cancel-new-plan"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [0mCancel[0m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      383 |         screen.getByTestId("saveCourse").click();
+      384 |         addCourseButton[1].click();
+    > 385 |         screen.getByTestId("saveCourse").click();
+          |                ^
+      386 |
+      387 |         const moveButtons = screen.getAllByTestId("move-courses");
+      388 |         moveButtons[0].click();
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at getElementError (node_modules/@testing-library/dom/dist/query-helpers.js:25:35)
+      at getMultipleElementsFoundError (node_modules/@testing-library/dom/dist/query-helpers.js:29:10)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:66:13
+      at getByTestId (node_modules/@testing-library/dom/dist/query-helpers.js:111:19)
+      at Object.<anonymous> (src/App.test.tsx:385:16)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● Scheduler Tests › Course prerequisites render (unmet prerequisites show up with a red x, you can check a box in the edit screen to get a green check stating you met prereqs, and courses with no prereqs have None listed 
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: 5
+    Received: 15
+
+      447 |         expect(noPreReqs.length).toEqual(5);
+      448 |         const unmetPreReqs = screen.getAllByText(/❌/i);
+    > 449 |         expect(unmetPreReqs.length).toEqual(5);
+          |                                     ^
+      450 |         const editButtons = screen.getAllByTestId("edit-course");
+      451 |         editButtons[5].click();
+      452 |         const preReqBoxOne = screen.getByTestId("preReq-checkBox");
+
+      at Object.<anonymous> (src/App.test.tsx:449:37)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+-------------------------------|---------|----------|---------|---------|----------------------------
+File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s          
+-------------------------------|---------|----------|---------|---------|----------------------------
+All files                      |   76.92 |     77.9 |   79.24 |   76.94 |                            
+ src                           |   76.92 |     77.9 |   79.24 |   76.94 |                            
+  App.tsx                      |   66.27 |    52.38 |      75 |   65.47 | 25,44-99,149,268           
+  CourseComponent.tsx          |   88.46 |    92.72 |   80.95 |   88.46 | 165,180,238-249,281        
+  DegreePlanComponent.tsx      |     100 |    95.65 |     100 |     100 | 103                        
+  DegreePlanVizualizer.tsx     |   64.86 |       70 |    62.5 |   63.88 | 33-51,223                  
+  DegreePlansListComponent.tsx |   93.75 |      100 |      90 |   93.75 | 78                         
+  SemesterComponent.tsx        |   72.28 |    73.68 |   78.57 |   73.17 | 65,140-175,298-299,315-316 
+ src/interfaces                |       0 |        0 |       0 |       0 |                            
+  catalog.ts                   |       0 |        0 |       0 |       0 |                            
+  course.ts                    |       0 |        0 |       0 |       0 |                            
+  plan.ts                      |       0 |        0 |       0 |       0 |                            
+  semester.ts                  |       0 |        0 |       0 |       0 |                            
+-------------------------------|---------|----------|---------|---------|----------------------------
 Test Suites: 1 failed, 1 total
-Tests:       2 failed, 15 passed, 17 total
+Tests:       5 failed, 25 passed, 30 total
 Snapshots:   0 total
-Time:        4.016 s
+Time:        11.801 s
 Ran all test suites.
