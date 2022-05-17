@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { Catalog } from "./interfaces/catalog";
 import { Course } from "./interfaces/course";
 import { Semester } from "./interfaces/semester";
@@ -32,6 +32,7 @@ export function CourseComponent({
     );
     const [metPreReq, changeMetPreReq] = useState<boolean>(false);
     const [canAdd, changeCanAdd] = useState<boolean>(true);
+    const [showWarning, changeShowWarning] = useState<boolean>(false);
     function resetCourse(c: Course) {
         const location = courses.findIndex(
             (crs: string) => crs === c.courseCode
@@ -145,6 +146,7 @@ export function CourseComponent({
                     <Form.Check
                         type="checkbox"
                         id="is-preReqMet-check"
+                        data-testid="preReq-checkBox"
                         label="Satisfied all prerequisites"
                         checked={metPreReq}
                         onChange={() => changeMetPreReq(!metPreReq)}
@@ -172,10 +174,26 @@ export function CourseComponent({
                         </Button>
                     )}
                 </div>
+                {editMode && showWarning && (
+                    <Modal onClose={() => changeShowWarning(false)}>hi</Modal>
+                )}
+                {!canAdd && editMode && (
+                    <div style={{ color: "red" }}>
+                        You cannot have two courses with the same code in one
+                        semester.
+                    </div>
+                )}
                 {editMode && (
                     <Button
                         data-testid="save-course"
                         onClick={() => {
+                            // const findInCatalog = courses.findIndex(
+                            //     (crs: string) => crs === courseCode
+                            // );
+                            // if (findInCatalog === -1) {
+                            //     changeShowWarning(true);
+                            //     return;
+                            // }
                             const numCoursesRepeat = sem.coursesTaken.filter(
                                 (course: Course): boolean =>
                                     course.courseCode === courseCode
@@ -206,6 +224,11 @@ export function CourseComponent({
                         Save
                     </Button>
                 )}
+                {/* {editMode && showWarning && (
+                    <Modal onClose>
+                        hi<button>hi</button>
+                    </Modal>
+                )} */}
                 {!canAdd && editMode && (
                     <div style={{ color: "red" }}>
                         You cannot have two courses with the same code in one
