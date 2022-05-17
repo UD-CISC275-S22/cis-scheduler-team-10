@@ -11,58 +11,28 @@ import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 // import { Course } from "./interfaces/course";
-
+import { Catalog } from "./interfaces/catalog";
 export function DegreePlanComponent({
     degreePlan,
     updatePlans,
-    degPlanSems,
-    changeDegPlanSems,
-    changePlan,
     addSemester,
     removeSemester,
-    courses
+    courses,
+    content
 }: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
-    degPlanSems: Semester[];
-    changeDegPlanSems: (sems: Semester[]) => void;
-    changePlan: (plan: Plan) => void;
-    addSemester: (
-        sems: Semester[],
-        plan: Plan,
-        semName: string,
-        semSeason: string
-    ) => void;
-    removeSemester: (semName: string) => void;
+    addSemester: (plan: Plan, semName: string, semSeason: string) => void;
+    removeSemester: (plan: Plan, semName: string) => void;
     courses: string[];
+    content: Catalog[];
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
     const [addSem, changeAddSem] = useState<boolean>(false);
-    const [semList, changeSemList] = useState<Semester[]>(degPlanSems);
-    // const [plan, updatePlan] = useState<Plan>(degreePlan);
-    const [invalid, updateInvalid] = useState<boolean>(false);
+    const [invalidYear, updateInvalidYear] = useState<boolean>(false);
     const [removing, changeRemoving] = useState<boolean>(false);
-
-    // function updateSemesters(
-    //     newSemester: Semester,
-    //     oldSemester: Semester
-    // ): void {
-    //     const newSemesters = degreePlan.semesters.map((semester: Semester) => {
-    //         if (semester === oldSemester) {
-    //             return newSemester;
-    //         } else {
-    //             return {
-    //                 ...semester,
-    //                 coursesTaken: [...semester.coursesTaken]
-    //             };
-    //         }
-    //     });
-    //     const newPlan = { ...degreePlan, semesters: newSemesters };
-    //     changeDegPlanSems(newSemesters);
-    //     updatePlan(newPlan);
-    //     updatePlans(newPlan, degreePlan);
-    // }
+    const [copiedSemester, updateCopiedSemester] = useState<boolean>(false);
 
     function updateSemList() {
         let numCredits = 0;
@@ -78,28 +48,50 @@ export function DegreePlanComponent({
             season: semSeason,
             coursesTaken: []
         };
-        const newSemList = [...semList, newSem];
-        //updateSems(newSem, degPlanSems);
-        changeSemList(newSemList);
-        changeDegPlanSems(newSemList);
-        const newPlan = { ...degreePlan, semesters: [...newSemList] };
+        const newPlan = {
+            ...degreePlan,
+            semesters: [...degreePlan.semesters, newSem]
+        };
         updatePlans(newPlan, degreePlan);
-        changePlan(newPlan);
     }
 
-    //updatePlanView(newPlan);
+    function resetSemester(s: Semester): void {
+        const newSems = degreePlan.semesters.map((sem: Semester) => {
+            if (sem.season + sem.semesterName === s.season + s.semesterName) {
+                return { ...sem, coursesTaken: [] };
+            } else {
+                return { ...sem };
+            }
+        });
+        const newPlan = { ...degreePlan, semesters: newSems };
+        updatePlans(newPlan, degreePlan);
+    }
 
     function save() {
-        if (semYear.length === 4 && parseInt(semYear) >= 2000) {
-            updateInvalid(false);
-            updateSemList();
-            changeSemList(degreePlan.semesters);
-            changeDegPlanSems(semList);
-            addSemester(semList, degreePlan, semYear, semSeason);
-            changeAddSem(!addSem);
-            changeSemYear("");
+        if (
+            degreePlan.semesters.find(
+                (semester: Semester) =>
+                    semSeason + semYear ===
+                    semester.season + semester.semesterName
+            ) === undefined
+        ) {
+            updateCopiedSemester(false);
+            if (
+                semYear.length === 4 &&
+                parseInt(semYear) >= 1900 &&
+                parseInt(semYear) <= 2100
+            ) {
+                updateInvalidYear(false);
+                updateSemList();
+                addSemester(degreePlan, semYear, semSeason);
+                changeAddSem(!addSem);
+                changeSemYear("");
+            } else {
+                updateInvalidYear(true);
+            }
         } else {
-            updateInvalid(true);
+            updateInvalidYear(false);
+            updateCopiedSemester(true);
         }
     }
 
@@ -164,12 +156,17 @@ export function DegreePlanComponent({
                             <Form.Control
                                 value={semYear}
                                 onChange={updateSemName}
-                                // type={"number"}
                             />
                         </Form.Group>
-                        {invalid && (
+                        {invalidYear && (
                             <span style={{ color: "red" }}>
-                                Please enter a valid year after 2000.
+                                Please enter a valid year.
+                            </span>
+                        )}
+                        {copiedSemester && (
+                            <span style={{ color: "red" }}>
+                                This semester has already been added to the
+                                plan.
                             </span>
                         )}
                         <div style={{ padding: "2px" }}>
@@ -190,38 +187,22 @@ export function DegreePlanComponent({
             <div style={{ padding: "5px" }}>
                 <Row>
                     <Col>
-                        {degPlanSems.map((sem: Semester) => (
+                        {degreePlan.semesters.map((sem: Semester) => (
                             <div
                                 key={degreePlan + sem.season + sem.semesterName}
                                 data-testid="semester"
                             >
                                 <SemesterComponent
+                                    plan={degreePlan}
                                     semester={sem}
                                     // updateSemesters={updateSemesters}
                                     removing={removing}
                                     removeSemester={removeSemester}
-                                    //reset={reset}
-                                    plan={degreePlan}
-                                    changePlan={changePlan}
+                                    resetSemester={resetSemester}
                                     updatePlans={updatePlans}
-                                    changeSemList={changeSemList}
                                     courses={courses}
+                                    content={content}
                                 ></SemesterComponent>
-                                {/* <Col key={sem.semesterName}>
-                                    {removing ? (
-                                        <Button
-                                            onClick={() =>
-                                                removeSemester(sem.semesterName)
-                                            }
-                                            variant="danger"
-                                            className="me-4"
-                                        >
-                                            Remove Semester
-                                        </Button>
-                                    ) : (
-                                        <span></span>
-                                    )}
-                                </Col> */}
                             </div>
                         ))}
                     </Col>

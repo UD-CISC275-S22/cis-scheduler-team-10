@@ -4,12 +4,19 @@ import { DegreePlanComponent } from "./DegreePlanComponent";
 import { Plan } from "./interfaces/plan";
 import plans from "./data/degreePlans.json";
 import { Row, Col, Container, Button } from "react-bootstrap";
-// import { Course } from "./interfaces/course";
 import { Catalog } from "./interfaces/catalog";
 import catalog from "./data/catalog.json";
 import { DegreePlansListComponent } from "./DegreePlansListComponent";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
+import { DegreePlanVizualizer } from "./DegreePlanVizualizer";
 const PLANS = plans as Plan[];
+
+declare global {
+    interface Navigator {
+        msSaveBlob?: (blob: Blob, defaultName?: string) => boolean;
+    }
+}
 
 let loadedData = PLANS;
 const saveDataKey = "My-Plan-Data";
@@ -28,37 +35,75 @@ let content: Catalog[] = [];
 for (let i = 0; i < filler.length; i++) {
     content = [...content, ...Object.values(filler[i])];
 }
-// const COURSES = content.map(
-//     (c: Catalog): Course => ({
-//         courseCode: c.code,
-//         courseTitle: c.name,
-//         numCredits: parseInt(c.credits),
-//         preReqs: /*temporary fix*/ [c.preReq],
-//         courseDescription: c.descr,
-//         complete: false,
-//         required: false,
-//         requirementType: /*c.breadth*/ "university"
-//     })
-// );
 
 export function App(): JSX.Element {
     const [planView, changePlanView] = useState<Plan | null>(null);
     const [allPlans, changeAllPlans] = useState<Plan[]>(loadedData);
-    const [plan, changePlan] = useState<Plan>(loadedData[0]);
-    const [degPlanSems, changeDegPlanSems] = useState<Semester[]>(
-        plan.semesters
-    );
+
     function saveData() {
         localStorage.setItem(saveDataKey, JSON.stringify(allPlans));
     }
 
-    function updatePlan(plan: Plan) {
-        changePlan(plan);
-        changePlanView(plan);
+    function exportToCSV(fileName: string, mimeType: string) {
+        let csvContentHeader = "Semester;";
+        let csvContentBody = "";
+        let longestCoursesLength =
+            planView?.semesters[0].coursesTaken.length ?? 0;
+        planView?.semesters.forEach(
+            (semester: Semester, semesterIndex: number) => {
+                let coursesData =
+                    semester.season.toUpperCase() + semester.semesterName + ";";
+
+                semester.coursesTaken.forEach(
+                    (course: Course, courseIndex: number) => {
+                        coursesData += course.courseCode + ";";
+                        if (semesterIndex === 0) {
+                            csvContentHeader +=
+                                "Course " + (courseIndex + 1) + ";";
+                        } else if (courseIndex >= longestCoursesLength) {
+                            longestCoursesLength = courseIndex + 1;
+                            csvContentHeader +=
+                                "Course " + (courseIndex + 1) + ";";
+                        }
+                    }
+                );
+                csvContentBody +=
+                    semesterIndex < planView.semesters.length
+                        ? coursesData + "\n"
+                        : coursesData;
+            }
+        );
+        const csvContent = csvContentHeader + "\n" + csvContentBody;
+
+        const a = document.createElement("a");
+        mimeType = mimeType || "application/octet-stream";
+
+        if (navigator.msSaveBlob) {
+            navigator.msSaveBlob(
+                new Blob([csvContent], {
+                    type: mimeType
+                }),
+                fileName
+            );
+        } else if (URL && "download" in a) {
+            a.href = URL.createObjectURL(
+                new Blob([csvContent], {
+                    type: mimeType
+                })
+            );
+            a.setAttribute("download", fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            location.href =
+                "data:application/octet-stream," +
+                encodeURIComponent(csvContent); // only this mime type is supported
+        }
     }
     function reset(p: Plan): void {
         const newPlans = allPlans.map((plan: Plan) => {
-            if (plan === p) {
+            if (plan.name === p.name) {
                 return { name: p.name, semesters: [] };
             } else {
                 return { ...plan };
@@ -76,16 +121,9 @@ export function App(): JSX.Element {
             }
         });
         changeAllPlans(newPlans);
-        //changePlan(newPlan);
         updatePlanView(newPlan);
     }
     function updatePlanView(newPlan: Plan): void {
-        changeDegPlanSems(newPlan.semesters);
-
-        changePlan(newPlan);
-        //updatePlans(newPlan, plan);
-        //
-
         if (newPlan === planView) {
             changePlanView(null);
         } else {
@@ -94,9 +132,13 @@ export function App(): JSX.Element {
     }
 
     function addPlan(newPlanName: string): void {
-        const newPlan: Plan = { name: newPlanName, semesters: [] };
-
-        changeAllPlans([...allPlans, newPlan]);
+        const index = allPlans.findIndex(
+            (p: Plan): boolean => p.name === newPlanName
+        );
+        if (index === -1) {
+            const newPlan: Plan = { name: newPlanName, semesters: [] };
+            changeAllPlans([...allPlans, newPlan]);
+        }
     }
 
     function removePlan(planName: string): void {
@@ -107,26 +149,25 @@ export function App(): JSX.Element {
             changePlanView(null);
         }
     }
-    function removeSemester(semName: string): void {
-        const newSems = degPlanSems.filter(
+    function removeSemester(plan: Plan, semName: string): void {
+        const index = allPlans.findIndex(
+            (p: Plan): boolean => p.name === plan.name
+        );
+        const newSems = allPlans[index].semesters.filter(
             (s: Semester): boolean => s.semesterName !== semName
         );
-        //changeDegPlanSems(newSems);
         const newPlan = { ...plan, semesters: newSems };
-        changePlan(newPlan);
         updatePlans(newPlan, plan);
         updatePlanView(newPlan);
     }
-    function addSemester(
-        sems: Semester[],
-        plan: Plan,
-        semName: string,
-        semSeason: string
-    ): void {
-        changePlan(plan);
-        //changeDegPlanSems(sems);
+    function addSemester(plan: Plan, semName: string, semSeason: string): void {
         let numCredits = 0;
-        if (semSeason === "fall" || semSeason === "spring") {
+        if (
+            semSeason === "fall" ||
+            semSeason === "spring" ||
+            semSeason === "Fall" ||
+            semSeason === "Spring"
+        ) {
             numCredits = 18;
         } else {
             numCredits = 7;
@@ -138,46 +179,12 @@ export function App(): JSX.Element {
             season: semSeason,
             coursesTaken: []
         };
-        const newSems = [...degPlanSems, newSem];
+        const newSems = [...plan.semesters, newSem];
         const newPlan = { ...plan, semesters: newSems };
         updatePlans(newPlan, plan);
-        // changeDegPlanSems(newSems);
-
-        //
         updatePlanView(newPlan);
     }
-    // function addCourse(crsID: string, semester: Semester, plan: Plan) {
-    //     //changeSem(semester);
 
-    //     changePlan(plan);
-    //     const newCourse: Course = {
-    //         courseCode: crsID,
-    //         courseTitle: "",
-    //         numCredits: 0,
-    //         preReqs: [],
-    //         courseDescription: "",
-    //         complete: true,
-    //         required: true,
-    //         requirementType: "university"
-    //     };
-    //     const newCourses = [...courses, newCourse];
-    //     changeCourses(newCourses);
-    //     const newSem = { ...semester, coursesTaken: newCourses };
-    //     //const newSems = [...degPlanSems, newSem];
-    //     const newSems = degPlanSems.map((sem: Semester) => {
-    //         if (sem === semester) {
-    //             return { ...newSem };
-    //         } else {
-    //             return { ...sem };
-    //         }
-    //     });
-    //     changeDegPlanSems(newSems);
-    //     const newPlan = { ...plan, semesters: newSems };
-
-    //     //changeDegPlanSems(newSems);
-    //     updatePlans(newPlan, plan);
-    //     updatePlanView(newPlan);
-    // }
     return (
         <div className="App">
             <header className="App-header">
@@ -194,8 +201,6 @@ export function App(): JSX.Element {
                         degreePlans={allPlans}
                         updatePlanView={updatePlanView}
                         addPlan={addPlan}
-                        degPlanSems={degPlanSems}
-                        changeDegPlanSems={changeDegPlanSems}
                         removePlan={removePlan}
                     ></DegreePlansListComponent>
                 </Col>
@@ -204,13 +209,11 @@ export function App(): JSX.Element {
                         <DegreePlanComponent
                             data-testid="degreePlan"
                             degreePlan={planView}
-                            degPlanSems={degPlanSems}
                             updatePlans={updatePlans}
-                            changeDegPlanSems={changeDegPlanSems}
-                            changePlan={updatePlan}
                             addSemester={addSemester}
                             removeSemester={removeSemester}
                             courses={courses}
+                            content={content}
                         ></DegreePlanComponent>
                     ) : (
                         <Container
@@ -229,15 +232,18 @@ export function App(): JSX.Element {
                                 }}
                             >
                                 This program is intended to help you visualize a
-                                path to graduation. To begin, select a
-                                previously-made degree plan, or create a new
-                                plan. Add your desired courses into the
-                                semesters you plan to take them, keeping your
-                                degree requirements in mind. You can edit each
-                                semester until you are satisfied with its
-                                contents. You can also make multiple degree
-                                plans to explore other combinations of classes
-                                to fulfill all of your requirements.
+                                path to graduation. To begin, select the title
+                                of a previously-made degree plan from the list
+                                on the left of your screen, or create a new plan
+                                by clicking the + and selecting a name. Add your
+                                desired courses into the semesters you plan to
+                                take them, keeping your degree requirements in
+                                mind. You can edit each semester until you are
+                                satisfied with its contents. You can also make
+                                multiple degree plans to explore other
+                                combinations of classes to fulfill all of your
+                                requirements. Click the name of the desired plan
+                                to navigate between your degree plans.
                             </Container>
                         </Container>
                     )}
@@ -248,13 +254,29 @@ export function App(): JSX.Element {
                     ) : (
                         <Button
                             data-testid="resetSem"
-                            onClick={() => reset(plan)}
+                            onClick={() => reset(planView)}
                             variant="danger"
                             className="me-4"
                         >
                             Reset
                         </Button>
                     )}
+                    {planView !== null && (
+                        <Button
+                            data-testid={"export-plan"}
+                            onClick={() => {
+                                exportToCSV(
+                                    planView.name.replace(/\s/g, "") + ".csv",
+                                    "text/csv;encoding:utf-8"
+                                );
+                            }}
+                        >
+                            Download Plan
+                        </Button>
+                    )}
+                    <DegreePlanVizualizer
+                        degreePlan={planView}
+                    ></DegreePlanVizualizer>
                 </Col>
             </Row>
             <p>Katie Hoyt, Vedant Subramanian, Evelyn Welsh</p>
