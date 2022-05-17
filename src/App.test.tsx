@@ -300,7 +300,7 @@ describe("Scheduler Tests", () => {
         const saveButtonOne = screen.getByTestId("save-course");
         saveButtonOne.click();
         expect(
-            screen.queryAllByText(
+            screen.queryByText(
                 "You cannot have two courses with the same code in one semester."
             )
         ).toBeInTheDocument;
