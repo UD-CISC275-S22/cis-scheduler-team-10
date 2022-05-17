@@ -39,6 +39,7 @@ export function CourseComponent({
     const [courseCredits, changeCredits] = useState<number>(course.numCredits);
     const [popUp, showPopUp] = useState<boolean>(false);
     const [moveCourseCopy, updateMoveCourseCopy] = useState<boolean>(false);
+    const [showWarning, changeShowWarning] = useState<boolean>(false);
     const [courseDescription, changeDescription] = useState<string>(
         course.courseDescription
     );
@@ -276,7 +277,9 @@ export function CourseComponent({
                         </Button>
                     )}
                 </div>
-
+                {editMode && showWarning && (
+                    <Modal onClose={() => changeShowWarning(false)}>hi</Modal>
+                )}
                 {!canAdd && editMode && (
                     <div style={{ color: "red" }}>
                         You cannot have two courses with the same code in one
@@ -291,9 +294,6 @@ export function CourseComponent({
                                 (course: Course): boolean =>
                                     course.courseCode === courseCode
                             );
-                            if (courseCode !== course.courseCode) {
-                                console.log(numCoursesRepeat.length);
-                            }
                             if (
                                 courseCode === course.courseCode ||
                                 numCoursesRepeat.length === 0
@@ -316,6 +316,12 @@ export function CourseComponent({
                     >
                         Save
                     </Button>
+                )}
+                {!canAdd && editMode && (
+                    <div style={{ color: "red" }}>
+                        You cannot have two courses with the same code in one
+                        semester.
+                    </div>
                 )}
                 {editMode && (
                     <Button
