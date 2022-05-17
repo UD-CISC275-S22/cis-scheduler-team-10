@@ -444,9 +444,9 @@ describe("Scheduler Tests", () => {
         const preReqs = screen.getAllByTestId("preReqs");
         expect(preReqs.length).toEqual(10);
         const noPreReqs = screen.getAllByText("None");
-        expect(noPreReqs.length).toEqual(8);
+        expect(noPreReqs.length).toEqual(5);
         const unmetPreReqs = screen.getAllByText(/❌/i);
-        expect(unmetPreReqs.length).toEqual(2);
+        expect(unmetPreReqs.length).toEqual(5);
         const editButtons = screen.getAllByTestId("edit-course");
         editButtons[5].click();
         const preReqBoxOne = screen.getByTestId("preReq-checkBox");
