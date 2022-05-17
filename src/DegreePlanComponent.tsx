@@ -10,20 +10,22 @@ import {
 import { SemesterComponent } from "./SemesterComponent";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
-
+// import { Course } from "./interfaces/course";
+import { Catalog } from "./interfaces/catalog";
 export function DegreePlanComponent({
     degreePlan,
     updatePlans,
     addSemester,
     removeSemester,
-    courses
-}: // courses
-{
+    courses,
+    content
+}: {
     degreePlan: Plan;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     addSemester: (plan: Plan, semName: string, semSeason: string) => void;
     removeSemester: (plan: Plan, semName: string) => void;
     courses: string[];
+    content: Catalog[];
 }): JSX.Element {
     const [semSeason, changeSemSeason] = useState<string>("Fall");
     const [semYear, changeSemYear] = useState<string>("");
@@ -199,6 +201,7 @@ export function DegreePlanComponent({
                                     resetSemester={resetSemester}
                                     updatePlans={updatePlans}
                                     courses={courses}
+                                    content={content}
                                 ></SemesterComponent>
                             </div>
                         ))}

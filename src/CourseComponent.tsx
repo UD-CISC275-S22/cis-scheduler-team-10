@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
+import { Catalog } from "./interfaces/catalog";
 import { Course } from "./interfaces/course";
 import { Semester } from "./interfaces/semester";
 
@@ -14,7 +15,10 @@ export function CourseComponent({
     tempSemester,
     updateTempSemester,
     semesterOptions,
-    moveCourse
+    moveCourse,
+    sem,
+    courses,
+    content
 }: {
     course: Course;
     updateCourses: (newCourse: Course, oldCourse: Course) => void;
@@ -25,13 +29,43 @@ export function CourseComponent({
     updateTempSemester: (semesterTitle: string) => void;
     semesterOptions: Semester[];
     moveCourse: (movingCourse: Course, newSemester: Semester) => boolean;
+    sem: Semester;
+    courses: string[];
+    content: Catalog[];
 }): JSX.Element {
     const [editMode, changeEditMode] = useState<boolean>(false);
     const [courseCode, changeCode] = useState<string>(course.courseCode);
     const [courseTitle, changeTitle] = useState<string>(course.courseTitle);
-    const [credits, changeCredits] = useState<number>(course.numCredits);
+    const [courseCredits, changeCredits] = useState<number>(course.numCredits);
     const [popUp, showPopUp] = useState<boolean>(false);
     const [moveCourseCopy, updateMoveCourseCopy] = useState<boolean>(false);
+    const [courseDescription, changeDescription] = useState<string>(
+        course.courseDescription
+    );
+    const [metPreReq, changeMetPreReq] = useState<boolean>(false);
+    const [canAdd, changeCanAdd] = useState<boolean>(true);
+
+    function resetCourse(c: Course) {
+        const location = courses.findIndex(
+            (crs: string) => crs === c.courseCode
+        );
+        const newCourse: Course = {
+            courseCode: content[location].code,
+            courseTitle: content[location].name,
+            numCredits: parseInt(content[location].credits),
+            preReqs: content[location].preReq,
+            courseDescription: content[location].descr,
+            complete: true,
+            required: true,
+            requirementType: content[location].typ
+        };
+
+        changeCode(newCourse.courseCode);
+        changeTitle(newCourse.courseTitle);
+        changeDescription(newCourse.courseDescription);
+        updateCourses(newCourse, c);
+        changeEditMode(!editMode);
+    }
 
     return (
         <div style={{ border: "1px solid black", padding: "10px" }}>
@@ -39,7 +73,7 @@ export function CourseComponent({
                 {!editMode && (
                     <div data-testid="course-code">
                         <b>
-                            {courseCode}: {credits} Credits
+                            {course.courseCode}: {course.numCredits} Credits
                         </b>
                     </div>
                 )}
@@ -60,9 +94,9 @@ export function CourseComponent({
                         data-testid="changeCodeBox"
                         type="textbox"
                         value={courseCode}
-                        onChange={(event: ChangeEvent) =>
-                            changeCode(event.target.value)
-                        }
+                        onChange={(event: ChangeEvent) => {
+                            changeCode(event.target.value);
+                        }}
                     ></Form.Control>
                 )}
                 {!editMode && (
@@ -79,15 +113,56 @@ export function CourseComponent({
                         }
                     ></Form.Control>
                 )}
+                {editMode && (
+                    <Form.Control
+                        type="textbox"
+                        data-testid="changeDescription"
+                        value={courseDescription}
+                        onChange={(event: ChangeEvent) =>
+                            changeDescription(event.target.value)
+                        }
+                    ></Form.Control>
+                )}
+
                 {!editMode && <p> {course.courseDescription}</p>}
                 {editMode && (
                     <Form.Control
                         type="textbox"
-                        value={!isNaN(credits) ? credits.toString() : ""}
+                        value={
+                            !isNaN(courseCredits)
+                                ? courseCredits.toString()
+                                : ""
+                        }
                         onChange={(event: ChangeEvent) =>
                             changeCredits(parseInt(event.target.value))
                         }
                     ></Form.Control>
+                )}
+                {!editMode && (
+                    <div>
+                        <p data-testid="preReqs">
+                            {" "}
+                            <b>Prerequisites: </b>
+                            {course.preReqs === ""
+                                ? "None"
+                                : course.preReqs}{" "}
+                            {course.preReqs !== ""
+                                ? metPreReq
+                                    ? "✔️"
+                                    : "❌"
+                                : ""}
+                        </p>
+                    </div>
+                )}
+                {editMode && (
+                    <Form.Check
+                        type="checkbox"
+                        id="is-preReqMet-check"
+                        data-testid="preReq-checkBox"
+                        label="Satisfied all prerequisites"
+                        checked={metPreReq}
+                        onChange={() => changeMetPreReq(!metPreReq)}
+                    />
                 )}
                 {!editMode && (
                     <Button
@@ -191,19 +266,50 @@ export function CourseComponent({
                         {"Move Course"}
                     </Button>
                 )}
+                <div style={{ padding: "5px" }}>
+                    {editMode && (
+                        <Button
+                            data-testid="restoreCourseInfo"
+                            onClick={() => resetCourse(course)}
+                        >
+                            Reset Course to Default Info
+                        </Button>
+                    )}
+                </div>
+
+                {!canAdd && editMode && (
+                    <div style={{ color: "red" }}>
+                        You cannot have two courses with the same code in one
+                        semester.
+                    </div>
+                )}
                 {editMode && (
                     <Button
                         data-testid="save-course"
                         onClick={() => {
-                            const newCourse = {
-                                ...course,
-                                courseCode: courseCode,
-                                courseTitle: courseTitle,
-                                numCredits: credits
-                            };
-                            updateCourses(newCourse, course);
-
-                            changeEditMode(!editMode);
+                            const numCoursesRepeat = sem.coursesTaken.filter(
+                                (course: Course): boolean =>
+                                    course.courseCode === courseCode
+                            );
+                            if (courseCode !== course.courseCode) {
+                                console.log(numCoursesRepeat.length);
+                            }
+                            if (
+                                courseCode === course.courseCode ||
+                                numCoursesRepeat.length === 0
+                            ) {
+                                const newCourse = {
+                                    ...course,
+                                    courseCode: courseCode,
+                                    courseTitle: courseTitle,
+                                    courseDescription: courseDescription,
+                                    numCredits: courseCredits
+                                };
+                                updateCourses(newCourse, course);
+                                changeEditMode(!editMode);
+                            } else {
+                                changeCanAdd(!canAdd);
+                            }
                         }}
                         variant="success"
                         className="me-4"
@@ -217,6 +323,7 @@ export function CourseComponent({
                         onClick={() => {
                             changeCode(course.courseCode);
                             changeTitle(course.courseTitle);
+                            changeDescription(course.courseDescription);
                             changeCredits(course.numCredits);
                             changeEditMode(!editMode);
                         }}

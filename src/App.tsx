@@ -161,7 +161,12 @@ export function App(): JSX.Element {
     }
     function addSemester(plan: Plan, semName: string, semSeason: string): void {
         let numCredits = 0;
-        if (semSeason === "fall" || semSeason === "spring") {
+        if (
+            semSeason === "fall" ||
+            semSeason === "spring" ||
+            semSeason === "Fall" ||
+            semSeason === "Spring"
+        ) {
             numCredits = 18;
         } else {
             numCredits = 7;
@@ -207,6 +212,7 @@ export function App(): JSX.Element {
                             addSemester={addSemester}
                             removeSemester={removeSemester}
                             courses={courses}
+                            content={content}
                         ></DegreePlanComponent>
                     ) : (
                         <Container

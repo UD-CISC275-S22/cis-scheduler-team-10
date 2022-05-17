@@ -5,6 +5,7 @@ import { Course } from "./interfaces/course";
 import { Plan } from "./interfaces/plan";
 import { Semester } from "./interfaces/semester";
 import { Typeahead } from "react-bootstrap-typeahead";
+import { Catalog } from "./interfaces/catalog";
 export function SemesterComponent({
     plan,
     semester,
@@ -12,7 +13,8 @@ export function SemesterComponent({
     removeSemester,
     resetSemester,
     updatePlans,
-    courses
+    courses,
+    content
 }: {
     plan: Plan;
     semester: Semester;
@@ -21,12 +23,13 @@ export function SemesterComponent({
     resetSemester: (s: Semester) => void;
     updatePlans: (newPlan: Plan, oldPlan: Plan) => void;
     courses: string[];
+    content: Catalog[];
 }): JSX.Element {
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
-    const [credits, changeCredits] = useState<string>("0");
-    const [invalidCourse, changeInvalidity] = useState<boolean>(false);
+    const [courseCopy, changeCopyStatus] = useState<boolean>(false);
+    const [invalidCourse, changeInvalidCourseStatus] = useState<boolean>(false);
     // temporary to move course to:
     const [tempSemester, changeTempSemester] = useState<Semester>(
         semester.season + semester.semesterName ===
@@ -97,7 +100,6 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
         return true;
     }
-
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = semester.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -118,10 +120,6 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
     }
 
-    function updateCredits(event: React.ChangeEvent<HTMLInputElement>) {
-        changeCredits(event.target.value);
-    }
-
     function removeCourse(crsID: string): void {
         const newCourses = semester.coursesTaken.filter(
             (c: Course): boolean => c.courseCode !== crsID
@@ -138,21 +136,17 @@ export function SemesterComponent({
         updatePlans(newPlan, plan);
     }
 
-    function addCourse(
-        courseID: string,
-        credits: number,
-        semester: Semester,
-        plan: Plan
-    ) {
+    function addCourse(courseID: string, semester: Semester, plan: Plan) {
+        const location = courses.findIndex((crs: string) => crs === courseID);
         const newCourse: Course = {
             courseCode: courseID,
-            courseTitle: "",
-            numCredits: credits,
-            preReqs: [],
-            courseDescription: "",
+            courseTitle: content[location].name,
+            numCredits: parseInt(content[location].credits),
+            preReqs: content[location].preReq,
+            courseDescription: content[location].descr,
             complete: true,
             required: true,
-            requirementType: "university"
+            requirementType: content[location].typ
         };
         const newCourses = [...semester.coursesTaken, newCourse];
         const newSemester = { ...semester, coursesTaken: newCourses };
@@ -173,12 +167,12 @@ export function SemesterComponent({
                 (course: Course) => course.courseCode === courseID
             ) === undefined
         ) {
-            addCourse(courseID, +credits, semester, plan);
+            addCourse(courseID, semester, plan);
             changeAddingCourse(!addingCourse);
             changeCourseID("Insert Course ID");
-            changeInvalidity(false);
+            changeCopyStatus(false);
         } else {
-            changeInvalidity(true);
+            changeCopyStatus(true);
         }
     }
 
@@ -192,9 +186,9 @@ export function SemesterComponent({
                 {semester.season.toUpperCase() +
                     " " +
                     semester.semesterName.toUpperCase()}
-                {/* <div data-testid="credLim">
-                    Credit Limit: {currentSem.creditLimit}
-                </div> */}
+                <div data-testid="credLim">
+                    Credit Limit: {semester.creditLimit}
+                </div>
                 <div data-testid="credFill">
                     Credits Filled:{" "}
                     {semester.coursesTaken.reduce(
@@ -265,6 +259,9 @@ export function SemesterComponent({
                                         semester.season + semester.semesterName
                                 )}
                                 moveCourse={moveCourse}
+                                sem={semester}
+                                courses={courses}
+                                content={content}
                             ></CourseComponent>
                         </div>
                     );
@@ -308,28 +305,29 @@ export function SemesterComponent({
                                         placeholder="Course Search..."
                                     ></Typeahead>
                                 </Form.Group>
-                                <Form.Group
-                                    data-testid="addCreds"
-                                    controlId="formCredits"
-                                >
-                                    <Form.Label>Number of Credits:</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        value={credits}
-                                        onChange={updateCredits}
-                                    />
-                                </Form.Group>
                                 <Button
                                     data-testid="saveCourse"
                                     variant="success"
-                                    onClick={save}
+                                    onClick={() => {
+                                        if (courseID === "Insert Course ID") {
+                                            changeInvalidCourseStatus(true);
+                                        } else {
+                                            save();
+                                            changeInvalidCourseStatus(false);
+                                        }
+                                    }}
                                 >
                                     Save Course
                                 </Button>
                             </div>
-                            {invalidCourse && (
+                            {courseCopy && (
                                 <span style={{ color: "red" }}>
                                     You cannot add the same course twice.
+                                </span>
+                            )}
+                            {invalidCourse && (
+                                <span style={{ color: "red" }}>
+                                    Please add a course from the course catalog.
                                 </span>
                             )}
                         </div>
