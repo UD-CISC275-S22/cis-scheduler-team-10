@@ -10,10 +10,10 @@
                 "coursesTaken": [
                     {
                         "courseCode": "EGGG 101",
-                        "courseTitle": "Introduction to Engineering (FYE)",
+                        "courseTitle": "Introduction to Engineering",
                         "numCredits": 2,
                         "preReqs": "",
-                        "courseDescription": "Introduction to profession, including disciplines of chemical, civil, computer, electrical, environmental, and mechanical engineering. Prepares students for success through integration of: technical problem solving and engineering design, ethical decision-making, teamwork, and communicating to diverse audiences.",
+                        "courseDescription": "Introduction to profession, including disciplines of chemical, civil, computer, electrical, environmental, and mechanical engineering.  Prepares students for success through integration of:  technical problem solving and engineering design, ethical decision-making, teamwork, and communicating to diverse audiences.",
                         "complete": false,
                         "required": true,
                         "requirementType": "college"
@@ -30,9 +30,9 @@
                     },
                     {
                         "courseCode": "MATH 241",
-                        "courseTitle": "Analytic Geometry & Calculus A",
+                        "courseTitle": "Analytic Geometry and Calculus A",
                         "numCredits": 4,
-                        "preReqs": "",
+                        "preReqs": "MATH 117 or acceptable score on the Math Placement Exam in accordance with current standards determined by the Department of Mathematical Sciences. See https://www.mathsci.udel.edu/courses-placement/ud-math-placement for more information.",
                         "courseDescription": "Functions, limits, continuity, derivatives. Polynomial, rational, exponential, hyperbolic, logarithmic, trigonometric and inverse trigonometric functions. Definite and indefinite integrals and the Fundamental Theorem of Calculus. Simple differential equations (separable ODE, linear ODE). ODE models leading to exponential growth and decay.",
                         "complete": false,
                         "required": true,
@@ -43,7 +43,7 @@
                         "courseTitle": "Seminar in Composition",
                         "numCredits": 3,
                         "preReqs": "",
-                        "courseDescription": "Introduction to the process of academic writing that centers on the composition of analytical, research-based essays.",
+                        "courseDescription": "",
                         "complete": false,
                         "required": true,
                         "requirementType": "university"
@@ -70,7 +70,7 @@
                         "courseCode": "CISC 181",
                         "courseTitle": "Introduction to Computer Science II",
                         "numCredits": 3,
-                        "preReqs": "CISC108",
+                        "preReqs": "Grade of C- or better in CISC 108 or CISC 106.",
                         "courseDescription": "Principles of computer science illustrated and applied through programming in an object oriented language. Programming projects illustrate computational problems, styles and issues that arise in computer systems development and in all application areas of computation.",
                         "complete": false,
                         "required": true,
@@ -80,8 +80,8 @@
                         "courseCode": "CISC 210",
                         "courseTitle": "Introduction to Systems Programming",
                         "numCredits": 3,
-                        "preReqs": "CISC108",
-                        "courseDescription": "Principles of computer systems programming for software and hardware platforms to achieve efficient resource usage. Topics include the C programming language, memory management, and awareness of system constraints and interfacing. Projects include programming embedded systems and interactive objects.",
+                        "preReqs": "A grade of C- or better in CISC 106 or CISC 108.",
+                        "courseDescription": "",
                         "complete": false,
                         "required": true,
                         "requirementType": "major"
@@ -91,17 +91,17 @@
                         "courseTitle": "Introduction to Social and Cultural Anthropology",
                         "numCredits": 3,
                         "preReqs": "",
-                        "courseDescription": "Major ideas and areas of study in social and cultural anthropology. Use of ethnographic data and film to illustrate the anthropologist’s view of societies in their sociocultural and ecological dimensions.",
+                        "courseDescription": "Major ideas and areas of study in social and cultural anthropology. Use of ethnographic data and film to illustrate the anthropologist's view of societies in their sociocultural and ecological dimensions.",
                         "complete": false,
                         "required": false,
                         "requirementType": "university"
                     },
                     {
                         "courseCode": "MATH 242",
-                        "courseTitle": "Analytic Geometry & Calculus B",
+                        "courseTitle": "Analytic Geometry and Calculus B",
                         "numCredits": 4,
-                        "preReqs": "",
-                        "courseDescription": "Brief review of MATH 241; evaluation of limits by L’Hospital’s rule; applications of integration; integration techniques; parametric curves; polar coordinates; infinite sequences and series. Includes use of computers to perform symbolic, numerical and graphical analysis.",
+                        "preReqs": "MATH 241 or MATH 232.",
+                        "courseDescription": "Brief review of MATH 241; evaluation of limits by L'Hospital's rule; applications of integration; integration techniques; parametric curves; polar coordinates; infinite sequences and series. Includes use of computers to perform symbolic, numerical and graphical analysis.",
                         "complete": false,
                         "required": false,
                         "requirementType": "college"
@@ -110,8 +110,8 @@
                         "courseCode": "ENGL 207",
                         "courseTitle": "Introduction to Poetry",
                         "numCredits": 3,
-                        "preReqs": "",
-                        "courseDescription": "Representative masterworks of English, American and world verse.",
+                        "preReqs": "ENGL 110",
+                        "courseDescription": "",
                         "complete": false,
                         "required": false,
                         "requirementType": "university"
