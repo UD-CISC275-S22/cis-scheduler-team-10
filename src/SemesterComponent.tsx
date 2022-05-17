@@ -28,7 +28,8 @@ export function SemesterComponent({
     const [addingCourse, changeAddingCourse] = useState<boolean>(false);
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
-    const [invalid, changeInvalidity] = useState<boolean>(false);
+    const [courseCopy, changeCopyStatus] = useState<boolean>(false);
+    const [invalidCourse, changeInvalidCourseStatus] = useState<boolean>(false);
     function updateCourses(newCourse: Course, oldCourse: Course): void {
         const newCourses = semester.coursesTaken.map((course: Course) => {
             if (course === oldCourse) {
@@ -99,9 +100,9 @@ export function SemesterComponent({
             addCourse(courseID, semester, plan);
             changeAddingCourse(!addingCourse);
             changeCourseID("Insert Course ID");
-            changeInvalidity(false);
+            changeCopyStatus(false);
         } else {
-            changeInvalidity(true);
+            changeCopyStatus(true);
         }
     }
 
@@ -217,14 +218,26 @@ export function SemesterComponent({
                                 <Button
                                     data-testid="saveCourse"
                                     variant="success"
-                                    onClick={save}
+                                    onClick={() => {
+                                        if (courseID === "Insert Course ID") {
+                                            changeInvalidCourseStatus(true);
+                                        } else {
+                                            save();
+                                            changeInvalidCourseStatus(false);
+                                        }
+                                    }}
                                 >
                                     Save Course
                                 </Button>
                             </div>
-                            {invalid && (
+                            {courseCopy && (
                                 <span style={{ color: "red" }}>
                                     You cannot add the same course twice.
+                                </span>
+                            )}
+                            {invalidCourse && (
+                                <span style={{ color: "red" }}>
+                                    Please add a course from the course catalog.
                                 </span>
                             )}
                         </div>

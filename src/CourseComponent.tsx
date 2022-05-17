@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { Catalog } from "./interfaces/catalog";
 import { Course } from "./interfaces/course";
 import { Semester } from "./interfaces/semester";
@@ -32,6 +32,7 @@ export function CourseComponent({
     );
     const [metPreReq, changeMetPreReq] = useState<boolean>(false);
     const [canAdd, changeCanAdd] = useState<boolean>(true);
+    const [resetWarningPopUp, showResetWarningPopUp] = useState<boolean>(false);
     function resetCourse(c: Course) {
         const location = courses.findIndex(
             (crs: string) => crs === c.courseCode
@@ -51,6 +52,18 @@ export function CourseComponent({
         changeTitle(newCourse.courseTitle);
         changeDescription(newCourse.courseDescription);
         updateCourses(newCourse, c);
+        changeEditMode(!editMode);
+    }
+
+    function saveEditCourse(): void {
+        const newCourse = {
+            ...course,
+            courseCode: courseCode,
+            courseTitle: courseTitle,
+            courseDescription: courseDescription,
+            numCredits: courseCredits
+        };
+        updateCourses(newCourse, course);
         changeEditMode(!editMode);
     }
 
@@ -167,6 +180,12 @@ export function CourseComponent({
                         <Button
                             data-testid="restoreCourseInfo"
                             onClick={() => resetCourse(course)}
+                            disabled={
+                                courses.find(
+                                    (courseName: string) =>
+                                        courseName === courseCode
+                                ) === undefined
+                            }
                         >
                             Reset Course to Default Info
                         </Button>
@@ -180,22 +199,18 @@ export function CourseComponent({
                                 (course: Course): boolean =>
                                     course.courseCode === courseCode
                             );
-                            if (courseCode !== course.courseCode) {
-                                console.log(numCoursesRepeat.length);
-                            }
                             if (
+                                courses.find(
+                                    (courseName: string) =>
+                                        courseName === courseCode
+                                ) === undefined
+                            ) {
+                                showResetWarningPopUp(true);
+                            } else if (
                                 courseCode === course.courseCode ||
                                 numCoursesRepeat.length === 0
                             ) {
-                                const newCourse = {
-                                    ...course,
-                                    courseCode: courseCode,
-                                    courseTitle: courseTitle,
-                                    courseDescription: courseDescription,
-                                    numCredits: courseCredits
-                                };
-                                updateCourses(newCourse, course);
-                                changeEditMode(!editMode);
+                                saveEditCourse();
                             } else {
                                 changeCanAdd(!canAdd);
                             }
@@ -206,6 +221,43 @@ export function CourseComponent({
                         Save
                     </Button>
                 )}
+                <Modal
+                    show={resetWarningPopUp}
+                    onHide={() => showResetWarningPopUp(false)}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-sm">
+                            Course Does Not Exist In Course Catalog
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div>
+                            This course does not exist in the Course Catalog. By
+                            adding this course, you confirm that you will be
+                            unable to reset the course to its default
+                            information.
+                        </div>
+                        <Button
+                            variant="success"
+                            data-testid={"save-move-course"}
+                            onClick={() => {
+                                showResetWarningPopUp(false);
+                                saveEditCourse();
+                            }}
+                        >
+                            Confirm
+                        </Button>
+                        <Button
+                            data-testid={"cancel-move"}
+                            variant="warning"
+                            onClick={() => {
+                                showResetWarningPopUp(false);
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                    </Modal.Body>
+                </Modal>
                 {!canAdd && editMode && (
                     <div style={{ color: "red" }}>
                         You cannot have two courses with the same code in one
