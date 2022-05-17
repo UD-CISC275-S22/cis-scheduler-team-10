@@ -220,12 +220,12 @@ describe("Scheduler Tests", () => {
         const degreePlans = screen.getAllByTestId("planName");
         expect(degreePlans.length).toEqual(1);
         degreePlans[0].click();
-        let oldCode = screen.getByText("EGG101: 2 Credits");
+        let oldCode = screen.getByText("EGGG 101: 2 Credits");
         expect(oldCode).toBeInTheDocument();
         const editCourseButtons = screen.getAllByTestId("edit-course");
         editCourseButtons[0].click();
         const textboxes = screen.getAllByRole("textbox");
-        expect(textboxes.length).toEqual(3);
+        expect(textboxes.length).toEqual(4);
         userEvent.clear(textboxes[0]);
         userEvent.type(textboxes[0], "EGGG 101");
         userEvent.clear(textboxes[2]);
@@ -233,7 +233,7 @@ describe("Scheduler Tests", () => {
         const cancel = screen.getByTestId("cancel-edit-course");
         expect(cancel).toBeInTheDocument();
         cancel.click();
-        oldCode = screen.getByText("EGG101: 2 Credits");
+        oldCode = screen.getByText("EGGG 101: 2 Credits");
         expect(oldCode).toBeInTheDocument();
     });
     test("Pressing remove course button removes course from semester", () => {
@@ -437,7 +437,6 @@ describe("Scheduler Tests", () => {
         resets[1].click();
         expect(screen.queryAllByTestId("course")).not.toBeInTheDocument;
     });
-    //below are the new tests for this stuff, the rest are old ones you already have/have fixed ->bc of the changes we made the above ones don't work right so don't merge them
     test("Course prerequisites render (unmet prerequisites show up with a red x, you can check a box in the edit screen to get a green check stating you met prereqs, and courses with no prereqs have None listed ", () => {
         const degreePlans = screen.getAllByTestId("planName");
         degreePlans[0].click();
