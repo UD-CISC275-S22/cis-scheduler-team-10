@@ -382,8 +382,7 @@ describe("Scheduler Tests", () => {
         addCourseButton[0].click();
         screen.getByTestId("saveCourse").click();
         addCourseButton[1].click();
-        const saveCourse = screen.getAllByTestId("saveCourse");
-        saveCourse[0].click();
+        screen.getByTestId("saveCourse").click();
 
         const moveButtons = screen.getAllByTestId("move-courses");
         moveButtons[0].click();

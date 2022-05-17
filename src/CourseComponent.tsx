@@ -317,12 +317,6 @@ export function CourseComponent({
                         Save
                     </Button>
                 )}
-                {!canAdd && editMode && (
-                    <div style={{ color: "red" }}>
-                        You cannot have two courses with the same code in one
-                        semester.
-                    </div>
-                )}
                 {editMode && (
                     <Button
                         data-testid={"cancel-edit-course"}

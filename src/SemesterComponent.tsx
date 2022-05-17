@@ -29,7 +29,6 @@ export function SemesterComponent({
     const [removingCourse, changeRemovingCourse] = useState<boolean>(false);
     const [courseID, changeCourseID] = useState<string>("Insert Course ID");
     const [courseCopy, changeCopyStatus] = useState<boolean>(false);
-    const [invalidCourse, changeInvalidCourseStatus] = useState<boolean>(false);
     // temporary to move course to:
     const [tempSemester, changeTempSemester] = useState<Semester>(
         semester.season + semester.semesterName ===
@@ -309,12 +308,7 @@ export function SemesterComponent({
                                     data-testid="saveCourse"
                                     variant="success"
                                     onClick={() => {
-                                        if (courseID === "Insert Course ID") {
-                                            changeInvalidCourseStatus(true);
-                                        } else {
-                                            save();
-                                            changeInvalidCourseStatus(false);
-                                        }
+                                        save();
                                     }}
                                 >
                                     Save Course
@@ -323,11 +317,6 @@ export function SemesterComponent({
                             {courseCopy && (
                                 <span style={{ color: "red" }}>
                                     You cannot add the same course twice.
-                                </span>
-                            )}
-                            {invalidCourse && (
-                                <span style={{ color: "red" }}>
-                                    Please add a course from the course catalog.
                                 </span>
                             )}
                         </div>
