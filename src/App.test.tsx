@@ -263,11 +263,12 @@ describe("Scheduler Tests", () => {
         editButtons[0].click();
         const textboxes = screen.getAllByRole("textbox");
         expect(textboxes.length).toEqual(4);
-        userEvent.type(textboxes[2], "0");
+        userEvent.clear(textboxes[3]);
+        userEvent.type(textboxes[3], "0");
         const save = screen.getByTestId("save-course");
         save.click();
         const fills = screen.getAllByTestId("credFill");
-        expect(fills[0]).toHaveTextContent("Credits Filled: 33");
+        expect(fills[0]).toHaveTextContent("Credits Filled: 13");
     });
     test("Adding a course changes the number of credits filled", () => {
         const degreePlans = screen.getAllByTestId("planName");
@@ -381,7 +382,8 @@ describe("Scheduler Tests", () => {
         addCourseButton[0].click();
         screen.getByTestId("saveCourse").click();
         addCourseButton[1].click();
-        screen.getByTestId("saveCourse").click();
+        const saveCourse = screen.getAllByTestId("saveCourse");
+        saveCourse[0].click();
 
         const moveButtons = screen.getAllByTestId("move-courses");
         moveButtons[0].click();
