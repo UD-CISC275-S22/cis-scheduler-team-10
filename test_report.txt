@@ -2,38 +2,38 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
-FAIL src/App.test.tsx (10.946 s)
+FAIL src/App.test.tsx (7.414 s)
   Scheduler Tests
-    ✓ The App renders (66 ms)
-    ✓ List of plans and welcome message visible (30 ms)
-    ✓ Can toggle between view of degreen plan and welcome message (156 ms)
-    ✓ Can add a new plan (243 ms)
-    ✓ Can cancel a new plan (147 ms)
-    ✓ Can remove a plan (21 ms)
-    ✓ Can view semester (111 ms)
-    ✕ Can edit courses (138 ms)
-    ✓ Buttons to add and remove semesters visible when inside of a plan (123 ms)
-    ✓ Pressing remove semester button creates new buttons to remove each semester in plan (127 ms)
-    ✓ Pressing remove semester button removes semester from plan (135 ms)
-    ✓ A removed semester stays removed when you exit the plan and return to it (192 ms)
-    ✓ Can add a new semester (495 ms)
-    ✓ Can't add a previously existing semester (329 ms)
-    ✕ Can add a new course to a semester (166 ms)
-    ✓ Can edit courses (634 ms)
-    ✓ Cancelling editing courses returns original course data (408 ms)
-    ✓ Pressing remove course button removes course from semester (130 ms)
-    ✓ Viewing default plan shows credit limit and filled credits per semester (89 ms)
-    ✓ Editing a course's credits changes the number of credits filled (234 ms)
-    ✕ Adding a course changes the number of credits filled (186 ms)
-    ✓ Can move courses between semesters (632 ms)
-    ✕ Can't move a course to a semester that has the course already (519 ms)
-    ✓ Resetting a plan removes all the semesters from a plan (81 ms)
-    ✓ Resetting a plan does not remove other plan's semesters (254 ms)
-    ✓ Resetting a semester removes all courses from the semester (94 ms)
-    ✕ Course prerequisites render (unmet prerequisites show up with a red x, you can check a box in the edit screen to get a green check stating you met prereqs, and courses with no prereqs have None listed  (85 ms)
-    ✓ You can change a course's information, save it, and then reset the info back to the course's default values as without changing the course code (671 ms)
-    ✓ Editing a course's code, saving it, then resetting the information to default will swap the info to that of the new course (329 ms)
-    ✓ The user will be blocked and given a warning message when they attempt to edit a course code to a course that already exists within the semester (297 ms)
+    ✓ The App renders (48 ms)
+    ✓ List of plans and welcome message visible (24 ms)
+    ✓ Can toggle between view of degreen plan and welcome message (107 ms)
+    ✓ Can add a new plan (171 ms)
+    ✓ Can cancel a new plan (93 ms)
+    ✓ Can remove a plan (17 ms)
+    ✓ Can view semester (74 ms)
+    ✕ Can edit courses (92 ms)
+    ✓ Buttons to add and remove semesters visible when inside of a plan (74 ms)
+    ✓ Pressing remove semester button creates new buttons to remove each semester in plan (84 ms)
+    ✓ Pressing remove semester button removes semester from plan (90 ms)
+    ✓ A removed semester stays removed when you exit the plan and return to it (128 ms)
+    ✓ Can add a new semester (301 ms)
+    ✓ Can't add a previously existing semester (205 ms)
+    ✕ Can add a new course to a semester (113 ms)
+    ✓ Can edit courses (415 ms)
+    ✓ Cancelling editing courses returns original course data (284 ms)
+    ✓ Pressing remove course button removes course from semester (72 ms)
+    ✓ Viewing default plan shows credit limit and filled credits per semester (54 ms)
+    ✓ Editing a course's credits changes the number of credits filled (158 ms)
+    ✕ Adding a course changes the number of credits filled (131 ms)
+    ✓ Can move courses between semesters (429 ms)
+    ✕ Can't move a course to a semester that has the course already (357 ms)
+    ✓ Resetting a plan removes all the semesters from a plan (51 ms)
+    ✓ Resetting a plan does not remove other plan's semesters (157 ms)
+    ✓ Resetting a semester removes all courses from the semester (55 ms)
+    ✕ Course prerequisites render (unmet prerequisites show up with a red x, you can check a box in the edit screen to get a green check stating you met prereqs, and courses with no prereqs have None listed  (52 ms)
+    ✓ You can change a course's information, save it, and then reset the info back to the course's default values as without changing the course code (422 ms)
+    ✓ Editing a course's code, saving it, then resetting the information to default will swap the info to that of the new course (211 ms)
+    ✓ The user will be blocked and given a warning message when they attempt to edit a course code to a course that already exists within the semester (172 ms)
 
   ● Scheduler Tests › Can edit courses
 
@@ -1132,5 +1132,5 @@ All files                      |   76.92 |     77.9 |   79.24 |   76.94 |
 Test Suites: 1 failed, 1 total
 Tests:       5 failed, 25 passed, 30 total
 Snapshots:   0 total
-Time:        11.801 s
+Time:        8.042 s
 Ran all test suites.
